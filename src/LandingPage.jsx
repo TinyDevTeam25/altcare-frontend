@@ -1,4 +1,5 @@
 import Logo from "./assets/logo.png"
+import HeroImage from "./assets/Group 2124.png"
 
 const mainLinks = [
   { label: "Home", href: "#" },
@@ -18,6 +19,7 @@ export default function LandingPage(){
   return(
     <div>
     < Nav links={mainLinks}/>
+    < Hero/>
     </div>
   )
 }
@@ -59,5 +61,23 @@ function Button({children}){
     <button>
       {children}
     </button>
+  )
+}
+ 
+function Hero(){
+  return(
+    <section>
+      <div>
+        <h1>Your Health,Your Control</h1>
+        <p>Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.</p>
+        <span>
+          <Button>Get started</Button>
+          <Button>Take a tour</Button>
+        </span>
+      </div>
+      <div>
+        <img src={HeroImage} alt="" />
+      </div>
+    </section>
   )
 }

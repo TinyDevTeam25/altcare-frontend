@@ -1,0 +1,511 @@
+/* Header Layout & Content */
+.professional-header {
+  width: 100%;
+  /* Changed to 100% to be responsive within the body */
+  height: 90px;
+  background-color: #FFFFFF;
+  padding: 20px 100px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.header-content-pro {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container-pro img {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+
+.professional-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.professional-body {
+  background-color: #F5FFFF;
+  width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.professional-nav a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  font-weight: 400;
+  /* Regular weight for inactive links */
+  color: #121212;
+}
+
+.professional-nav a.active {
+  color: #38B2AC;
+  font-weight: 500;
+  /* Medium weight for active link */
+}
+
+.professional-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logged-in-as {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #008080CC;
+  white-space: nowrap;
+}
+
+.professional-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color: #DD0004;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 30px;
+}
+
+/* ================================= */
+/* --  PAGE HEADER CARD           -- */
+/* ================================= */
+
+.page-header-card {
+  width: 1240px;
+  height: 152px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Vertically center the content */
+  gap: 20px;
+  /* Space between title, subtitle, and link */
+  margin-bottom: 30px;
+  /* Space before the next section */
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.2;
+  /* Adjusted for better readability */
+  letter-spacing: -0.5px;
+  color: #000000;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #555;
+  /* Using a softer grey for the subtitle */
+  margin: 0;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #38B2AC;
+  margin-top: 10px;
+  /* Add some space above the link */
+}
+
+.back-link img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Find and replace the existing .main-content-area-pro rule */
+
+.main-content-area-pro {
+  /* This is the key to centering the content */
+  width: 1240px;
+  /* Set the max width of the content from your design */
+  margin: 40px auto;
+  /* Top/bottom margin of 40px, auto left/right centers it */
+  padding: 0;
+  /* Padding is handled by the cards, so we remove it here */
+  flex-grow: 1;
+}
+
+/* ================================= */
+/* -- DETAILS GRID & CARDS        -- */
+/* ================================= */
+
+.details-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* Aligns cards to the top */
+  gap: 30px;
+  /* Provides space if they wrap */
+}
+
+.details-card {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.overview-card {
+  width: 693px;
+}
+
+.snapshot-card {
+  width: 476px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EAEAEA;
+  padding-bottom: 15px;
+}
+
+.card-header .card-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1;
+  /* Match height */
+  letter-spacing: -0.5px;
+  color: #000000;
+  margin: 0;
+}
+
+.card-body {
+  flex-grow: 1;
+  /* Pushes footer down */
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  /* Label and Value columns */
+  gap: 15px 20px;
+  /* Row and Column gaps */
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.snapshot-grid {
+  grid-template-columns: 180px 1fr;
+  /* Wider label column for snapshot card */
+}
+
+.info-label {
+  font-weight: 500;
+  /* Bolder for labels */
+  color: #555;
+}
+
+.info-value {
+  font-weight: 400;
+  color: #121212;
+}
+
+.info-value .severe {
+  color: #DD0004;
+  /* Red color for severe warning */
+  font-weight: 500;
+}
+
+.info-label.full-width,
+.info-text.full-width {
+  grid-column: 1 / -1;
+  /* Spans both columns */
+}
+
+.info-text {
+  margin: -5px 0 0 0;
+}
+
+.status-badge.confirmed {
+  display: inline-flex;
+  padding: 3px 20px;
+  /* Adjusted padding */
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 14px;
+  background-color: #CAD4FF;
+  color: #270D9C;
+}
+
+.card-footer-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #EAEAEA;
+  display: flex;
+  justify-content: flex-start;
+  /* Align buttons to the left */
+  gap: 10px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  height: 40px;
+  padding: 10px 20px;
+  /* Base padding */
+  border-radius: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.action-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.action-button.primary {
+  background-color: #0000FF99;
+  /* Blue with opacity */
+  padding: 10px 30px;
+}
+
+.action-button.secondary {
+  background-color: #FFA500;
+  /* Orange */
+}
+
+.action-button.tertiary {
+  background-color: #FF000099;
+  /* Red with opacity */
+  padding: 10px 30px;
+}
+
+.card-footer-link {
+  margin-top: auto;
+  /* Pushes to the bottom */
+  padding-top: 20px;
+  border-top: 1px solid #EAEAEA;
+  text-align: left;
+}
+
+.card-footer-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #38B2AC;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.card-footer-link img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ================================= */
+/* -- APPOINTMENT NOTES CARD      -- */
+/* ================================= */
+
+.notes-card {
+  width: 100%;
+  height: 394px;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.notes-textarea {
+  width: 100%;
+  height: 250px;
+  border: 0.5px solid #D9D9D9;
+  /* Using a subtle border */
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #121212;
+  resize: vertical;
+  /* Allows user to resize the height */
+}
+
+.notes-textarea::placeholder {
+  color: #808080;
+  font-weight: 400;
+}
+
+.card-footer-notes {
+  margin-top: auto;
+  /* Pushes the button to the bottom of the card */
+  padding-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  /* Pushes button to the right */
+}
+
+.save-notes-button {
+  background-color: #2C7A7B;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  border: none;
+  height: 50px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+/* ================================= */
+/* -- ICON TRANSFORMATIONS        -- */
+/* ================================= */
+
+.arrow-right-transformed {
+  transform: scaleX(-1);
+  /* Flips the icon horizontally */
+}
+
+/* ================================= */
+/* -- RESPONSIVE DESIGN           -- */
+/* ================================= */
+
+/* For screens smaller than the main container (e.g., smaller laptops) */
+@media (max-width: 1440px) {
+  .professional-body {
+    width: 100%;
+    /* Allow the body to shrink */
+  }
+}
+
+/* For Tablets and smaller laptops */
+@media (max-width: 1200px) {
+  .professional-header {
+    padding: 20px 40px;
+  }
+
+  .main-content-area-pro {
+    padding: 40px;
+  }
+
+  .details-grid {
+    flex-direction: column;
+    /* Stack the two main cards */
+  }
+
+  .overview-card,
+  .snapshot-card {
+    width: 100%;
+    /* Make cards full-width */
+    box-sizing: border-box;
+  }
+}
+
+/* For Mobile Phones */
+@media (max-width: 768px) {
+  .professional-header {
+    padding: 20px;
+  }
+
+  /* Hide desktop nav and show hamburger menu (requires JS to function) */
+  .professional-nav,
+  .professional-user-actions {
+    display: none;
+  }
+
+  .hamburger-menu {
+    /* This class needs to be added to the ProfessionalHeader.jsx */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+  }
+
+  .main-content-area-pro {
+    padding: 20px;
+  }
+
+  .page-header-card {
+    padding: 20px;
+    height: auto;
+    /* Let height be determined by content */
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    /* Stack labels on top of values */
+    gap: 8px 0;
+  }
+
+  .info-value {
+    margin-bottom: 12px;
+    /* Add space after each value */
+  }
+
+  .card-footer-actions {
+    flex-direction: column;
+    /* Stack the action buttons */
+  }
+
+  .action-badge {
+    justify-content: center;
+    /* Center content in stacked buttons */
+  }
+}

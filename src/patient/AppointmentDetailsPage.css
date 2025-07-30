@@ -1,0 +1,464 @@
+/* =================================================== */
+/* == STYLES FOR PATIENT APPOINTMENT DETAILS PAGE == */
+/* =================================================== */
+
+/* --- Main Page Layout --- */
+.professional-body {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #F5FFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content-area-pro {
+  width: 1240px;
+  margin: 40px auto;
+  padding: 0;
+  flex-grow: 1;
+}
+
+/* --- Patient Header (Corrected) --- */
+.patient-header {
+  width: 100%;
+  height: 90px;
+  background-color: #FFFFFF;
+  padding: 20px 100px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.header-content-patient {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container-patient img {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+
+.patient-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.patient-nav a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  font-weight: 400;
+  color: #121212;
+}
+
+.patient-nav a.active {
+  color: #008080CC;
+  font-weight: 500;
+}
+
+.patient-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-profile-patient {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-profile-patient .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-profile-patient .user-name {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #008080CC;
+}
+
+.patient-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color: #DD0004;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 30px;
+}
+
+
+/* --- Page Header Card (Corrected) --- */
+.patient-page-header-card {
+  width: 100%;
+  padding: 20px 40px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+}
+
+.page-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: #121212;
+  margin: 0;
+}
+
+.page-title+.page-subtitle {
+  margin-top: 8px;
+  /* Adds space between title and subtitle */
+}
+
+.page-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #555;
+  margin: 0;
+  margin-top: 8px;
+  /* Adds space below the title */
+}
+
+.page-header-actions {
+  width: 100%;
+  display: grid;
+  /* Using GRID for precise centering */
+  grid-template-columns: 1fr auto 1fr;
+  /* Left, Center, Right columns */
+  align-items: center;
+  margin-top: 20px;
+}
+
+.back-link-patient {
+  justify-self: start;
+  /* Aligns this to the start of the first column */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #38B2AC;
+}
+
+.back-link-patient img {
+  width: 24px;
+  height: 24px;
+}
+
+.header-buttons {
+  justify-self: center;
+  /* Aligns this to the center of the middle column */
+  display: flex;
+  gap: 20px;
+}
+
+.header-action-button {
+  background: transparent;
+  border: 1px solid #D1D5DB;
+  border-radius: 30px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.header-action-button img {
+  width: 20px;
+  height: 20px;
+}
+
+
+/* --- Main Content Grid --- */
+.patient-details-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+  align-items: stretch;
+  /* This makes the cards equal height */
+}
+
+.details-card-patient {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card {
+  width: 376px;
+}
+
+.interpretation-card {
+  width: 809px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EAEAEA;
+  padding-bottom: 15px;
+}
+
+.card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: #121212;
+  margin: 0;
+}
+
+.info-grid-patient {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px 10px;
+  align-items: center;
+}
+
+.info-grid-patient .info-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #6B7280;
+  text-align: left;
+}
+
+.info-grid-patient .info-value {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #111827;
+  text-align: left;
+}
+
+.status-badge-patient.completed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  width: auto;
+  /* Let the width be flexible */
+  height: 30px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 14px;
+  background-color: #B1FFDC;
+  color: #065F46;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.interpretation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.interpretation-row .info-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #121212;
+  margin: 0;
+}
+
+.interpretation-row .info-text.italic {
+  font-style: italic;
+  color: #6B7280;
+}
+
+/* --- Related Documents Card --- */
+.documents-card {
+  width: 100%;
+}
+
+.document-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.document-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.document-item:last-child {
+  border-bottom: none;
+}
+
+.document-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.document-name {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #111827;
+}
+
+.document-meta {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.document-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.document-actions button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.document-actions img {
+  width: 24px;
+  height: 24px;
+}
+
+
+/* ================================= */
+/* -- RESPONSIVE DESIGN           -- */
+/* ================================= */
+
+@media (max-width: 1440px) {
+  .professional-body {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .patient-header {
+    padding: 20px 40px;
+  }
+
+  .main-content-area-pro {
+    width: auto;
+    padding: 40px;
+  }
+
+  .patient-details-grid {
+    flex-direction: column;
+  }
+
+  .info-card,
+  .interpretation-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .patient-header {
+    padding: 20px;
+  }
+
+  .patient-nav,
+  .patient-user-actions {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+  }
+
+  .main-content-area-pro {
+    padding: 20px;
+    width: auto;
+    box-sizing: border-box;
+  }
+
+  .patient-page-header-card {
+    padding: 20px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .page-header-actions {
+    grid-template-columns: 1fr;
+    /* Stack on mobile */
+    gap: 15px;
+  }
+
+  .back-link-patient,
+  .header-buttons {
+    justify-self: start;
+    /* Align all to the left on mobile */
+  }
+
+  .info-grid-patient {
+    grid-template-columns: 1fr;
+    gap: 8px 0;
+  }
+
+  .info-grid-patient .info-value {
+    margin-bottom: 12px;
+  }
+
+  .document-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

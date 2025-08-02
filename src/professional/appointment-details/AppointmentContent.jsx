@@ -1,14 +1,12 @@
 import React from "react";
-// Note: We use placeholders here. You must replace 'icon-name.svg'
-// with the ACTUAL filenames of your icons in the assets folder.
-import backArrowIcon from "../assets/arrow-left-icon.svg";
-import overviewIcon from "../assets/calendar-tick.svg";
-import tickSquareIcon from "../assets/calendar-tick.svg";
-import rotateRightIcon from "../assets/rotate-right.svg";
-import trashIcon from "../assets/trash.svg";
-import patientIcon from "../assets/user-square-icon.png";
-import viewRecordIcon from "../assets/arrow-left-icon.svg";
-import notesIcon from "../assets/eye.svg";
+import backArrowIcon from "../../assets/arrow-left-icon.svg";
+import overviewIcon from "../../assets/calendar-tick.svg";
+import tickSquareIcon from "../../assets/calendar-tick.svg";
+import rotateRightIcon from "../../assets/rotate-right.svg";
+import trashIcon from "../../assets/trash.svg";
+import patientIcon from "../../assets/user-square-icon.png";
+import viewRecordIcon from "../../assets/arrow-left-icon.svg";
+import notesIcon from "../../assets/eye.svg";
 
 function AppointmentContent() {
   return (

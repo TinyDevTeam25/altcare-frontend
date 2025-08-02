@@ -1,26 +1,25 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-// Import all your page-level components
+// Import all of your pages
 import LandingPage from "./LandingPage.jsx";
-import PatientAppointmentDetailsPage from "./patient/PatientAppointmentDetailsPage.jsx";
-// This is the one we want to view
-import ProfessionalAppointmentDetailsPage from "./professional/AppointmentDetailsPage.jsx";
+import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
+import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
+import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route
-        path="/patient/appointment-details"
-        element={<PatientAppointmentDetailsPage />}
-      />
-
-      {/* This is the route for the professional page */}
-      <Route
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+      <Route
+        path="/patient/appointment-details"
+        element={<PatientAppointmentDetailsPage />}
+      />
+      <Route path="/patient/messages" element={<SecureMessagesPage />} />
     </Routes>
   );
 }

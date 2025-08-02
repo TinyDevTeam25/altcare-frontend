@@ -1,8 +1,8 @@
 import React from "react";
-import overviewIcon from "../assets/calendar-tick.svg";
-import tickSquareIcon from "../assets/calendar.svg";
-import rotateRightIcon from "../assets/rotate-right.svg";
-import trashIcon from "../assets/trash.svg";
+import overviewIcon from "../../assets/calendar-tick.svg";
+import tickSquareIcon from "../../assets/calendar.svg";
+import rotateRightIcon from "../../assets/rotate-right.svg";
+import trashIcon from "../../assets/trash.svg";
 
 function AppointmentOverview() {
   return (

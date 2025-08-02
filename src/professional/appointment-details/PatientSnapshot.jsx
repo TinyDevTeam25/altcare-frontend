@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import patientIcon from "../assets/user-square-icon.png";
-import arrowIcon from "../assets/arrow-left-icon.svg";
+import patientIcon from "../../assets/user-square-icon.png";
+import arrowIcon from "../../assets/arrow-left-icon.svg";
 
 function PatientSnapshot() {
   return (

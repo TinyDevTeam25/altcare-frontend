@@ -41,7 +41,7 @@ function Nav({ showLinks = true, showButton = true, links = [], buttonText = "Si
 
       {showButton&&(<div style={{display:"flex", gap:"20px"}}>
         <P style={{color:"#008080",lineHeight:"24px"}}>{pText}</P>
-        <Button style={{borderRadius:"30px",backgroundColor:"#008080",color:"#fff",outline:"none",border:"none",padding:"10px 20px",fontWeight:"600"}}>
+        <Button style={{borderRadius:"30px",backgroundColor:"#008080",color:"#fff",outline:"none",border:"none",padding:"20px 25px",fontWeight:"600"}}>
           {buttonText}
         </Button>
       </div>)} 
@@ -72,7 +72,7 @@ function Hero(){
         <h1>Your Health,Your <span style={{color:"#38B2AC"}}>Control</span> </h1>
         <p>Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.</p>
         <span style={{display:"flex",gap:"10px",marginTop:"30px"}}>
-          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 20px",borderRadius:"30px"}}>Get started</Button>
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
           <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button>
         </span>
       </div>

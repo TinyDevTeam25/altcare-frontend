@@ -6,6 +6,7 @@ import LandingPage from "./LandingPage.jsx";
 import PatientAppointmentDetailsPage from "./patient/PatientAppointmentDetailsPage.jsx";
 // This is the one we want to view
 import ProfessionalAppointmentDetailsPage from "./professional/AppointmentDetailsPage.jsx";
+import MyProfilePage from "./Profile/ProfilePage.jsx"; 
 
 function App() {
   return (

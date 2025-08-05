@@ -1,5 +1,5 @@
 import React from "react";
-import infoIcon from "../assets/info-icon.svg";
+import infoIcon from "../../assets/info-icon.svg";
 
 function AppointmentInfo() {
   return (

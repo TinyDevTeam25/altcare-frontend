@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import backArrowIcon from "../assets/arrow-left-icon.svg";
+import backArrowIcon from "../../assets/arrow-left-icon.svg";
 
 function AppointmentPageHeader() {
   return (

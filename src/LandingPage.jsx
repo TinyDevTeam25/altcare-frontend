@@ -15,12 +15,6 @@ const mainLinks = [
   { label: "Contact Us", href: "#contact" }
 ];
 
-const dashboardLinks = [
-  { label: "Dashboard", href: "#dashboard" },
-  { label: "Profile", href: "#profile" },
-  { label: "Settings", href: "#settings" },
-  { label: "Logout", href: "#logout" }
-];
 
 export default function LandingPage(){
   return(

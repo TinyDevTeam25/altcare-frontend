@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import backArrowIcon from "../assets/arrow-left-icon.svg";
-import rescheduleIcon from "../assets/rotate-right.svg";
-import cancelIcon from "../assets/trash.svg";
+import backArrowIcon from "../../assets/arrow-left-icon.svg";
+import rescheduleIcon from "../../assets/rotate-right.svg";
+import cancelIcon from "../../assets/trash.svg";
 
 function PatientPageHeader() {
   return (

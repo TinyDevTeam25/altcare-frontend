@@ -1,7 +1,7 @@
 import React from "react";
-import attachIcon from "../assets/attach-icon.svg";
-import eyeIcon from "../assets/eye.svg";
-import downloadIcon from "../assets/document-download.svg";
+import attachIcon from "../../assets/attach-icon.svg";
+import eyeIcon from "../../assets/eye.svg";
+import downloadIcon from "../../assets/document-download.svg";
 
 function RelatedDocuments() {
   return (

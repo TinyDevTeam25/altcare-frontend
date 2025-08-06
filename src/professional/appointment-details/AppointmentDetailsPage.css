@@ -1,7 +1,6 @@
 /* Header Layout & Content */
 .professional-header {
   width: 100%;
-  /* Changed to 100% to be responsive within the body */
   height: 90px;
   background-color: #FFFFFF;
   padding: 20px 100px;
@@ -150,16 +149,10 @@
   height: 24px;
 }
 
-/* Find and replace the existing .main-content-area-pro rule */
-
 .main-content-area-pro {
-  /* This is the key to centering the content */
   width: 1240px;
-  /* Set the max width of the content from your design */
   margin: 40px auto;
-  /* Top/bottom margin of 40px, auto left/right centers it */
   padding: 0;
-  /* Padding is handled by the cards, so we remove it here */
   flex-grow: 1;
 }
 
@@ -404,9 +397,7 @@
   cursor: pointer;
 }
 
-/* ================================= */
 /* -- ICON TRANSFORMATIONS        -- */
-/* ================================= */
 
 .arrow-right-transformed {
   transform: scaleX(-1);
@@ -461,7 +452,7 @@
   }
 
   .hamburger-menu {
-    /* This class needs to be added to the ProfessionalHeader.jsx */
+
     display: flex;
     flex-direction: column;
     gap: 5px;

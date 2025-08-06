@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-// Import all your page-level components
+// Import all of your pages
 import LandingPage from "./LandingPage.jsx";
 import PatientAppointmentDetailsPage from "./patient/PatientAppointmentDetailsPage.jsx";
 // This is the one we want to view
@@ -12,6 +12,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+
+      
       <Route
         path="/patient/appointment-details"
         element={<PatientAppointmentDetailsPage />}
@@ -22,6 +24,11 @@ function App() {
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+      <Route
+        path="/patient/appointment-details"
+        element={<PatientAppointmentDetailsPage />}
+      />
+      <Route path="/patient/messages" element={<SecureMessagesPage />} />
     </Routes>
   );
 }

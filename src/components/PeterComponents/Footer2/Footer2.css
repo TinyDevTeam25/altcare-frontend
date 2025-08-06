@@ -1,0 +1,16 @@
+.Footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #000;
+  color: #fff;
+  align-items: center;
+  font-family: sans-serif;
+}
+.Footer ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 20px 0px;
+  gap: 40px;
+}

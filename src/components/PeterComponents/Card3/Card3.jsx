@@ -9,13 +9,17 @@ function Card3 ({
     pr,
     cbc,
     date1,
-    nor,
-    Dr,
-    vd,
+    nor1,
+    nor2,
+    Dr1,
+    vd1,
+    vd2,
+    vd3,
     cp,
     date2,
     ldl,
     Dr2,
+    Dr3,
      color1,
    color2,
    color3,
@@ -46,12 +50,12 @@ function Card3 ({
             <td>{cbc}</td>
             <td>{date1}</td>
             <td className="normal" style={{ color: color1 }}>
-              {nor}
+              {nor1}
             </td>
-            <td>{Dr}</td>
+            <td>{Dr1}</td>
             <td>
               <span className="view-link" style={{ color: color3 }}>
-                {vd}
+                {vd1}
               </span>
             </td>
           </tr>
@@ -64,7 +68,7 @@ function Card3 ({
             <td>{Dr2}</td>
             <td>
               <span className="view-link" style={{ color: color3 }}>
-                {vd}
+                {vd2}
               </span>
             </td>
           </tr>
@@ -72,12 +76,12 @@ function Card3 ({
             <td>{ur}</td>
             <td>{date3}</td>
             <td className="normal" style={{ color: color1 }}>
-              {nor}
+              {nor2}
             </td>
-            <td>{Dr}</td>
+            <td>{Dr3}</td>
             <td>
               <span className="view-link" style={{ color: color3 }}>
-                {vd}
+                {vd3}
               </span>
             </td>
           </tr>

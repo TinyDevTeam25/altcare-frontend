@@ -4,7 +4,7 @@ import { Link } from "react-router";
 export const Activity = () => {
   return (
     <div className="containerA">
-      <div className="card">
+      <div className="cardactivity">
         <h3>Recent Activity</h3>
         <ul className="activity-list">
           <li className="activity-item">

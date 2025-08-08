@@ -3,7 +3,7 @@ import Nav2 from "../../components/PeterComponents/Nav2/Nav2";
 import Top from "../../components/PeterComponents/Top/Top";
 import Menu from "../../components/PeterComponents/Menu/Menu";
 import Activity from "../../components/PeterComponents/Activity/Activity";
-import Footer2 from "../../components/PeterComponents/Footer2/Footer2";
+import Footer from "../../components/PeterComponents/Footer2/Footer2";
 function dashboard() {
   return (
     <>
@@ -15,7 +15,7 @@ function dashboard() {
          <Activity/>
         </main>
 
-        <Footer2 />
+        <Footer />
       </body>
     </>
   );

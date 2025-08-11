@@ -5,7 +5,7 @@ import tickSquareIcon from "../../assets/calendar-tick.svg";
 import rotateRightIcon from "../../assets/rotate-right.svg";
 import trashIcon from "../../assets/trash.svg";
 import patientIcon from "../../assets/user-square-icon.png";
-import viewRecordIcon from "../../assets/arrow-left-icon.svg";
+import viewRecordIcon from "../../assets/eye.svg";
 import notesIcon from "../../assets/eye.svg";
 
 function AppointmentContent() {

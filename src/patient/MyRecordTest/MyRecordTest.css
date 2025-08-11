@@ -1,0 +1,90 @@
+.dashboard {
+  min-height: 170vh;
+  max-width: 85%;
+  margin: 60px auto;
+}
+
+.ls ul {
+  gap: 5px;
+  margin: 50px 200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  font-family: var(--primary-font);
+  font-size: 13px;
+}
+.ls ul li a {
+  color: #000;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  text-align: center;;
+  gap: 0.5rem;
+  margin-bottom: 20px;
+}
+.resultss-container {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+  margin:50px auto;
+  font-family: var(--primary-font);
+}
+
+.results-container h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  color: #555;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+.normal {
+  color: green;
+  font-weight: bold;
+}
+
+.elevated {
+  color: orange;
+  font-weight: bold;
+}
+
+.view-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.view-all {
+  margin-top: 15px;
+  display: inline-block;
+  color: #00a58c;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+}

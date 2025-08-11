@@ -24,12 +24,14 @@ body {
   text-decoration: none;
   color: #121212;
   font-size: 16px;
+  line-height: 24px;
 }
 
 .Hero {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 120px;
   background-color: #F5FFFF;
 }
 
@@ -50,6 +52,7 @@ body {
   line-height: 36px;
   width: 100%;
   cursor: pointer;
+  letter-spacing: -0.5px;
 
 }
 

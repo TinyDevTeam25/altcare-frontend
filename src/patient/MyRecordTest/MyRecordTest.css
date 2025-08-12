@@ -63,7 +63,8 @@ td {
 
 .normal {
   color: green;
-  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .elevated {

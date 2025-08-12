@@ -1,5 +1,5 @@
 import React from "react";
-import noteIcon from "../assets/note.svg";
+import noteIcon from "../../assets/note.svg";
 
 function ClinicalInterpretation() {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import notesIcon from "../assets/eye.svg";
+import notesIcon from "../../assets/eye.svg";
 function AppointmentNotes() {
   return (
     <div className="details-card notes-card">

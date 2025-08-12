@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
-import userAvatar from "../assets/jane-doe-avatar.png";
+import logo from "../../assets/logo.png";
+import userAvatar from "../../assets/jane-doe-avatar.png";
 
-function PatientHeader() {
+// The component now accepts a prop called 'activePage'
+function PatientHeader({ activePage }) {
   return (
     <header className="patient-header">
       <div className="header-content-patient">
@@ -13,13 +14,28 @@ function PatientHeader() {
           </Link>
         </div>
         <nav className="patient-nav">
-          <Link to="#">Dashboard</Link>
-          <Link to="#">My Records</Link>
-          <Link to="#" className="active">
+          {/* We now check the activePage prop to decide which link is active */}
+          <Link to="#" className={activePage === "dashboard" ? "active" : ""}>
+            Dashboard
+          </Link>
+          <Link to="#" className={activePage === "records" ? "active" : ""}>
+            My Records
+          </Link>
+          <Link
+            to="/patient/appointment-details"
+            className={activePage === "appointments" ? "active" : ""}
+          >
             Appointments
           </Link>
-          <Link to="#">Messages</Link>
-          <Link to="#">Profile</Link>
+          <Link
+            to="/patient/messages"
+            className={activePage === "messages" ? "active" : ""}
+          >
+            Messages
+          </Link>
+          <Link to="#" className={activePage === "profile" ? "active" : ""}>
+            Profile
+          </Link>
         </nav>
         <div className="patient-user-actions">
           <div className="user-profile-patient">
@@ -30,7 +46,7 @@ function PatientHeader() {
             Logout
           </Link>
         </div>
-        {/* ADD THIS FOR MOBILE */}
+        {/* You may want to add the hamburger menu here for consistency */}
         <div className="hamburger-menu">
           <div className="bar"></div>
           <div className="bar"></div>

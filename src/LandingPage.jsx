@@ -43,6 +43,9 @@ function Nav({ showLinks = true, showButton = true, links = [], buttonText = "Si
         ))}
       </ul>)}
 
+
+
+
       {showButton&&(<div style={{display:"flex", gap:"20px"}}>
       
        <P style={{color:"#008080",lineHeight:"24px",cursor:"pointer"}}>{pText}</P>
@@ -52,6 +55,7 @@ function Nav({ showLinks = true, showButton = true, links = [], buttonText = "Si
           {buttonText}
         </Button>
       </div>)} 
+
     </nav>
   )
 }
@@ -80,10 +84,20 @@ function Hero(){
         <h1>Your Health,Your <span style={{color:"#38B2AC"}}>Control</span> </h1>
         <p>Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.</p>
         <span style={{display:"flex",gap:"10px",marginTop:"30px"}}>
+ dashboardupdate
+ {/* feature/Profile-page
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button> */}
+
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Get started</Button>
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Take a tour</Button>
+ {/* main */}
+=======
  
           <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
 
           <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button>
+
 
         </span>
       </div>

@@ -21,6 +21,7 @@ function Menu() {
         date2="July 15 2025"
         text="No more upcoming appointments for this month"
         btn="View all appointment"
+        color2="#0000FF"
       />
       <Card
         Image={result}
@@ -34,6 +35,7 @@ function Menu() {
         Parameter4="Date:June 20,2025"
         date2="Reviewed"
         btn="View all Results"
+        color2="#38B2AC"
       />
       <Card
         Image={clock}
@@ -47,6 +49,7 @@ function Menu() {
         Parameter4="200mg, once a day"
         date2="Due:09:00pm"
         btn="Manage Medications"
+        color2="#FFA500"
       />
       <Card
         Image={message}
@@ -60,6 +63,7 @@ function Menu() {
         Parameter4="200mg, once a day"
         date2="Due:09:00pm"
         btn="view All Messages"
+        color2="#FF0000"
       />
     </section>
   );

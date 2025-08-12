@@ -5,7 +5,11 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./LandingPage.jsx";
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 // This is the one we want to view
+
+
+
 //  dashboardupdate
+ main
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import PatientDashboard from"./patient/patientdashboard/Dashboard.jsx";

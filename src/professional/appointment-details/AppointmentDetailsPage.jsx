@@ -4,7 +4,7 @@ import AppointmentPageHeader from "./AppointmentPageHeader.jsx";
 import AppointmentOverview from "./AppointmentOverview.jsx";
 import PatientSnapshot from "./PatientSnapshot.jsx";
 import AppointmentNotes from "./AppointmentNotes.jsx";
-import Footer from "../../components/Footer.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
 import "./AppointmentDetailsPage.css";
 
 function AppointmentDetailsPage() {

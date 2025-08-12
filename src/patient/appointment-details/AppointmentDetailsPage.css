@@ -5,7 +5,7 @@
 /* --- Main Page Layout --- */
 .professional-body {
   width: 100%;
-  max-width: 1440px;
+  /*max-width: 1440px;*/
   min-height: 100vh;
   margin: 0 auto;
   background-color: #F5FFFF;
@@ -14,13 +14,15 @@
 }
 
 .main-content-area-pro {
-  width: 1240px;
+  width: 100%;
+  max-width: 1240px;
   margin: 40px auto;
-  padding: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
   flex-grow: 1;
 }
 
-/* --- Patient Header (Corrected) --- */
+/* --- Patient Header */
 .patient-header {
   width: 100%;
   height: 90px;
@@ -107,7 +109,7 @@
 }
 
 
-/* --- Page Header Card (Corrected) --- */
+/* --- Page Header Card --- */
 .patient-page-header-card {
   width: 100%;
   padding: 20px 40px;

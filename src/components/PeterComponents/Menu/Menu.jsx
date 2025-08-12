@@ -15,12 +15,13 @@ function Menu() {
         Parameter2="Dr Emily White"
         color="#0000FF"
         bgColor="#CDE6FF"
-        date1="July  15 2025"
+        date1="July 15 2025"
         Parameter3="Cardiology Follow-up"
         Parameter4="Dr. Robert Green"
         date2="July 15 2025"
         text="No more upcoming appointments for this month"
         btn="View all appointment"
+        color2="#0000FF"
       />
       <Card
         Image={result}
@@ -34,6 +35,7 @@ function Menu() {
         Parameter4="Date:June 20,2025"
         date2="Reviewed"
         btn="View all Results"
+        color2="#38B2AC"
       />
       <Card
         Image={clock}
@@ -47,6 +49,7 @@ function Menu() {
         Parameter4="200mg, once a day"
         date2="Due:09:00pm"
         btn="Manage Medications"
+        color2="#FFA500"
       />
       <Card
         Image={message}
@@ -60,75 +63,8 @@ function Menu() {
         Parameter4="200mg, once a day"
         date2="Due:09:00pm"
         btn="view All Messages"
+        color2="#FF0000"
       />
-      {/* <div className="card1">
-        <h3 className="heading">
-          <img src={result} alt="" /> Latest Test Results{" "}
-        </h3>
-        <div className="appointment">
-          <p>
-            Blood Work <br />
-            (Complete) <br /> <span className="name">Lab ID: #7890</span>
-            <span className="test">New!</span>
-          </p>
-          <p>
-            X-Ray (Chest)
-            <br />
-            <span className="name">Date: June 20, 2025</span>{" "}
-            <span className="test">Reviewed</span>
-          </p>
-
-          <Link to="" className="appoint">
-            View All Results &rarr;
-          </Link>
-        </div>
-      </div>
-      <div className="card1">
-        <h3 className="heading">Medication Reminders</h3>
-        <div className="appointment">
-          <p>
-            Medication A <br />
-            <span className="name">1 tablet, twice daily</span>
-            <span className="medication">Due: 08:00 AM</span>
-          </p>
-          <p>
-            Medication B
-            <br />
-            <span className="name">200mg, once a day</span>
-            <span className="medication">Due: 09:00 PM</span>
-          </p>
-
-          <Link to="" className="appoint">
-            Manage Medications &rarr;
-          </Link>
-        </div>
-      </div>
-      <div className="card1">
-        <h3 className="heading">Secure Messages</h3>
-        <div className="securemessage">
-          <p>
-            New message
-            <br /> from Dr. Smith <br />
-            <span className="name">
-              Regarding <br /> your recent blood test.
-            </span>
-            <span className="securetime">Due: 08:00 AM</span>
-          </p>
-          <p>
-            Reply from <br />
-            Admin
-            <br />
-            <span className="name">
-              Your profile update <br /> has been processed
-            </span>
-            <span className="securetime">Due: 09:00 PM</span>
-          </p>
-
-          <Link to="" className="appoint">
-            View All Messages &rarr;
-          </Link>
-        </div>
-      </div> */}
     </section>
   );
 }

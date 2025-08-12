@@ -7,6 +7,7 @@ function Card({
   Parameter1,
   Parameter2,
   color,
+  color2,
   bgColor,
   date1,
   Parameter3,
@@ -17,9 +18,11 @@ function Card({
 }) {
   return (
     <div className="card1">
-      <h3 className="heading">
-        <img src={Image} alt="" className="fileimage" /> {Title}
-      </h3>
+      <div className="heading">
+        <img src={Image} alt="" className="fileimage" />
+        <p>{Title}</p>
+      </div>
+
       <div className="appointment">
         <div className="fl">
           <p className="paragraph">
@@ -42,7 +45,7 @@ function Card({
         </div>
 
         <p className="name">{text}</p>
-        <Link to="" className="appoint">
+        <Link to="" className="appoint" style={{color:color2}}>
           {btn} &rarr;
         </Link>
       </div>

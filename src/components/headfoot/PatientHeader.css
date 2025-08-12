@@ -1,4 +1,4 @@
-/* --- Patient Header  --- */
+/* --- Patient Header --- */
 .patient-header {
   width: 100%;
   height: 90px;
@@ -23,13 +23,14 @@
   display: block;
 }
 
-.patient-nav {
+
+.patient-nav-desktop {
   display: flex;
   align-items: center;
   gap: 32px;
 }
 
-.patient-nav a {
+.patient-nav-desktop a {
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -38,7 +39,7 @@
   color: #121212;
 }
 
-.patient-nav a.active {
+.patient-nav-desktop a.active {
   color: #008080CC;
   font-weight: 500;
 }
@@ -84,10 +85,6 @@
   border-radius: 30px;
 }
 
-/* ================================= */
-/* -- WALLET DISPLAY COMPONENT    -- */
-/* ================================= */
-
 .wallet-display {
   display: flex;
   align-items: center;
@@ -97,8 +94,8 @@
 .wallet-icon {
   width: 24px;
   height: 24px;
+
   filter: invert(48%) sepia(90%) saturate(1001%) hue-rotate(130deg) brightness(97%) contrast(101%);
-  /* The filter above is a generator for #00AC84. Or you can edit the SVG fill color. */
 }
 
 .wallet-balance {
@@ -109,46 +106,19 @@
   white-space: nowrap;
 }
 
-@media (max-width: 1200px) {
-  .patient-header {
-    padding: 20px 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  .patient-header {
-    padding: 20px;
-  }
-
-  .patient-nav,
-  .patient-user-actions {
-    display: none;
-  }
-
-  .hamburger-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-  }
-
-  .hamburger-menu .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-  }
+/* Hamburger menu should be hidden on desktop by default */
+.hamburger-menu {
+  display: none;
 }
 
 /* ======================================= */
 /* == HAMBURGER MENU & MOBILE NAV LOGIC == */
 /* ======================================= */
 
-/* By default, the mobile navigation menu is hidden */
 .patient-nav-mobile {
   display: none;
   width: 100%;
   background-color: #FFFFFF;
-  /* Give it a solid background */
   border-top: 1px solid #EAEAEA;
 }
 
@@ -171,23 +141,47 @@
   font-weight: 600;
 }
 
-/* When the header has the 'menu-open' class (toggled by our JavaScript), 
-   it becomes a flex column to stack the mobile menu underneath. */
 .patient-header.menu-open {
   height: auto;
-  /* Allow the header to grow */
   flex-direction: column;
   align-items: flex-start;
 }
 
-/* This is the key rule: when the menu is open, we show the mobile nav */
 .patient-header.menu-open .patient-nav-mobile {
   display: block;
 }
 
-/* In the mobile media query, we now need to hide the DESKTOP version of the nav */
+/* ======================================= */
+/* == RESPONSIVE MEDIA QUERIES          == */
+/* ======================================= */
+
+@media (max-width: 1200px) {
+  .patient-header {
+    padding: 20px 40px;
+  }
+}
+
 @media (max-width: 768px) {
-  .patient-nav-desktop {
+  .patient-header {
+    padding: 20px;
+  }
+
+  .patient-nav-desktop,
+  .patient-user-actions {
     display: none;
+  }
+
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
   }
 }

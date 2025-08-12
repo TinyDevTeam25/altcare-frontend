@@ -14,7 +14,7 @@ function PatientPageHeader() {
         </p>
       </div>
       <div className="page-header-actions">
-        <Link to="/appointments" className="back-link-patient">
+        <Link to="/patient/appointments" className="back-link-patient">
           <img src={backArrowIcon} alt="Back" />
           <span>Back to Appointments List</span>
         </Link>

@@ -7,6 +7,7 @@ import ProfessionalAppointmentDetailsPage from "./professional/appointment-detai
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import PatientDashboardPage from "./patient/patientdashboard/Dashboard.jsx";
+import MyAppointmentsPage from "./patient/my-appointments/MyAppointmentsPage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
       />
       <Route path="/patient/messages" element={<SecureMessagesPage />} />
       <Route path="/patient/dashboard" element={<PatientDashboardPage />} />
+      <Route path="/patient/appointments" element={<MyAppointmentsPage />} />
+      {/* Add more routes as needed */}
     </Routes>
   );
 }

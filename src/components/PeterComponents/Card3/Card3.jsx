@@ -33,7 +33,7 @@ function Card3 ({
     <div className="results-container">
       <div className='results-header'>
         <img src={pix} alt="" />
-        <h2 className='topi'>{topic}</h2>
+        <p className='topi'>{topic}</p>
       </div>
       <table>
         <thead>

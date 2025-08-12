@@ -1,11 +1,13 @@
 import React from 'react'
 import "./Top.css"
-export const Top = () => {
+import Card2 from "../Card2/Card2";
+function Top() {
   return (
-    <section className='Janes'>
-      <h1>Welcome, Jane Doe!</h1>
-      <p>Your personalized health overview at a glance</p>
-    </section>
+  
+      <Card2
+        Headline="Welcome, Jane Doe!"
+        Textline="Your personalized health overview at a glance"
+      />
   );
 }
 export default Top;

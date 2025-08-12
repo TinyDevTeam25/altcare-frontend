@@ -1,3 +1,20 @@
+ feature/Profile-page
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5; /* Default line-height for better readability */
+}
+
+/* Base App Layout */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 body {
@@ -5,6 +22,7 @@ body {
   padding: 0;
 
 }
+ main
 .nav {
   display: flex;
   justify-content: space-between;
@@ -25,12 +43,14 @@ body {
   text-decoration: none;
   color: #121212;
   font-size: 16px;
+  line-height: 24px;
 }
 
 .Hero {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 120px;
   background-color: #F5FFFF;
 }
 
@@ -51,6 +71,7 @@ body {
   line-height: 36px;
   width: 100%;
   cursor: pointer;
+  letter-spacing: -0.5px;
 
 }
 
@@ -70,6 +91,9 @@ body {
   justify-content: center;
   align-items: center;
   padding: 60px 30px;
+}
+.health{
+  background-color: #fff;
 }
 .health-section{
    height: auto;
@@ -108,14 +132,20 @@ body {
   color: #131313;
   font-size: 24px;
 }
+
 .testimonial-section{
-  background-color: #F5FFFF;
+  /* background-color: #F5FFFF; */
   text-align: center;
+}
+.tes-head{
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
 }
 .testimonial{
   font-size: 24px;
   border-radius: 20px;
-  padding: 50px;
+   padding: 50px; 
   border-left: 3px solid #38B2AC;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -136,10 +166,11 @@ figcaption{
   height: auto;
   display:flex;
   flex-direction: column;
+  gap: 50px;
   justify-content: center;
   align-items: center;
   padding: 55px;
-  background-color: #38B2AC;
+ background-color: #38B2AC; 
 }
 .health-control p {
    color: #fff;
@@ -201,14 +232,14 @@ figcaption{
 :root {
   --primary-font: "Poppins", sans-serif;
 }
-/* body{ background-color:#f5ffff ;}
+body{ background-color:#f5ffff ;}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
   
-} */
+}
 img {
   max-width: 100%;
   height: auto;

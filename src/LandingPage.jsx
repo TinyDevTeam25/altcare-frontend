@@ -1,3 +1,5 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import Logo from "./assets/logo.png";
 import HeroImage from "./assets/Group 2124.png";
 import "./index.css";
@@ -6,7 +8,7 @@ import calender from "./assets/calendar-tick.png";
 import message from "./assets/messages.png";
 import timer from "./assets/timer-start.png";
 import user from "./assets/jane-doe-avatar.png";
-import Footer from "././components/headfoot/Footer.jsx";
+import Footer from "./components/headfoot/Footer.jsx";
 
 const mainLinks = [
   { label: "Home", href: "#" },
@@ -15,12 +17,7 @@ const mainLinks = [
   { label: "Contact Us", href: "#contact" },
 ];
 
-const dashboardLinks = [
-  { label: "Dashboard", href: "#dashboard" },
-  { label: "Profile", href: "#profile" },
-  { label: "Settings", href: "#settings" },
-  { label: "Logout", href: "#logout" },
-];
+// const dashboardLinks = [ ... ];
 
 export default function LandingPage() {
   return (
@@ -56,14 +53,19 @@ function Nav({
         </ul>
       )}
 
+      {/* Resolved conflict by choosing one consistent format */}
       {showButton && (
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
           <P
-            style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}
+            style={{
+              color: "#008080",
+              lineHeight: "24px",
+              cursor: "pointer",
+              margin: 0,
+            }}
           >
             {pText}
           </P>
-
           <Button
             style={{
               borderRadius: "30px",
@@ -83,6 +85,7 @@ function Nav({
     </nav>
   );
 }
+
 function P({ children, style }) {
   return <span style={style}>{children}</span>;
 }
@@ -93,18 +96,11 @@ function Button({ children, style }) {
 
 function Hero() {
   return (
-    <section
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        backgroundColor: "#f5ffff",
-        padding: "50px 100px",
-      }}
-    >
+    <section className="hero-section-landing">
       <div className="hero-left">
+        {/* Resolved conflict */}
         <h1>
-          Your Health,Your <span style={{ color: "#38B2AC" }}>Control</span>{" "}
+          Your Health,Your <span style={{ color: "#38B2AC" }}>Control</span>
         </h1>
         <p>
           Access your medical records, schedule appointments, view
@@ -117,7 +113,7 @@ function Hero() {
               color: "white",
               backgroundColor: "#008080",
               border: "none",
-              padding: "10px 20px",
+              padding: "10px 40px",
               borderRadius: "30px",
               cursor: "pointer",
             }}
@@ -144,8 +140,6 @@ function Hero() {
     </section>
   );
 }
-
-// Empower your health section
 
 function HealthCards() {
   return (
@@ -189,12 +183,10 @@ function HealthCard({ img, title, description }) {
   );
 }
 
-// What User say
-
 function WhatUsersSay() {
   return (
     <section className="testimonial-section">
-      <div>
+      <div className="tes-head">
         <h1 className="head-text">What Users say</h1>
         <article className="testimonial">
           <p>
@@ -216,8 +208,6 @@ function WhatUsersSay() {
     </section>
   );
 }
-
-// take control of your health
 
 function HealthControl() {
   return (

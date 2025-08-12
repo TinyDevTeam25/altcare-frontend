@@ -1,7 +1,7 @@
 import React from "react";
 import "./Activity.css";
 import { Link } from "react-router";
-export const Activity = () => {
+export function Activity(){
   return (
     <div className="containerA">
       <div className="cardactivity">

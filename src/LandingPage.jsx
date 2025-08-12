@@ -42,7 +42,7 @@ function Nav({
   return (
     <nav className="nav">
       <img src={Logo} alt="logo" />
-
+ feature/Victor/appointment-details-page
       {showLinks && (
         <ul className="nav-link">
           {links.map((link, index) => (
@@ -82,6 +82,29 @@ function Nav({
           </Button>
         </div>
       )}
+      
+      {showLinks &&(<ul className="nav-link">
+        {links.map((link, index) => (
+          <li key={index}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>)}
+
+
+
+
+      {showButton&&(<div style={{display:"flex", gap:"20px"}}>
+      
+       <P style={{color:"#008080",lineHeight:"24px",cursor:"pointer"}}>{pText}</P>
+
+        <Button style={{borderRadius:"30px",backgroundColor:"#008080",color:"#fff",outline:"none",border:"none",padding:"10px 20px",fontWeight:"600",cursor:"pointer"}}>
+        
+          {buttonText}
+        </Button>
+      </div>)} 
+
+
     </nav>
   );
 }
@@ -93,6 +116,7 @@ function P({ children, style }) {
 function Button({ children, style }) {
   return <button style={style}>{children}</button>;
 }
+ 
 
 function Hero() {
   return (
@@ -132,6 +156,31 @@ function Hero() {
           >
             Take a tour
           </Button>
+
+ 
+function Hero(){
+  return(
+    <section style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between",backgroundColor:"#f5ffff",padding:"50px 100px"}}>
+      <div className="hero-left">
+        <h1>Your Health,Your <span style={{color:"#38B2AC"}}>Control</span> </h1>
+        <p>Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.</p>
+        <span style={{display:"flex",gap:"10px",marginTop:"30px"}}>
+ dashboardupdate
+ {/* feature/Profile-page
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button> */}
+
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Get started</Button>
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Take a tour</Button>
+ {/* main */}
+
+ 
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
+
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button>
+
+
+
         </span>
       </div>
       <div className="hero-image">

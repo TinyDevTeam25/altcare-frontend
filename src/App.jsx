@@ -3,6 +3,14 @@ import { Routes, Route } from "react-router-dom";
 
 // COMBINED IMPORTS from both branches
 import LandingPage from "./LandingPage.jsx";
+ feature/Victor/appointment-details-page
+import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
+// This is the one we want to view
+
+
+
+//  dashboardupdate
+ main
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";

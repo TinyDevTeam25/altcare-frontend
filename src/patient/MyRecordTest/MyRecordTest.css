@@ -21,9 +21,11 @@
 
 .results-header {
   display: flex;
+  flex-wrap: wrap;
+  font-weight: 500;
   align-items: center;
   text-align: center;;
-  gap: 0.5rem;
+  gap: 0.9rem;
   margin-bottom: 20px;
 }
 .resultss-container {

@@ -1,0 +1,46 @@
+/* ================================= */
+/* --      SHARED FOOTER          -- */
+/* ================================= */
+
+.main-footer-container {
+  width: 100%;
+  /* Use 100% to be responsive inside the body containers */
+  height: 84px;
+  background-color: #171717;
+  padding: 30px 100px;
+  box-sizing: border-box;
+  margin-top: auto;
+  /* This is key to push the footer to the bottom */
+}
+
+.footer-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+  /* A standard gap between links */
+}
+
+.footer-links a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+  text-decoration: none;
+}

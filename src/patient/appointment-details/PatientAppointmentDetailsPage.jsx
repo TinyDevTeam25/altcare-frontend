@@ -1,11 +1,13 @@
 import React from "react";
-import PatientHeader from "./PatientHeader.jsx";
+import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
 import PatientPageHeader from "./PatientPageHeader.jsx";
 import AppointmentInfo from "./AppointmentInfo.jsx";
 import ClinicalInterpretation from "./ClinicalInterpretation.jsx";
 import RelatedDocuments from "./RelatedDocuments.jsx";
-import Footer from "../../components/Footer.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
 import "./AppointmentDetailsPage.css";
+import "../../components/headfoot/PatientHeader.css";
+import "../../components/headfoot/Footer.css";
 
 function PatientAppointmentDetailsPage() {
   return (

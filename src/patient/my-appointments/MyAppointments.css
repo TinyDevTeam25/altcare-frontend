@@ -1,0 +1,292 @@
+/* ======================================= */
+/* == STYLES FOR MY APPOINTMENTS PAGE == */
+/* ======================================= */
+
+.appointments-header-card {
+  width: 100%;
+  padding: 20px 40px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.appointments-header-card .page-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: #121212;
+  margin: 0;
+}
+
+.appointments-header-card .page-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #555;
+  margin: 0;
+}
+
+.button-schedule {
+  width: 400px;
+  height: 50px;
+  background-color: #008080;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.button-schedule img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ======================================= */
+/* == UPCOMING APPOINTMENTS TABLE == */
+/* ======================================= */
+
+.appointments-table-card {
+  width: 100%;
+  padding: 20px 40px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-sizing: border-box;
+
+}
+
+.appointments-table-card+.appointments-table-card {
+  margin-top: 50px;
+}
+
+.appointments-table-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.appointments-table-card .card-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.appointments-table-card .card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: #121212;
+  margin: 0;
+}
+
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Poppins', sans-serif;
+}
+
+.appointments-table th,
+.appointments-table td {
+  text-align: left;
+  padding: 16px 8px;
+  border-bottom: 1px solid #E5E7EB;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+  color: #121212;
+}
+
+.appointments-table th {
+  font-weight: 500;
+  font-size: 16px;
+  color: #121212;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.status-badge.upcoming {
+  display: inline-flex;
+  padding: 3px 12px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #CAD4FF;
+  color: #0000FF;
+}
+
+.action-links {
+  display: flex;
+  gap: 20px;
+}
+
+.action-links a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.link-reschedule {
+  color: #1567FF;
+}
+
+.link-cancel {
+  color: #FF0000;
+}
+
+.card-footer-note {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.card-footer-note p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* ======================================= */
+/* == PAST APPOINTMENTS TABLE == */
+/* ======================================= */
+
+.appointments-table-card .card-icon.past {}
+
+.status-badge.past {
+  padding: 3px 12px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-flex;
+}
+
+.status-badge.past.completed {
+  background-color: #C0F7E0;
+  color: #02663C;
+}
+
+.status-badge.past.cancelled {
+  background-color: #EAF1EE;
+  color: #797C7B;
+}
+
+.link-view {
+  color: #1567FF;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.card-footer-link-pro {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.card-footer-link-pro a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #38B2AC;
+}
+
+.card-footer-link-pro img {
+  width: 24px;
+  height: 24px;
+}
+
+.appointment-link {
+  color: #008080;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.appointment-link:hover {
+  text-decoration: underline;
+  /* Underline on hover for better UX */
+}
+
+/* ======================================= */
+/* == RESPONSIVE DESIGN FOR THIS PAGE   == */
+/* ======================================= */
+
+/* For Tablets and smaller laptops */
+@media (max-width: 1200px) {}
+
+/* For Mobile Phones */
+@media (max-width: 768px) {
+  .appointments-header-card {
+    padding: 20px;
+  }
+
+  .button-schedule {
+    width: 100%;
+    /* Make button full-width */
+  }
+
+  .appointments-table-card {
+    padding: 20px;
+  }
+
+  /* This is the key for making the table responsive */
+  .appointments-table thead {
+    display: none;
+    /* Hide the table headers */
+  }
+
+  .appointments-table,
+  .appointments-table tbody,
+  .appointments-table tr,
+  .appointments-table td {
+    display: block;
+    /* Make table rows and cells stack */
+    width: 100%;
+  }
+
+  .appointments-table tr {
+    margin-bottom: 20px;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .appointments-table td {
+    border: none;
+    text-align: right;
+    /* Align cell content to the right */
+    position: relative;
+    padding-left: 50%;
+    /* Create space for the label */
+  }
+
+  .appointments-table td:before {
+    /* Use the 'data-label' to create labels for each cell */
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    text-align: left;
+    font-weight: 600;
+    /* Make labels bold */
+    color: #374151;
+  }
+}

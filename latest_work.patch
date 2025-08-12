@@ -1,0 +1,239 @@
+diff --git a/src/components/Footer.jsx b/src/components/Footer.jsx
+deleted file mode 100644
+index c13a68b..0000000
+--- a/src/components/Footer.jsx
++++ /dev/null
+@@ -1,21 +0,0 @@
+-import React from "react";
+-import { Link } from "react-router-dom";
+-
+-function Footer() {
+-  return (
+-    <footer className="main-footer-container">
+-      <div className="footer-content">
+-        <div className="footer-copyright">
+-          © 2025 AltCare Pro. All rights reserved.
+-        </div>
+-        <nav className="footer-links">
+-          <Link to="/privacy">Privacy Policy</Link>
+-          <Link to="/terms">Terms of Service</Link>
+-          <Link to="/faq">FAQ</Link>
+-        </nav>
+-      </div>
+-    </footer>
+-  );
+-}
+-
+-export default Footer;
+diff --git a/src/patient/appointment-details/AppointmentDetailsPage.css b/src/patient/appointment-details/AppointmentDetailsPage.css
+index ffbc64a..3e4f748 100644
+--- a/src/patient/appointment-details/AppointmentDetailsPage.css
++++ b/src/patient/appointment-details/AppointmentDetailsPage.css
+@@ -20,94 +20,8 @@
+   flex-grow: 1;
+ }
+ 
+-/* --- Patient Header (Corrected) --- */
+-.patient-header {
+-  width: 100%;
+-  height: 90px;
+-  background-color: #FFFFFF;
+-  padding: 20px 100px;
+-  box-sizing: border-box;
+-  display: flex;
+-  align-items: center;
+-  border-bottom: 1px solid #EAEAEA;
+-}
+-
+-.header-content-patient {
+-  width: 100%;
+-  display: flex;
+-  justify-content: space-between;
+-  align-items: center;
+-}
+-
+-.logo-container-patient img {
+-  width: 50px;
+-  height: 50px;
+-  display: block;
+-}
+-
+-.patient-nav {
+-  display: flex;
+-  align-items: center;
+-  gap: 32px;
+-}
+-
+-.patient-nav a {
+-  font-family: 'Poppins', sans-serif;
+-  font-size: 16px;
+-  line-height: 24px;
+-  text-decoration: none;
+-  font-weight: 400;
+-  color: #121212;
+-}
+-
+-.patient-nav a.active {
+-  color: #008080CC;
+-  font-weight: 500;
+-}
+-
+-.patient-user-actions {
+-  display: flex;
+-  align-items: center;
+-  gap: 20px;
+-}
+-
+-.user-profile-patient {
+-  display: flex;
+-  align-items: center;
+-  gap: 10px;
+-}
+-
+-.user-profile-patient .avatar {
+-  width: 40px;
+-  height: 40px;
+-  border-radius: 50%;
+-  object-fit: cover;
+-}
+-
+-.user-profile-patient .user-name {
+-  font-family: 'Poppins', sans-serif;
+-  font-weight: 500;
+-  color: #008080CC;
+-}
+-
+-.patient-logout-button {
+-  display: flex;
+-  align-items: center;
+-  justify-content: center;
+-  height: 50px;
+-  padding: 10px 20px;
+-  box-sizing: border-box;
+-  background-color: #DD0004;
+-  color: #FFFFFF;
+-  font-family: 'Poppins', sans-serif;
+-  font-weight: 600;
+-  font-size: 16px;
+-  text-decoration: none;
+-  border-radius: 30px;
+-}
+-
+ 
+-/* --- Page Header Card (Corrected) --- */
++/* --- Page Header Card --- */
+ .patient-page-header-card {
+   width: 100%;
+   padding: 20px 40px;
+diff --git a/src/patient/appointment-details/PatientAppointmentDetailsPage.jsx b/src/patient/appointment-details/PatientAppointmentDetailsPage.jsx
+index 54566bc..f8dca0f 100644
+--- a/src/patient/appointment-details/PatientAppointmentDetailsPage.jsx
++++ b/src/patient/appointment-details/PatientAppointmentDetailsPage.jsx
+@@ -1,11 +1,13 @@
+ import React from "react";
+-import PatientHeader from "./PatientHeader.jsx";
++import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
+ import PatientPageHeader from "./PatientPageHeader.jsx";
+ import AppointmentInfo from "./AppointmentInfo.jsx";
+ import ClinicalInterpretation from "./ClinicalInterpretation.jsx";
+ import RelatedDocuments from "./RelatedDocuments.jsx";
+-import Footer from "../../components/Footer.jsx";
++import Footer from "../../components/headfoot/Footer.jsx";
+ import "./AppointmentDetailsPage.css";
++import "../../components/headfoot/PatientHeader.css";
++import "../../components/headfoot/Footer.css";
+ 
+ function PatientAppointmentDetailsPage() {
+   return (
+diff --git a/src/patient/appointment-details/PatientHeader.jsx b/src/patient/appointment-details/PatientHeader.jsx
+deleted file mode 100644
+index e922c18..0000000
+--- a/src/patient/appointment-details/PatientHeader.jsx
++++ /dev/null
+@@ -1,60 +0,0 @@
+-import React from "react";
+-import { Link } from "react-router-dom";
+-import logo from "../../assets/logo.png";
+-import userAvatar from "../../assets/jane-doe-avatar.png";
+-
+-// The component now accepts a prop called 'activePage'
+-function PatientHeader({ activePage }) {
+-  return (
+-    <header className="patient-header">
+-      <div className="header-content-patient">
+-        <div className="logo-container-patient">
+-          <Link to="/">
+-            <img src={logo} alt="AltCare Logo" />
+-          </Link>
+-        </div>
+-        <nav className="patient-nav">
+-          {/* We now check the activePage prop to decide which link is active */}
+-          <Link to="#" className={activePage === "dashboard" ? "active" : ""}>
+-            Dashboard
+-          </Link>
+-          <Link to="#" className={activePage === "records" ? "active" : ""}>
+-            My Records
+-          </Link>
+-          <Link
+-            to="/patient/appointment-details"
+-            className={activePage === "appointments" ? "active" : ""}
+-          >
+-            Appointments
+-          </Link>
+-          <Link
+-            to="/patient/messages"
+-            className={activePage === "messages" ? "active" : ""}
+-          >
+-            Messages
+-          </Link>
+-          <Link to="#" className={activePage === "profile" ? "active" : ""}>
+-            Profile
+-          </Link>
+-        </nav>
+-        <div className="patient-user-actions">
+-          <div className="user-profile-patient">
+-            <img src={userAvatar} alt="Patient Avatar" className="avatar" />
+-            <span className="user-name">Jane, DOE</span>
+-          </div>
+-          <Link to="/logout" className="patient-logout-button">
+-            Logout
+-          </Link>
+-        </div>
+-        {/* You may want to add the hamburger menu here for consistency */}
+-        <div className="hamburger-menu">
+-          <div className="bar"></div>
+-          <div className="bar"></div>
+-          <div className="bar"></div>
+-        </div>
+-      </div>
+-    </header>
+-  );
+-}
+-
+-export default PatientHeader;
+diff --git a/src/patient/messaging/SecureMessagesPage.jsx b/src/patient/messaging/SecureMessagesPage.jsx
+index 2b9a5d4..d9fd97d 100644
+--- a/src/patient/messaging/SecureMessagesPage.jsx
++++ b/src/patient/messaging/SecureMessagesPage.jsx
+@@ -1,6 +1,6 @@
+ import React from "react";
+-import PatientHeader from "../appointment-details/PatientHeader.jsx";
+-import Footer from "../../components/Footer.jsx";
++import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
++import Footer from "../../components/headfoot/Footer.jsx";
+ import MessagesHeader from "./MessagesHeader.jsx";
+ import MessageList from "./MessageList.jsx";
+ import "./SecureMessages.css";
+diff --git a/src/professional/appointment-details/AppointmentDetailsPage.jsx b/src/professional/appointment-details/AppointmentDetailsPage.jsx
+index 3cdb391..61f71b5 100644
+--- a/src/professional/appointment-details/AppointmentDetailsPage.jsx
++++ b/src/professional/appointment-details/AppointmentDetailsPage.jsx
+@@ -4,7 +4,7 @@ import AppointmentPageHeader from "./AppointmentPageHeader.jsx";
+ import AppointmentOverview from "./AppointmentOverview.jsx";
+ import PatientSnapshot from "./PatientSnapshot.jsx";
+ import AppointmentNotes from "./AppointmentNotes.jsx";
+-import Footer from "../../components/Footer.jsx";
++import Footer from "../../components/headfoot/Footer.jsx";
+ import "./AppointmentDetailsPage.css";
+ 
+ function AppointmentDetailsPage() {

@@ -43,17 +43,23 @@ function Nav({ showLinks = true, showButton = true, links = [], buttonText = "Si
         ))}
       </ul>)}
 
-{showButton && (
-  <div style={{ display: "flex", gap: "20px" }}>
-    <P style={{ color: "#008080", lineHeight: "24px" }}>{pText}</P>
-    <Button style={{ borderRadius: "30px", backgroundColor: "#008080", color: "#fff", outline: "none", border: "none", padding: "10px 20px", fontWeight: "600", cursor: "pointer" }}>
-      {buttonText}
-    </Button>
-  </div>
-)}
+
+
+
+      {showButton&&(<div style={{display:"flex", gap:"20px"}}>
+      
+       <P style={{color:"#008080",lineHeight:"24px",cursor:"pointer"}}>{pText}</P>
+
+        <Button style={{borderRadius:"30px",backgroundColor:"#008080",color:"#fff",outline:"none",border:"none",padding:"10px 20px",fontWeight:"600",cursor:"pointer"}}>
+        
+          {buttonText}
+        </Button>
+      </div>)} 
+
     </nav>
   )
 }
+
 function P({children,style}){
   return(
     <span style={style}>
@@ -78,6 +84,7 @@ function Hero(){
         <h1>Your Health,Your <span style={{color:"#38B2AC"}}>Control</span> </h1>
         <p>Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.</p>
         <span style={{display:"flex",gap:"10px",marginTop:"30px"}}>
+ dashboardupdate
  {/* feature/Profile-page
           <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
           <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button> */}
@@ -85,6 +92,13 @@ function Hero(){
           <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Get started</Button>
           <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px",cursor:"pointer"}}>Take a tour</Button>
  {/* main */}
+=======
+ 
+          <Button style={{color:"white",backgroundColor:"#008080",border:"none",padding:"10px 40px",borderRadius:"30px"}}>Get started</Button>
+
+          <Button style={{border:"1px solid #319999",color:"#008080",backgroundColor:"#f5ffff",padding:"10px 20px",borderRadius:"30px"}}>Take a tour</Button>
+
+
         </span>
       </div>
       <div className="hero-image">
@@ -145,7 +159,7 @@ function HealthCard({img,title,description}){
 function WhatUsersSay(){
   return(
     <section className="testimonial-section">
-      <div>
+      <div className="tes-head">
         <h1 className="head-text">What Users say</h1>
         <article className="testimonial">
           <p>“Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis!”</p>

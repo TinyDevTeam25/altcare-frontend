@@ -14,8 +14,8 @@ export default function RecordTabs({ activeTab }) {
           key={tab}
           className={`pb-1 border-b-2 ${
             activeTab === tab
-              ? 'border-cyan-500 text-cyan-600 font-semibold'
-              : 'border-transparent hover:text-cyan-500'
+              ? 'border-[#38B2AC] text-[#38B2AC] font-semibold'
+              : 'border-transparent hover:text-[#38B2AC]'
           }`}
         >
           {tab}

@@ -12,9 +12,9 @@ import Icon5 from '../../assets/book (4).png'
 export default function HealthRecords() {
   return (
     <div className="min-h-screen flex flex-col">
-      <PatientHeader />
+      <PatientHeader activePage="records" />
 
-      <main className="flex-grow px-4 md:px-12 py-2 max-w-5xl mx-auto">
+      <main className="flex-grow px-4 md:px-12 py-2 max-w-5xl mx-auto mt-10 mb-20">
         <section className="bg-white p-4 rounded-lg shadow-sm">
           <h1 className="text-xl md:text-2xl font-semibold mb-2">
             My Health Records

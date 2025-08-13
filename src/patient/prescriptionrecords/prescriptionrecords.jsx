@@ -3,14 +3,14 @@ import Footer from '../../components/headfoot/Footer'
 import PatientHeader from '../../components/headfoot/PatientHeader'
 import PrescriptionTable from './prescriptiontable'
 
-import PrescriptionIcon from "../../assets/task-square.png"
+import PrescriptionIcon from '../../assets/task-square.png'
 
 export default function PrescriptionRecords() {
   return (
     <div className="min-h-screen flex flex-col">
-      <PatientHeader />
+      <PatientHeader activePage="records"/>
 
-      <main className="flex-grow px-4 md:px-12 py-8 max-w-5xl mx-auto">
+      <main className="flex-grow px-4 md:px-12 py-8 max-w-5xl mx-auto mb-50">
         <section className="bg-white p-4 rounded-lg shadow-sm">
           <h1 className="text-xl md:text-2xl font-semibold mb-2">
             My Health Records
@@ -40,7 +40,7 @@ export default function PrescriptionRecords() {
           <div className="mt-4">
             <a
               href="#"
-              className="text-cyan-600 font-medium inline-flex items-center gap-1 hover:underline"
+              className="text-[#38B2AC] font-medium inline-flex items-center gap-1 hover:underline"
             >
               View All Prescriptions
               <span className="text-xl">→</span>
@@ -48,7 +48,6 @@ export default function PrescriptionRecords() {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   )

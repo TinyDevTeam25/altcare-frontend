@@ -40,7 +40,8 @@
 }
 
 .patient-nav-desktop a.active {
-  color: #008080CC;
+  color: #38B2AC;
+  border-bottom: 2px solid #38B2AC;
   font-weight: 500;
 }
 

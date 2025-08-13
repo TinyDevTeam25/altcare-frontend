@@ -1,22 +1,17 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 // COMBINED IMPORTS from both branches
-import LandingPage from "./LandingPage.jsx";
- feature/Victor/appointment-details-page
-import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
-// This is the one we want to view
+import LandingPage from './LandingPage.jsx'
 
-
-
-//  dashboardupdate
- main
-import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
-import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
-import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
-import PatientDashboardPage from "./patient/patientdashboard/Dashboard.jsx";
-import MyAppointmentsPage from "./patient/my-appointments/MyAppointmentsPage.jsx";
-import MyRecordTest from "./patient/MyRecordTest/MyRecordTest.jsx";
+import ProfessionalAppointmentDetailsPage from './professional/appointment-details/AppointmentDetailsPage.jsx'
+import PatientAppointmentDetailsPage from './patient/appointment-details/PatientAppointmentDetailsPage.jsx'
+import SecureMessagesPage from './patient/messaging/SecureMessagesPage.jsx'
+import PatientDashboardPage from './patient/patientdashboard/Dashboard.jsx'
+import MyAppointmentsPage from './patient/my-appointments/MyAppointmentsPage.jsx'
+import MyRecordTest from './patient/MyRecordTest/MyRecordTest.jsx'
+import HealthRecords from './patient/healthrecords/healthrecords.jsx'
+import PrescriptionRecords from './patient/precriptionrecords/prescriptionrecords.jsx'
 
 function App() {
   return (
@@ -44,8 +39,17 @@ function App() {
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+
+      {/* -- HEALTH RECORDS ROUTE */}
+
+      <Route path="/patient/healthrecords" element={<HealthRecords />} />
+
+      <Route
+        path="/patient/prescriptionrecords"
+        element={<PrescriptionRecords />}
+      />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -3,10 +3,16 @@ import "./MyRecordTest.css";
 import Nav2 from '../../components/PeterComponents/Nav2/Nav2';
 import Footer2 from '../../components/PeterComponents/Footer2/Footer2';
 import Card2 from '../../components/PeterComponents/Card2/Card2';
-import { Link } from 'react-router';
+import { Link } from "react-router";
 import Card3 from "../../components/PeterComponents/Card3/card3"
 import Document from "../../assets/document-text .png"
+import book from "../../assets/book.png"
+import Recordheader from '../../components/PeterComponents/Recordheader/Recordheader';
+
 function MyRecordTest() {
+  // Alt text for the book image in the Medical History Highlights section
+  const bookAltText = "Open book icon representing medical history highlights section";
+
   return (
     <>
       <Nav2 />
@@ -15,26 +21,8 @@ function MyRecordTest() {
           Headline="My Health Records"
           Textline="Access your comprehensive medical history, test results, and prescriptions."
         />
-
-        <section className="ls">
-          <ul>
-            <li>
-              <Link to="">All records</Link>
-            </li>
-            <li>
-              <Link to="">Test Result</Link>
-            </li>
-            <li>
-              <Link to="">Prescription</Link>
-            </li>
-            <li>
-              <Link to="">Medical History</Link>
-            </li>
-            <li>
-              <Link to="">Immunization</Link>
-            </li>
-          </ul>
-        </section>
+<Recordheader/>
+        
 
         <div className="resultss-container">
           <Card3
@@ -91,6 +79,38 @@ function MyRecordTest() {
             vw="View All prescriptions"
             arrow="→"
           />
+        </div>
+
+        <div className="containerRecord">
+          <div className="Recordcontainer">
+            <div className="Record-header">
+              <img src={book} alt={bookAltText} />
+              <p>Medical History Highlights</p>
+            </div>
+
+            <ul className="Record-list">
+              <li className="Record-item">
+                <button className="dot green"></button>
+                Diagnosed with Type 2 Diabetes (2020)
+              </li>
+              <li className="Record-item">
+                <button className="dot red"></button>
+                Appendectomy surgery (2018)
+              </li>
+              <li className="Record-item">
+                <button className="dot blue"></button>
+                Allergy to Penicillin (Severe)
+              </li>
+              <li className="Record-item">
+                <button className="dot brown"></button>
+                Annual Physicals completed regularly
+              </li>
+            </ul>
+
+            <Link to="/Activitylog" className="view-History">
+              View Full Medical History &rarr;
+            </Link>
+          </div>
         </div>
       </main>
 

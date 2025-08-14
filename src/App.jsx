@@ -9,12 +9,11 @@ import PatientAppointmentDetailsPage from "./patient/appointment-details/Patient
 
 
 //  dashboardupdate
- main
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import PatientDashboard from"./patient/patientdashboard/Dashboard.jsx";
 import MyRecordTest from "./patient/MyRecordTest/MyRecordTest.jsx";
-
+import Recordheader from "./patient/TestResult/result.jsx";
 
 function App() {
   return (
@@ -33,6 +32,8 @@ function App() {
 {/* This is the route for  My record test record */}
 <Route
         path="/patient/MyRecordTest/MyRecordTest" element={<MyRecordTest />} />
+
+   <Route path="/patient/TestResult/result" element={<Recordheader />} />  
       
       {/* This is the route for the professional page */}
       <Route

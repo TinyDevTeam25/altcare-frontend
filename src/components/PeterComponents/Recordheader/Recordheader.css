@@ -1,0 +1,19 @@
+.ls ul {
+  gap: 5px;
+  margin: 50px 200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  font-family: var(--primary-font);
+  font-size: 13px;
+}
+.ls ul li a {
+  color: #000;
+}
+
+.title-record {
+  color: #38b2ac;
+  border-bottom: 1px solid #38b2ac;
+}

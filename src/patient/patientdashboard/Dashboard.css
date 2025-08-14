@@ -1,5 +1,5 @@
-.dashboard {
-  min-height: 170vh;
+.result-dashboard {
+  /* min-height: 100vh; */
   max-width: 85%;
   /* background-color: #fff; */
   margin: 60px auto;

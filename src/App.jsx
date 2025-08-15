@@ -12,6 +12,7 @@ import MyAppointmentsPage from './patient/my-appointments/MyAppointmentsPage.jsx
 import MyRecordTest from './patient/MyRecordTest/MyRecordTest.jsx'
 import HealthRecords from './patient/healthrecords/healthrecords.jsx'
 import PrescriptionRecords from './patient/prescriptionrecords/prescriptionrecords.jsx'
+import ActivityLog from './patient/activitylog/ActivityLog.jsx'
 
 function App() {
   return (
@@ -48,6 +49,9 @@ function App() {
         path="/patient/prescriptionrecords"
         element={<PrescriptionRecords />}
       />
+
+      {/* Patient - activity route */}
+      <Route path="/patient/activitylog" element={<ActivityLog />} />
     </Routes>
   )
 

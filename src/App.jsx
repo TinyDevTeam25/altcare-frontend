@@ -25,6 +25,7 @@ import MyRecordTest from './patient/MyRecordTest/MyRecordTest.jsx'
 import HealthRecords from './patient/healthrecords/healthrecords.jsx'
 
 import PrescriptionRecords from './patient/prescriptionrecords/prescriptionrecords.jsx'
+import ActivityLog from './patient/activitylog/ActivityLog.jsx'
 
 import Recordheader from "./patient/TestResult/result.jsx"; 
 
@@ -72,6 +73,9 @@ function App() {
         path="/patient/prescriptionrecords"
         element={<PrescriptionRecords />}
       />
+
+      {/* Patient - activity route */}
+      <Route path="/patient/activitylog" element={<ActivityLog />} />
     </Routes>
   )
 

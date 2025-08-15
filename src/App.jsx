@@ -1,55 +1,82 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-
-// Import all of your pages
-import LandingPage from "./LandingPage.jsx";
-import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
-// This is the one we want to view
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 
 
-//  dashboardupdate
-import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
-import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
-import PatientDashboard from"./patient/patientdashboard/Dashboard.jsx";
-import MyRecordTest from "./patient/MyRecordTest/MyRecordTest.jsx";
-import Recordheader from "./patient/TestResult/result.jsx";
+
+
+
+
+// COMBINED IMPORTS from both branches
+import LandingPage from './LandingPage.jsx'
+
+import ProfessionalAppointmentDetailsPage from './professional/appointment-details/AppointmentDetailsPage.jsx'
+
+import PatientAppointmentDetailsPage from './patient/appointment-details/PatientAppointmentDetailsPage.jsx'
+
+import SecureMessagesPage from './patient/messaging/SecureMessagesPage.jsx'
+
+import PatientDashboardPage from './patient/patientdashboard/Dashboard.jsx'
+
+import MyAppointmentsPage from './patient/my-appointments/MyAppointmentsPage.jsx'
+
+import MyRecordTest from './patient/MyRecordTest/MyRecordTest.jsx'
+
+import HealthRecords from './patient/healthrecords/healthrecords.jsx'
+
+import PrescriptionRecords from './patient/prescriptionrecords/prescriptionrecords.jsx'
+
+import Recordheader from "./patient/TestResult/result.jsx"; 
 
 function App() {
   return (
     <Routes>
+      
+
+     
+
+      {/* --- CORE PUBLIC ROUTE --- */}
       <Route path="/" element={<LandingPage />} />
-
-      <Route
-        path="/patient/appointment-details/PatientAppointmentDetailsPage"
-        element={<PatientAppointmentDetailsPage />}
-      />
-      {/* This is the route for Patient dashboard */}
-      <Route
-        path="/patient/patientdashboard/Dashboard"
-        element={<PatientDashboard />}
-      />
-{/* This is the route for  My record test record */}
-<Route
-        path="/patient/MyRecordTest/MyRecordTest" element={<MyRecordTest />} />
-
-   <Route path="/patient/TestResult/result" element={<Recordheader />} />  
       
       {/* This is the route for the professional page */}
       <Route
         path="/professional/appointment-details/AppointmentDetailsPage"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+
+      {/* --- PATIENT ROUTES --- */}
+      <Route path="/patient/appointments" element={<MyAppointmentsPage />} />
+
+      <Route path="/patient/TestResult/result" element={<Recordheader />} />  
+
       <Route
         path="/patient/appointment-details"
         element={<PatientAppointmentDetailsPage />}
-      />
+      /> 
+      
+      <Route path="/patient/messages" element={<SecureMessagesPage />} />
+
+      <Route path="/patient/dashboard" element={<PatientDashboardPage />} />
+
       <Route
-        path="/patient/messaging/SecureMessagesPage"
-        element={<SecureMessagesPage />}
+        path="/patient/records/test-results" // Using a cleaner URL is a good practice
+        element={<MyRecordTest />}
+      />
+
+     
+
+      <Route path="/patient/healthrecords" element={<HealthRecords />}/>
+      
+
+      <Route
+        path="/patient/prescriptionrecords"
+        element={<PrescriptionRecords />}
       />
     </Routes>
-  );
+  )
+
+
+
 }
 
-export default App;
+export default App

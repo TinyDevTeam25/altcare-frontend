@@ -11,7 +11,7 @@ function MyAppointmentsPage() {
     <div className="patient-page-body">
       {" "}
       {/* Using the consistent body class */}
-      <PatientHeader activePage="appointments" />
+      <PatientHeader />
       <main className="main-content-area">
         <AppointmentsHeaderCard />
         <UpcomingAppointments />

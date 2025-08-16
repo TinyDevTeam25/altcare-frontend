@@ -41,10 +41,7 @@ function App() {
         element={<PrescriptionRecords />}
       />
       <Route path="/patient/activity-log" element={<ActivityLog />} />
-      <Route
-        path="/patient/records/test-result-header"
-        element={<Recordheader />}
-      />
+      <Route path="/patient/records" element={<Recordheader />} />
       <Route path="/patient/profile" element={<ProfilePage />} />
 
       {/* --- PROFESSIONAL ROUTE --- */}

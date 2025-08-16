@@ -15,7 +15,7 @@ function Dashboard() {
           as it was part of your teammate's original code. This is a change 
           they can make later. */}
       <body>
-        <PatientHeader activePage="dashboard" />
+        <PatientHeader />
         <main className="dashboard">
           <Top />
           <Menu />

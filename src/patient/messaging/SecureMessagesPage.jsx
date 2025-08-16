@@ -8,8 +8,7 @@ import "./SecureMessages.css";
 function SecureMessagesPage() {
   return (
     <div className="patient-page-body">
-      {/* Pass the correct activePage prop */}
-      <PatientHeader activePage="messages" />
+      <PatientHeader />
       <main className="main-content-area">
         <MessagesHeader />
         <MessageList />

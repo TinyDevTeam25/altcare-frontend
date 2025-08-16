@@ -1,49 +1,37 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Use both Link and useLocation
 import logo from "../../assets/logo.png";
 import userAvatar from "../../assets/jane-doe-avatar.png";
 import walletIcon from "../../assets/wallet-icon.png";
 import "./PatientHeader.css";
 
-function PatientHeader({ activePage }) {
+// Define the navigation links as a single, clean data source
+const patientNavLinks = [
+  { path: "/patient/dashboard", label: "Dashboard" },
+  { path: "/patient/records", label: "My Records" },
+  { path: "/patient/appointments", label: "Appointments" },
+  { path: "/patient/messages", label: "Messages" },
+  { path: "/patient/profile", label: "Profile" },
+];
+
+function PatientHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // We define the links once and reuse them for both desktop and mobile
-  const navLinks = (
-    <>
-      <Link
-        to="/patient/dashboard"
-        className={activePage === "dashboard" ? "active" : ""}
-      >
-        Dashboard
-      </Link>
-      <Link
-        to="/patient/records/test-result-header"
-        className={activePage === "records" ? "active" : ""}
-      >
-        My Records
-      </Link>
-      <Link
-        to="/patient/appointments"
-        className={activePage === "appointments" ? "active" : ""}
-      >
-        Appointments
-      </Link>
-      <Link
-        to="/patient/messages"
-        className={activePage === "messages" ? "active" : ""}
-      >
-        Messages
-      </Link>
-      <Link
-        to="/patient/profile"
-        className={activePage === "profile" ? "active" : ""}
-      >
-        Profile
-      </Link>
-    </>
-  );
+  // Use the useLocation hook to get the current URL path automatically
+  const location = useLocation();
+
+  // Create the list of links by mapping over the data array
+  const navLinks = patientNavLinks.map((link) => (
+    <Link
+      key={link.path}
+      to={link.path}
+      // The 'active' class is now set automatically by comparing paths
+      className={location.pathname === link.path ? "active" : ""}
+    >
+      {link.label}
+    </Link>
+  ));
 
   return (
     <header className={`patient-header ${isMenuOpen ? "menu-open" : ""}`}>

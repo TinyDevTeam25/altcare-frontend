@@ -1,18 +1,17 @@
-import React from 'react';
-import ArrowRightIcon from '../assets/Line-arrow-right.svg';
-import AccountSettingsIcon from '../assets/candle-2.svg';
-
+import React from "react";
+import ArrowRightIcon from "../../assets/Line-arrow-right.svg";
+import AccountSettingsIcon from "../../assets/candle-2.svg";
 
 const AccountSettingsSection = () => {
   return (
     <section className="profile-section">
       <h2 className="section-heading">
         <AccountSettingsIcon className="section-icon settings" />
-
-
         Account Settings
       </h2>
-      <p className="account-settings-description">Manage your password, email preferences, and notification settings.</p>
+      <p className="account-settings-description">
+        Manage your password, email preferences, and notification settings.
+      </p>
       <div className="account-settings-links">
         <a href="#" className="account-settings-link">
           <span>Change Password</span>

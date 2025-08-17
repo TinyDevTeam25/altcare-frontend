@@ -12,12 +12,22 @@ import ActivityLog from "./patient/activitylog/ActivityLog.jsx";
 import Recordheader from "./patient/TestResult/result.jsx"; // Note: component names should be PascalCase
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
+import AboutPage from "./patient/JOY/About.jsx";
+import SignIn from "./patient/JOY/SignIn.jsx";
+import SignUp from "./patient/JOY/SignUp.jsx";
+import FeaturesPage from "./patient/JOY/Features.jsx";
+import ContactPage from "./patient/JOY/Contact.jsx";
 
 function App() {
   return (
     <Routes>
       {/* --- CORE PUBLIC ROUTE --- */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/features" element={<FeaturesPage />} />
+      <Route path="/contact" element={<ContactPage/>} />
+      <Route path="/SignIn" element={<SignIn/>}/>
+      <Route path="/SignUp" element={<SignUp/>}/>
 
       {/* --- PATIENT ROUTES (Main Pages) --- */}
       <Route path="/patient/appointments" element={<MyAppointmentsPage />} />

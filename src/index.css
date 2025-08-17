@@ -59,12 +59,14 @@ main .nav {
   line-height: 24px;
 }
 
-.Hero {
+.hero-section-landing {
   display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 120px;
-  background-color:  var(--background-color);
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  flex-wrap: wrap; 
+  column-gap: 300px;
+  background-color:  var(--background-color); 
 }
 
 .hero-left {
@@ -154,11 +156,13 @@ main .nav {
 .tes-head {
   display: flex;
   flex-direction: column;
+  align-items: center;
   row-gap: 50px;
 }
 
 .testimonial {
-  font-size: 24px;
+  width: 70%;
+  font-size: 24px; 
   border-radius: 20px;
   padding: 50px;
   border-left: 3px solid #38b2ac;
@@ -179,6 +183,14 @@ figure {
 figcaption {
   text-align: left;
 }
+
+figcaption p:first-child{
+  font-weight: 500;
+}
+figcaption p:last-child{
+  font-weight: 400;
+}
+
 
 .health-control {
   height: auto;

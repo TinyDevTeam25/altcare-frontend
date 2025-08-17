@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import Logo from "./assets/logo.png";
 import HeroImage from "./assets/Group 2124.png";
 import "./index.css";
 import folder from "./assets/folder-2.png";
@@ -9,13 +8,17 @@ import message from "./assets/messages.png";
 import timer from "./assets/timer-start.png";
 import user from "./assets/jane-doe-avatar.png";
 import Footer from "./components/headfoot/Footer.jsx";
+import Nav from "./components/Nav1/Nav.jsx";
+import { Button } from "./components/Nav1/Nav.jsx";
+
 
 const mainLinks = [
   { label: "Home", href: "#" },
-  { label: "About", href: "#about" },
-  { label: "Features", href: "#features" },
-  { label: "Contact Us", href: "#contact" },
-];
+  { label: "About", href: "/about" },
+  { label: "Features", href: "/features" },
+  { label: "Contact Us", href: "/contact" },
+
+ ];
 
 export default function LandingPage() {
   return (
@@ -30,46 +33,24 @@ export default function LandingPage() {
   );
 }
 
-function Nav({ showLinks = true, showButton = true, links = [], buttonText = "Sign Up", pText = "Professionals" }) {
-  return (
-    <nav className="nav">
-      <img src={Logo} alt="logo" />
-      {showLinks && (
-        <ul className="nav-link">
-          {links.map((link, index) => (
-            <li key={index}>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
-      )}
 
-      {showButton && (
-        <div style={{ display: "flex", gap: "20px" }}>
-          <P style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}>{pText}</P>
-          <Button style={{ borderRadius: "30px", backgroundColor: "#008080", color: "#fff", outline: "none", border: "none", padding: "10px 20px", fontWeight: "600", cursor: "pointer" }}>
-            {buttonText}
-          </Button>
-        </div>
-      )}
-    </nav>
-  );
-}
-
-function P({ children, style }) {
-  return <span style={style}>{children}</span>;
-}
-
-function Button({ children, style }) {
-  return <button style={style}>{children}</button>;
-}
 
 function Hero() {
+  const words=["Control","Access","Management","Power","Toolkit"]
+  const[currentordIndex,setCurrentWordIndex]=useState(0)
+
+  useEffect(function(){
+    const interval=setInterval(()=>{
+      setCurrentWordIndex((prevIndex)=> prevIndex===words.length-1?0:prevIndex+1)
+    },2000)
+    return()=>clearInterval(interval)
+  },[words.length])
+
   return (
     <section className="hero-section-landing">
       <div className="hero-left">
         <h1>
-          Your Health,Your <span style={{ color: "#38B2AC" }}>Control</span>
+          Your Health,Your <span style={{ color: "#38B2AC"}}>{words[currentordIndex]}</span>
         </h1>
         <p>
           Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.
@@ -122,7 +103,7 @@ function WhatUsersSay() {
           <figure>
             <img src={user} alt="user profile" />
             <figcaption>
-              <h3>Jane Doe</h3>
+              <p>Jane Doe</p>
               <p>This app made managing my health so much easier. Highly recommended!</p>
             </figcaption>
           </figure>

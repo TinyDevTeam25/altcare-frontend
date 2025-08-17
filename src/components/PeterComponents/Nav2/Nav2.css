@@ -10,7 +10,7 @@
   gap: 4px;
 }
 .nav ul {
-gap: 25px;
+  gap: 25px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -26,32 +26,33 @@ gap: 25px;
   color: #008080;
   transition-duration: 1s;
 }
-.prof{
+.prof {
   display: flex;
   align-items: center;
   gap: 7px;
   cursor: pointer;
 }
-.profile{
+.profile {
   display: flex;
   align-items: center;
-  gap:40px;}
-
+  gap: 40px;
+}
 
 .nav div a {
-    font-family: var(--primary-font);
+  font-family: var(--primary-font);
 }
 
 .nav div .Jane {
-  color: #00AC84;
+  color: #00ac84;
   font-family: var(--primary-font);
 }
 
-.wallet{display: flex;
- 
+.wallet {
+  display: flex;
+
   align-items: center;
   gap: 10px;
   font-family: var(--primary-font);
-  color: #00AC84;
+  color: #00ac84;
   cursor: pointer;
 }

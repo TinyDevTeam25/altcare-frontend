@@ -8,7 +8,7 @@ function dashboard() {
   return (
     <>
       <body>
-        <Nav2 />
+        
         <main className="dashboard">
          <Top/>
          <Menu />

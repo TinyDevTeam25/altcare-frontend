@@ -15,7 +15,7 @@ function MyRecordTest() {
 
   return (
     <>
-      <Nav2 />
+      
       <main className="dashboard">
         <Card2
           Headline="My Health Records"

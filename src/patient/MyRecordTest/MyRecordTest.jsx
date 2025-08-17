@@ -5,7 +5,7 @@ import Footer2 from '../../components/PeterComponents/Footer2/Footer2';
 import Card2 from '../../components/PeterComponents/Card2/Card2';
 import { Link } from "react-router";
 import Card3 from "../../components/PeterComponents/Card3/card3"
-import Document from "../../assets/document-text .png"
+import Document from "../../assets/document-text.png"
 import book from "../../assets/book.png"
 import Recordheader from '../../components/PeterComponents/Recordheader/Recordheader';
 

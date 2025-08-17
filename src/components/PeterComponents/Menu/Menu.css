@@ -1,4 +1,4 @@
-.Menu {
+/* .Menu {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -33,12 +33,12 @@
 .pill {
   float: right;
   /* background: #CDE6FF; */
-  padding: 10px 10px;
-  border-radius: 20px;
+  /* padding: 10px 10px; */
+  /* border-radius: 20px; */
   /* color: #0000FF; */
-  font-size: 10px;
-  margin-top: -15px;
-}
+  /* font-size: 10px; */
+  /* margin-top: -15px; */
+/* } */
 /* 
 .test{ display: inline-block;
 float: right;
@@ -68,7 +68,7 @@ float: right;
   font-size: 10px;
  margin-top: -29px;
 } */
-.appoint {
+/* .appoint {
   display: inline-block;
   margin-top: 15px;
   font-size: 14px;
@@ -99,6 +99,6 @@ float: right;
 }
 .fl p{
   max-width: 260px;
-}
+} */
 
-p.paragraph{max-width: 120px;}
+/* p.paragraph{max-width: 120px;}  */

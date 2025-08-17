@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router";
 import logo from "../../../assets/logo.png";
 import JaneDoe from "../../../assets/jane-doe-avatar.png";
 import Wallet from "../../../assets/wallet.png";
-function Nav2({  setshowProfileCard }) {
+function Nav2({  setshowProfileCard, setshowWalletCard }) {
   let navLinks = [
     { path: "/patient/patientdashboard/Dashboard", name: "Dashboard" },
     { path: "/patient/MyRecordTest/MyRecordTest", name: "My Records" },
@@ -35,16 +35,14 @@ function Nav2({  setshowProfileCard }) {
         ))}
       </ul>
       <section className="profile">
-        <div className="prof" onClick={()=> setshowProfileCard(true)}>
+        <div className="prof" onClick={() => setshowProfileCard(true)}>
           <img
             src={JaneDoe}
             alt="Jane Doe smiling in a professional headshot with a neutral background"
           />
-          <div className="Jane">
-            Jane, DOE
-          </div>
+          <div className="Jane">Jane, DOE</div>
         </div>
-        <div className="wallet">
+        <div className="wallet" onClick={() => setshowWalletCard(true)}>
           <img src={Wallet} alt="" />
           <p> 100,000 NGN</p>
         </div>

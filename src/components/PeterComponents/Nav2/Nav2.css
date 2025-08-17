@@ -36,19 +36,22 @@ gap: 25px;
   display: flex;
   align-items: center;
   gap:40px;}
+
+
 .nav div a {
     font-family: var(--primary-font);
 }
 
 .nav div .Jane {
-  color: #008080;
+  color: #00AC84;
   font-family: var(--primary-font);
 }
 
 .wallet{display: flex;
-  /* justify-content: center; */
+ 
   align-items: center;
   gap: 10px;
   font-family: var(--primary-font);
   color: #00AC84;
+  cursor: pointer;
 }

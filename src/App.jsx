@@ -14,15 +14,21 @@ import MyRecordTest from "./patient/MyRecordTest/MyRecordTest.jsx";
 import Recordheader from "./patient/TestResult/result.jsx";
 import ProfileCard from "./components/PeterComponents/Profile Card/ProfileCard.jsx";
 import Nav2 from "./components/PeterComponents/Nav2/Nav2.jsx";
+import WalletCard from "./components/PeterComponents/wallet Card/walletCard.jsx";
+
 function App() {
+  let [showWalletCard, setshowWalletCard] = useState(false);
   let [showProfileCard, setshowProfileCard] = useState(false);
   let location = useLocation();
   return (
     <>
       {location.pathname !== "/" && (
-        <Nav2 setshowProfileCard={setshowProfileCard} />
+        <Nav2 setshowProfileCard={setshowProfileCard} setshowWalletCard={setshowWalletCard} />
       )}
       {showProfileCard && <ProfileCard setshowProfileCard={setshowProfileCard} />}
+      {showWalletCard && <WalletCard setshowWalletCard={setshowWalletCard} />}
+      
+      {/* Render the routes */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
 

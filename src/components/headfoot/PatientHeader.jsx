@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // Use both Link and useLocation
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import userAvatar from "../../assets/jane-doe-avatar.png";
-import walletIcon from "../../assets/wallet-icon.png";
+import walletIcon from "../../assets/wallet.png";
 import "./PatientHeader.css";
+import WalletPopover from "./WalletPopover.jsx";
+import ProfilePopover from "./ProfilePopover.jsx";
 
 // Define the navigation links as a single, clean data source
 const patientNavLinks = [
@@ -16,18 +18,39 @@ const patientNavLinks = [
 
 function PatientHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  // Use the useLocation hook to get the current URL path automatically
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const location = useLocation();
 
-  // Create the list of links by mapping over the data array
+  const toggleMenu = () => {
+    setIsWalletOpen(false);
+    setIsProfileOpen(false);
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleWallet = () => {
+    setIsMenuOpen(false);
+    setIsProfileOpen(false);
+    setIsWalletOpen(!isWalletOpen);
+  };
+
+  const toggleProfile = () => {
+    setIsMenuOpen(false);
+    setIsWalletOpen(false);
+    setIsProfileOpen(!isProfileOpen);
+  };
+
   const navLinks = patientNavLinks.map((link) => (
     <Link
       key={link.path}
       to={link.path}
-      // The 'active' class is now set automatically by comparing paths
-      className={location.pathname === link.path ? "active" : ""}
+      className={
+        location.pathname === link.path ||
+        (link.path !== "/patient/dashboard" &&
+          location.pathname.startsWith(link.path))
+          ? "active"
+          : ""
+      }
     >
       {link.label}
     </Link>
@@ -45,16 +68,26 @@ function PatientHeader() {
         <nav className="patient-nav-desktop">{navLinks}</nav>
 
         <div className="patient-user-actions">
-          <div className="user-profile-patient">
+          <div
+            className="user-profile-patient"
+            onClick={toggleProfile}
+            style={{ cursor: "pointer" }}
+          >
             <img src={userAvatar} alt="Patient Avatar" className="avatar" />
             <span className="user-name">Jane, DOE</span>
           </div>
-          <Link to="/" className="patient-logout-button">
-            Logout
-          </Link>
-          <div className="wallet-display">
-            <img src={walletIcon} alt="Wallet" className="wallet-icon" />
-            <span className="wallet-balance">100,000 NGN</span>
+
+          {/* THIS IS THE FIX: The standalone Logout button has been removed */}
+
+          <div className="wallet-container">
+            <div
+              className="wallet-display"
+              onClick={toggleWallet}
+              style={{ cursor: "pointer" }}
+            >
+              <img src={walletIcon} alt="Wallet" className="wallet-icon" />
+              <span className="wallet-balance">100,000 NGN</span>
+            </div>
           </div>
         </div>
 
@@ -66,6 +99,14 @@ function PatientHeader() {
       </div>
 
       <nav className="patient-nav-mobile">{navLinks}</nav>
+
+      {/* RENDER POPOVERS */}
+      {isWalletOpen && (
+        <WalletPopover closePopover={() => setIsWalletOpen(false)} />
+      )}
+      {isProfileOpen && (
+        <ProfilePopover closePopover={() => setIsProfileOpen(false)} />
+      )}
     </header>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import "../MyRecordTest/MyRecordTest.css";
-import PatientHeader from "../../components/headfoot/PatientHeader";
+// import PatientHeader from "../../components/headfoot/PatientHeader";
 import Card2 from "../../components/PeterComponents/Card2/Card2";
 import Card3 from "../../components/PeterComponents/Card3/card3";
 import Document from "../../assets/document-text.png";
@@ -10,8 +10,8 @@ import "./result.css"; // Assuming you have a CSS file for styling
 function result() {
   return (
     <>
-      <PatientHeader activePage="records" />
-      <main className="result-dashboard">
+      {/* <PatientHeader activePage="records" /> */}
+      <main className="dashboard">
         <Card2
           Headline="My Health Records"
           Textline="Access your comprehensive medical history, test results, and prescriptions."

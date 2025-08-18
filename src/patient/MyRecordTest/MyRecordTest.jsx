@@ -21,7 +21,7 @@ function MyRecordTest() {
           Headline="My Health Records"
           Textline="Access your comprehensive medical history, test results, and prescriptions."
         />
-        
+        <Recordheader/>
 
         <div className="resultss-container">
           <Card3

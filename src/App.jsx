@@ -22,7 +22,7 @@ import MyAppointmentsPage from "./patient/my-appointments/MyAppointmentsPage.jsx
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
-
+import TestResult from "./patient/TestResult/result.jsx"
 // Professional Feature Pages
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 
@@ -70,13 +70,21 @@ function App() {
           path="/patient/patientdashboard/Dashboard"
           element={<PatientDashboardPage />}
         />
-<Route path="/patient/MyRecordTest/MyRecordTest" element={<MyRecordTest />} />
+        <Route
+          path="/patient/MyRecordTest/MyRecordTest"
+          element={<MyRecordTest />}
+        />
         <Route path="/patient/appointments" element={<MyAppointmentsPage />} />
         <Route
           path="/patient/appointment-details/PatientAppointmentDetailsPage"
           element={<PatientAppointmentDetailsPage />}
         />
-        <Route path="/patient/messages" element={<SecureMessagesPage />} />
+<Route path="/patient/TestResult/result" element={<TestResult/>}/>
+
+        <Route
+          path="/patient/messaging/SecureMessagesPage"
+          element={<SecureMessagesPage />}
+        />
         <Route path="/patient/profile" element={<ProfilePage />} />
         <Route path="/patient/activity-log" element={<ActivityLog />} />
         {/* Sub-routes for Records */}
@@ -100,7 +108,6 @@ function App() {
           element={<ProfessionalAppointmentDetailsPage />}
         />
       </Routes>
-      
     </>
   );
 }

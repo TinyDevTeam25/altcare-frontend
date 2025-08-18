@@ -47,6 +47,7 @@ button{
 }
 
 .gren-btn{
+  font-size: 14px;
   border: 1px solid #008000;
 background-color: #E0F9E0;
 color: #008000;
@@ -54,6 +55,7 @@ color: #008000;
 
 
 .ash-btn{
+    font-size: 14px;
   margin: 0 auto;
   width: 90%;
 background-color: #E1E0E0;

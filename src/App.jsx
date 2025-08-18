@@ -44,13 +44,18 @@ function App() {
         It shows the Nav2 header on every page EXCEPT the landing page.
       */}
       {location.pathname !== "/" && (
-        <Nav2 setshowProfileCard={setshowProfileCard} setshowWalletCard={setshowWalletCard} />
+        <Nav2
+          setshowProfileCard={setshowProfileCard}
+          setshowWalletCard={setshowWalletCard}
+        />
       )}
 
       {/* Conditionally render the popover cards */}
-      {showProfileCard && <ProfileCard setshowProfileCard={setshowProfileCard} />}
+      {showProfileCard && (
+        <ProfileCard setshowProfileCard={setshowProfileCard} />
+      )}
       {showWalletCard && <WalletCard setshowWalletCard={setshowWalletCard} />}
-      
+
       {/* A single, clean, combined list of all routes */}
       <Routes>
         {/* --- Public Routes --- */}
@@ -60,27 +65,42 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
-
         {/* --- Patient Routes --- */}
-        <Route path="/patient/dashboard" element={<PatientDashboardPage />} />
+        <Route
+          path="/patient/patientdashboard/Dashboard"
+          element={<PatientDashboardPage />}
+        />
+<Route path="/patient/MyRecordTest/MyRecordTest" element={<MyRecordTest />} />
         <Route path="/patient/appointments" element={<MyAppointmentsPage />} />
-        <Route path="/patient/appointment-details" element={<PatientAppointmentDetailsPage />} />
+        <Route
+          path="/patient/appointment-details/PatientAppointmentDetailsPage"
+          element={<PatientAppointmentDetailsPage />}
+        />
         <Route path="/patient/messages" element={<SecureMessagesPage />} />
         <Route path="/patient/profile" element={<ProfilePage />} />
         <Route path="/patient/activity-log" element={<ActivityLog />} />
-        
         {/* Sub-routes for Records */}
         <Route path="/patient/records" element={<HealthRecords />} />
-        <Route path="/patient/records/prescriptions" element={<PrescriptionRecords />} />
-        <Route path="/patient/records/test-results" element={<MyRecordTest />} />
-        <Route path="/patient/records/result-header" element={<Recordheader />} /> {/* Assuming this is another records page */}
-
+        <Route
+          path="/patient/records/prescriptions"
+          element={<PrescriptionRecords />}
+        />
+        <Route
+          path="/patient/records/test-results"
+          element={<MyRecordTest />}
+        />
+        <Route
+          path="/patient/records/result-header"
+          element={<Recordheader />}
+        />{" "}
+        {/* Assuming this is another records page */}
         {/* --- Professional Route --- */}
         <Route
           path="/professional/appointment-details"
           element={<ProfessionalAppointmentDetailsPage />}
         />
       </Routes>
+      
     </>
   );
 }

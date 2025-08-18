@@ -48,6 +48,7 @@
   width: 20px;
 }
 .profileCard .pcard button{
+
   padding: 10px 5px;
   width: 100%;
   text-align: center;
@@ -65,6 +66,7 @@ button img{
   margin-right: 10px;
 }
 .green-btn{
+    font-size: 14px;
   border: 1px solid #38B2AC;
   transition: all 0.3s ease-in-out;
 }
@@ -72,7 +74,7 @@ button img{
   background: #38b2ac2d;
   
 }
-.red-btn{
+.red-btn{font-size: 14px;
   transition: all 0.3s ease-in-out;
   border: 1px solid #FF1F1F;
   margin-bottom: 40px;

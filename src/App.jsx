@@ -20,10 +20,81 @@ import MyAppointmentsPage from "./patient/my-appointments/MyAppointmentsPage.jsx
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
+
+import TestResult from "./patient/TestResult/result.jsx"
+// Professional Feature Pages
+
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 
 function App() {
   return (
+
+    <>
+      {/* 
+        This is the conditional header logic from the 'dashboardupdate' branch.
+        It shows the Nav2 header on every page EXCEPT the landing page.
+      */}
+      {location.pathname !== "/" && (
+        <Nav2
+          setshowProfileCard={setshowProfileCard}
+          setshowWalletCard={setshowWalletCard}
+        />
+      )}
+
+      {/* Conditionally render the popover cards */}
+      {showProfileCard && (
+        <ProfileCard setshowProfileCard={setshowProfileCard} />
+      )}
+      {showWalletCard && <WalletCard setshowWalletCard={setshowWalletCard} />}
+
+      {/* A single, clean, combined list of all routes */}
+      <Routes>
+        {/* --- Public Routes --- */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        {/* --- Patient Routes --- */}
+        <Route
+          path="/patient/patientdashboard/Dashboard"
+          element={<PatientDashboardPage />}
+        />
+        <Route
+          path="/patient/MyRecordTest/MyRecordTest"
+          element={<MyRecordTest />}
+        />
+        <Route path="/patient/appointments" element={<MyAppointmentsPage />} />
+        <Route
+          path="/patient/appointment-details/PatientAppointmentDetailsPage"
+          element={<PatientAppointmentDetailsPage />}
+        />
+<Route path="/patient/TestResult/result" element={<TestResult/>}/>
+
+        <Route
+          path="/patient/messaging/SecureMessagesPage"
+          element={<SecureMessagesPage />}
+        />
+        <Route path="/patient/profile" element={<ProfilePage />} />
+        <Route path="/patient/activity-log" element={<ActivityLog />} />
+        {/* Sub-routes for Records */}
+        <Route path="/patient/records" element={<HealthRecords />} />
+        <Route
+          path="/patient/records/prescriptions"
+          element={<PrescriptionRecords />}
+        />
+        <Route
+          path="/patient/records/test-results"
+          element={<MyRecordTest />}
+        />
+        <Route
+          path="/patient/records/result-header"
+          element={<Recordheader />}
+        />{" "}
+        {/* Assuming this is another records page */}
+        {/* --- Professional Route --- */}
+
     <Routes>
       {/* --- Public Routes (Have NO Layout) --- */}
       <Route path="/" element={<LandingPage />} />
@@ -38,6 +109,7 @@ function App() {
         {/* These child routes will render inside the layout's <Outlet> */}
         <Route path="dashboard" element={<PatientDashboardPage />} />
         <Route path="appointments" element={<MyAppointmentsPage />} />
+
         <Route
           path="appointment-details"
           element={<PatientAppointmentDetailsPage />}

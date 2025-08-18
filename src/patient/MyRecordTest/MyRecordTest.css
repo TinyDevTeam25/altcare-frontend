@@ -24,7 +24,7 @@
 }
 
 .results-container h2 {
-  font-size: 20px;
+  font-size: 17px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -89,7 +89,7 @@ td {
 
 
 .containerRecord p, .topi {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
 }
 
@@ -97,7 +97,7 @@ td {
 padding: 0;
 margin: 0;}
 
-.Record-item{line-height: 40px;}
+.Record-item{line-height: 40px;font-size: 14px;}
 
 .dot {
   width: 8px;
@@ -130,6 +130,7 @@ margin: 0;}
   text-decoration: none;
 }
 .Record-header{display: flex;
+  width: 100%;
 margin: 0 auto;
 gap:0.9rem;
-padding:15px 5px;}
+padding:15px 0px;}

@@ -4,12 +4,12 @@ import { Link, useLocation } from "react-router";
 import logo from "../../../assets/logo.png";
 import JaneDoe from "../../../assets/jane-doe-avatar.png";
 import Wallet from "../../../assets/wallet.png";
-function Nav2({  setshowProfileCard, setshowWalletCard }) {
+function Nav2({ setshowProfileCard, setshowWalletCard }) {
   let navLinks = [
     { path: "/patient/patientdashboard/Dashboard", name: "Dashboard" },
     { path: "/patient/MyRecordTest/MyRecordTest", name: "My Records" },
-    {path: "/patient/appointment-details",name: "Appointments",},
-    { path: "/messages", name: "messages" },
+    { path: "/patient/appointment-details", name: "Appointments" },
+    { path: "/patient/messaging/SecureMessagesPage", name: "messages" },
     { path: "/profile", name: "profile" },
   ];
   let location = useLocation();

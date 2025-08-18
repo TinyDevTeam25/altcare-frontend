@@ -21,8 +21,7 @@ function MyRecordTest() {
           Headline="My Health Records"
           Textline="Access your comprehensive medical history, test results, and prescriptions."
         />
-<Recordheader/>
-        
+        <Recordheader/>
 
         <div className="resultss-container">
           <Card3
@@ -90,19 +89,19 @@ function MyRecordTest() {
 
             <ul className="Record-list">
               <li className="Record-item">
-                <button className="dot green"></button>
+                <span className="dot green"></span>
                 Diagnosed with Type 2 Diabetes (2020)
               </li>
               <li className="Record-item">
-                <button className="dot red"></button>
+                <span className="dot red"></span>
                 Appendectomy surgery (2018)
               </li>
               <li className="Record-item">
-                <button className="dot blue"></button>
+                <span className="dot blue"></span>
                 Allergy to Penicillin (Severe)
               </li>
               <li className="Record-item">
-                <button className="dot brown"></button>
+                <span className="dot brown"></span>
                 Annual Physicals completed regularly
               </li>
             </ul>

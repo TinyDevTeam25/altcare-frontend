@@ -8,7 +8,6 @@ import "./SecureMessages.css";
 function SecureMessagesPage() {
   return (
     <div className="patient-page-body">
-      <PatientHeader />
       <main className="main-content-area">
         <MessagesHeader />
         <MessageList />

@@ -41,7 +41,12 @@ function App() {
         It shows the Nav2 header on every page EXCEPT the landing page.
       */}
 
-      {location.pathname !== "/" && (
+      {location.pathname === "/" ||
+      location.pathname === "/signin" ||
+      location.pathname === "/signup" ||
+      location.pathname === "/patient/appointment-details" ? (
+        ""
+      ) : (
         <Nav2
           setshowProfileCard={setshowProfileCard}
           setshowWalletCard={setshowWalletCard}

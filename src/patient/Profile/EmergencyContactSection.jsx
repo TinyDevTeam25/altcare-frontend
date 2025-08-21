@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import EmergencyContactIcon from "../../assets/user-octagon.svg";
+// This import gives you the URL to the icon
+import emergencyContactIconUrl from "../../assets/user-octagon.svg";
 
 const EmergencyContactSection = () => {
   const [emergencyContact, setEmergencyContact] = useState({
@@ -25,7 +26,12 @@ const EmergencyContactSection = () => {
   return (
     <section className="profile-section">
       <h2 className="section-heading">
-        <EmergencyContactIcon className="section-icon emergency" />
+        {/* THIS IS THE FIX: Use a standard <img> tag */}
+        <img
+          src={emergencyContactIconUrl}
+          alt="Emergency Contact"
+          className="section-icon emergency"
+        />
         Emergency Contact
       </h2>
       <form onSubmit={handleSubmit}>
@@ -58,7 +64,7 @@ const EmergencyContactSection = () => {
               className="form-input"
             />
           </div>
-          {/* Relationship (takes full width on medium screens and up) */}
+          {/* Relationship */}
           <div className="form-field-full-width">
             <label htmlFor="ecRelationship" className="form-label">
               Relationship

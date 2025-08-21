@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import PatientLayout from "./layouts/PatientLayout.jsx";
 
 // Import all the pages
+import ProfileCard from "./components/PeterComponents/Profile Card/ProfileCard.jsx";
+import WalletCard from "./components/PeterComponents/wallet Card/walletCard.jsx";
+import Nav2 from "./components/PeterComponents/Nav2/Nav2.jsx";
 import LandingPage from "./LandingPage.jsx";
 import AboutPage from "./patient/JOY/About.jsx";
 import SignIn from "./patient/JOY/SignIn.jsx";
@@ -20,20 +23,24 @@ import MyAppointmentsPage from "./patient/my-appointments/MyAppointmentsPage.jsx
 import PatientAppointmentDetailsPage from "./patient/appointment-details/PatientAppointmentDetailsPage.jsx";
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
-
-import TestResult from "./patient/TestResult/result.jsx"
+import { useState } from "react";
+import TestResult from "./patient/TestResult/result.jsx";
+import { useLocation } from "react-router-dom";
 // Professional Feature Pages
 
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 
 function App() {
+  let location = useLocation();
+  const [showProfileCard, setshowProfileCard] = useState(false);
+  const [showWalletCard, setshowWalletCard] = useState(false);
   return (
-
     <>
       {/* 
         This is the conditional header logic from the 'dashboardupdate' branch.
         It shows the Nav2 header on every page EXCEPT the landing page.
       */}
+
       {location.pathname !== "/" && (
         <Nav2
           setshowProfileCard={setshowProfileCard}
@@ -46,10 +53,7 @@ function App() {
         <ProfileCard setshowProfileCard={setshowProfileCard} />
       )}
       {showWalletCard && <WalletCard setshowWalletCard={setshowWalletCard} />}
-
-      {/* A single, clean, combined list of all routes */}
       <Routes>
-        {/* --- Public Routes --- */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/features" element={<FeaturesPage />} />
@@ -70,7 +74,7 @@ function App() {
           path="/patient/appointment-details/PatientAppointmentDetailsPage"
           element={<PatientAppointmentDetailsPage />}
         />
-<Route path="/patient/TestResult/result" element={<TestResult/>}/>
+        <Route path="/patient/TestResult/result" element={<TestResult />} />
 
         <Route
           path="/patient/messaging/SecureMessagesPage"
@@ -91,44 +95,50 @@ function App() {
         <Route
           path="/patient/records/result-header"
           element={<Recordheader />}
-        />{" "}
+        />
         {/* Assuming this is another records page */}
         {/* --- Professional Route --- */}
-
-    <Routes>
-      {/* --- Public Routes (Have NO Layout) --- */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/features" element={<FeaturesPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/SignIn" element={<SignIn />} />
-      <Route path="/SignUp" element={<SignUp />} />
-
-      {/* --- Patient Routes (ALL use the PatientLayout) --- */}
-      <Route path="/patient" element={<PatientLayout />}>
-        {/* These child routes will render inside the layout's <Outlet> */}
-        <Route path="dashboard" element={<PatientDashboardPage />} />
-        <Route path="appointments" element={<MyAppointmentsPage />} />
-
         <Route
-          path="appointment-details"
-          element={<PatientAppointmentDetailsPage />}
+          path="/professional/appointment-details"
+          element={<ProfessionalAppointmentDetailsPage />}
         />
-        <Route path="messages" element={<SecureMessagesPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="activity-log" element={<ActivityLog />} />
-        <Route path="records" element={<HealthRecords />} />
-        <Route path="records/prescriptions" element={<PrescriptionRecords />} />
-        <Route path="records/test-results" element={<MyRecordTest />} />
-        <Route path="records/result-header" element={<Recordheader />} />
-      </Route>
+        {/* --- Public Routes (Have NO Layout) --- */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
 
-      {/* --- Professional Route (Does NOT use the PatientLayout) --- */}
-      <Route
-        path="/professional/appointment-details"
-        element={<ProfessionalAppointmentDetailsPage />}
-      />
-    </Routes>
+        {/* --- Patient Routes (ALL use the PatientLayout) --- */}
+        <Route path="/patient" element={<PatientLayout />}>
+          {/* These child routes will render inside the layout's <Outlet> */}
+          <Route path="dashboard" element={<PatientDashboardPage />} />
+          <Route path="appointments" element={<MyAppointmentsPage />} />
+
+          <Route
+            path="appointment-details"
+            element={<PatientAppointmentDetailsPage />}
+          />
+          <Route path="messages" element={<SecureMessagesPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="records" element={<HealthRecords />} />
+          <Route
+            path="records/prescriptions"
+            element={<PrescriptionRecords />}
+          />
+          <Route path="records/test-results" element={<MyRecordTest />} />
+          <Route path="records/result-header" element={<Recordheader />} />
+        </Route>
+
+        {/* --- Professional Route (Does NOT use the PatientLayout) --- */}
+        <Route
+          path="/professional/appointment-details"
+          element={<ProfessionalAppointmentDetailsPage />}
+        />
+      </Routes>
+    </>
   );
 }
 

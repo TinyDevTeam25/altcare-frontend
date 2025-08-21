@@ -9,11 +9,17 @@
   font-family: var(--primary-font);
   font-size: 13px;
 }
-.ls ul li a {
-  color: #000;
+.ls ul li.under {
+  border-bottom: 1px solid #38b2ac;
+  color: #38b2ac;
+
 }
 
-.title-record {
+.ls ul li {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ls ul li:hover{
+  
   color: #38b2ac;
-  border-bottom: 1px solid #38b2ac;
 }

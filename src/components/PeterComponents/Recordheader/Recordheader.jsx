@@ -1,30 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import "./Recordheader.css"
-function Recordheader() {
+import "./Recordheader.css";
+function Recordheader({activeLink, setActiveLink}) {
+  let recordLinks = [
+    "All records",
+    "Test Result",
+    "Prescription",
+    "Medical History",
+    "Immunization",
+  ];
+ 
+
   return (
     <section className="ls">
       <ul>
-        <li>
-          <Link
-            to="/patient/MyRecordTest/MyRecordTest"
-            className="title-record"
+        {recordLinks.map((link, index) => (
+          <li
+            key={index}
+            className={activeLink === link ? "under" : ""}
+            onClick={() => setActiveLink(link)}
           >
-            All records
-          </Link>
-        </li>
-        <li>
-          <Link to="/patient/TestResult/result">Test Result</Link>
-        </li>
-        <li>
-          <Link to="">Prescription</Link>
-        </li>
-        <li>
-          <Link to="">Medical History</Link>
-        </li>
-        <li>
-          <Link to="">Immunization</Link>
-        </li>
+            {link}
+          </li>
+        ))}
       </ul>
     </section>
   );

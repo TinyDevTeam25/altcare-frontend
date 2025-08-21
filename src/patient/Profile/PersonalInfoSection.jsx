@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PersonalInfoIcon from "../../assets/user.svg";
+import React, { useState } from "react"; // THIS IS THE FIX
+import personalInfoIconUrl from "../../assets/user.svg";
 
 const PersonalInfoSection = () => {
   const [personalInfo, setPersonalInfo] = useState({
@@ -27,7 +27,11 @@ const PersonalInfoSection = () => {
   return (
     <section className="profile-section">
       <h2 className="section-heading">
-        <PersonalInfoIcon className="section-icon personal" />
+        <img
+          src={personalInfoIconUrl}
+          alt="Personal Info"
+          className="section-icon personal"
+        />
         Personal Information
       </h2>
       <form onSubmit={handleSubmit}>
@@ -52,7 +56,7 @@ const PersonalInfoSection = () => {
               Date of Birth
             </label>
             <input
-              type="text"
+              type="date"
               id="dateOfBirth"
               name="dateOfBirth"
               value={personalInfo.dateOfBirth}
@@ -83,7 +87,7 @@ const PersonalInfoSection = () => {
               Contact Number
             </label>
             <input
-              type="text"
+              type="cell"
               id="contactNumber"
               name="contactNumber"
               value={personalInfo.contactNumber}
@@ -98,7 +102,7 @@ const PersonalInfoSection = () => {
             Address
           </label>
           <input
-            type="text"
+            type="adress"
             id="address"
             name="address"
             value={personalInfo.address}

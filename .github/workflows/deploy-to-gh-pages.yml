@@ -1,46 +1,45 @@
 name: Deploy to Github Pages
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 permissions:
-    pages: write
-    id-token: write
+  pages: write
+  id-token: write
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Check out repo
-              uses: actions/checkout@v4
-            - name: Setup Node JS
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20
-                cache: npm
-            
-            - name: Install dependencies
-              run: npm ci
-            
-            - name: Build Project
-              run: npm run build
-            
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                path: ./dist
-              
-    deploy:
-        needs: build-and-deploy
-        runs-on: ubuntu-latest
-        environment:
-            name: github-pages
-            url: ${{steps.deployment.output.pages_url}}
-        steps:
-            - name: Deploy to Github pages
-              id: deploy
-              uses: actions/deploy-pages@v4
-            
-        
-        
-            
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Setup Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{steps.deploy.outputs.page_url}}
+    steps:
+      - name: Deploy to Github pages
+        id: deploy
+        uses: actions/deploy-pages@v4

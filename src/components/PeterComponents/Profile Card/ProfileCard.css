@@ -80,7 +80,7 @@ button img{
   margin-bottom: 40px;
 }
 .red-btn:hover img{
-  content: url('../../../assets/logout1.png');
+  content: url('../../../assets/Logout1.png');
 }
 .profileCard .pcard button.red-btn:hover {
   background: #FF1F1F;

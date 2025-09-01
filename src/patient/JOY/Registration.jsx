@@ -1,41 +1,34 @@
-import Footer from "../Profile/Footer";
-import Nav from "../../components/Nav1/Nav";
-import "./sign.css"
+import Footer from "../Profile/Footer.jsx";
+import Nav from "../../components/Nav1/Nav.jsx";
+import "./sign.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../utils/axiosConfig";
 
-
-
-
-
-export default function Registration(){
-
-return(
- <div>
-   <Nav
-         linkTo="/"
-          buttonText="Back Home"
-          pText="Need Help?"
-          buttonStyle={{
+export default function Registration() {
+  return (
+    <div>
+      <Nav
+        linkTo="/"
+        buttonText="Back Home"
+        pText="Need Help?"
+        buttonStyle={{
           borderRadius: "30px",
-          backgroundColor: "#fff", 
-         color: "#008080",       
-         border: "1px solid #008080",
-         padding: "10px 20px",
-         fontWeight: "600",
-         cursor: "pointer",
-   
-     }}
-         />
-         <Reg/>
-   <Footer />
- </div>
-)
+          backgroundColor: "#fff",
+          color: "#008080",
+          border: "1px solid #008080",
+          padding: "10px 20px",
+          fontWeight: "600",
+          cursor: "pointer",
+        }}
+      />
+      <Reg />
+      <Footer />
+    </div>
+  );
 }
 
-
-function Reg(){
+function Reg() {
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
@@ -51,8 +44,8 @@ function Reg(){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  setError("");
-  setSuccess("")
+    setError("");
+    setSuccess("");
     if (
       !fullName ||
       !dob ||
@@ -63,41 +56,39 @@ function Reg(){
       !emergencyName ||
       !emergencyContact ||
       !emergencyRelationship
-    )  {
-    alert("⚠️ Please fill in all fields.");
-    return;
-  }
-   
+    ) {
+      alert("⚠️ Please fill in all fields.");
+      return;
+    }
 
     const ninRegex = /^\d{11}$/;
-   if (!ninRegex.test(nin)) {
-  setError("NIN must be exactly 11 digits.");
-  return;
-  }
+    if (!ninRegex.test(nin)) {
+      setError("NIN must be exactly 11 digits.");
+      return;
+    }
 
-  const phoneRegex = /^\d{11}$/;
- if (!phoneRegex.test(contact)) {
-  setError("Phone number must be exactly 11 digits.");
-  return;
- }
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(contact)) {
+      setError("Phone number must be exactly 11 digits.");
+      return;
+    }
 
- if (!phoneRegex.test(emergencyContact)) {
-  setError("Emergency contact must be exactly 11 digits.");
-  return;
- }
+    if (!phoneRegex.test(emergencyContact)) {
+      setError("Emergency contact must be exactly 11 digits.");
+      return;
+    }
 
- setError ("")
-    
+    setError("");
 
     const signupData = JSON.parse(localStorage.getItem("signupData"));
-    localStorage.getItem("signupData")
+    localStorage.getItem("signupData");
     if (!signupData) {
       setError("Please Sign Up first.");
       return;
     }
     const formattedDob = new Date(dob).toISOString();
 
-     const payload = {
+    const payload = {
       email: signupData.email,
       password: signupData.password,
       full_name: fullName,
@@ -110,8 +101,7 @@ function Reg(){
       emergency_phone: emergencyContact,
       emergency_relationship: emergencyRelationship,
     };
-    
-    
+
     try {
       const completeData = { ...signupData, ...payload };
       const res = await apiClient.post("/auth/register-patient", completeData);
@@ -133,18 +123,22 @@ function Reg(){
       }
       const { status, data } = err.response;
       const details =
-        typeof data === "string" ? data : data?.message || data?.error || JSON.stringify(data);
+        typeof data === "string"
+          ? data
+          : data?.message || data?.error || JSON.stringify(data);
       alert(`❌ Error ${status}: ${details}`);
     }
   };
-   
+
   //
-  
+
   return (
     <div className="all">
       <form className="formm" onSubmit={handleSubmit}>
         <article>
-          {success && <p style={{ color: "green", fontSize: "14px" }}>{success}</p>}
+          {success && (
+            <p style={{ color: "green", fontSize: "14px" }}>{success}</p>
+          )}
           <h1>Alt Care</h1>
           <h2>Complete Your Profile</h2>
           <p>
@@ -265,4 +259,3 @@ function Reg(){
     </div>
   );
 }
-

@@ -4,11 +4,11 @@ import React from "react";
 // DELETED: import Footer from './Footer';
 
 // These are the components that are UNIQUE to the profile page, which is correct.
-import PersonalInfoSection from "./PersonalInfoSection";
-import EmergencyContactSection from "./EmergencyContactSection";
-import AccountSettingsSection from "./AccountSettingsSection";
+import PersonalInfoSection from "./PersonalInfoSection.jsx";
+import EmergencyContactSection from "./EmergencyContactSection.jsx";
+import AccountSettingsSection from "./AccountSettingsSection.jsx";
 
-import "./profile.css";
+import "./Profile.css";
 
 const ProfilePage = () => {
   // It now ONLY returns the <main> content for the profile page.

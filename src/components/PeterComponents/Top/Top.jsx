@@ -1,10 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
-import "./Top.css"
-import Card2 from "../Card2/Card2";
+import React, { useState, useEffect } from "react";
+import "./Top.css";
+import Card2 from "../Card2/Card2.jsx";
 function Top() {
-
- const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [welcomeText, setWelcomeText] = useState("Welcome");
 
   useEffect(() => {
@@ -15,11 +13,10 @@ function Top() {
     }
   }, []);
   return (
-  
-      <Card2
-        Headline={`${welcomeText}, ${name || "User"}!`}
+    <Card2
+      Headline={`${welcomeText}, ${name || "User"}!`}
       Textline="Your personalized health overview at a glance"
-      />
+    />
   );
 }
 export default Top;

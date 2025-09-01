@@ -1,6 +1,6 @@
 import React from "react";
 import "./MyRecordTest.css";
-import Nav2 from "../../components/PeterComponents/Nav2/Nav2";
+import Nav2 from "../../components/PeterComponents/Nav2/Nav2.jsx";
 import Footer2 from "../../components/PeterComponents/Footer2/Footer2.jsx";
 import Card2 from "../../components/PeterComponents/Card2/Card2.jsx";
 import { Link } from "react-router";

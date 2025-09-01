@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router";
 import "./Recordheader.css";
-function Recordheader({activeLink, setActiveLink}) {
+function Recordheader({ activeLink, setActiveLink }) {
   let recordLinks = [
     "All records",
     "Test Result",
@@ -9,7 +9,6 @@ function Recordheader({activeLink, setActiveLink}) {
     "Medical History",
     "Immunization",
   ];
- 
 
   return (
     <section className="ls">

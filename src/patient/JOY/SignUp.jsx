@@ -1,9 +1,9 @@
 // SignUp.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthCard from "./AuthCard";
-import Nav from "../../components/Nav1/Nav";
-import Footer from "../Profile/Footer";
+import AuthCard from "./AuthCard.jsx";
+import Nav from "../../components/Nav1/Nav.jsx";
+import Footer from "../Profile/Footer.jsx";
 import Couple from "../../assets/Couple.png";
 // import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";

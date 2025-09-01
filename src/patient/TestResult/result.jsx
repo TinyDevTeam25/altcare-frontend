@@ -1,11 +1,11 @@
 import React from "react";
 import "../MyRecordTest/MyRecordTest.css";
 // import PatientHeader from "../../components/headfoot/PatientHeader";
-import Card2 from "../../components/PeterComponents/Card2/Card2";
-import Card3 from "../../components/PeterComponents/Card3/card3";
+import Card2 from "../../components/PeterComponents/Card2/Card2.jsx";
+import Card3 from "../../components/PeterComponents/Card3/Card3.jsx";
 import Document from "../../assets/document-text.png";
-import Footer2 from "../../components/PeterComponents/Footer2/Footer2";
-import Recordheader from "../../components/PeterComponents/Recordheader/Recordheader";
+import Footer2 from "../../components/PeterComponents/Footer2/Footer2.jsx";
+import Recordheader from "../../components/PeterComponents/Recordheader/Recordheader.jsx";
 import "./result.css"; // Assuming you have a CSS file for styling
 function result() {
   return (

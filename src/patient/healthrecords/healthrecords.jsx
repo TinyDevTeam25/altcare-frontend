@@ -1,7 +1,7 @@
-import RecordCard from "./recordcard";
-import RecordTabs from "./recordtabs";
-import Footer from "../../components/headfoot/Footer";
-import PatientHeader from "../../components/headfoot/PatientHeader";
+import RecordCard from "./recordcard.jsx";
+import RecordTabs from "./recordtabs.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
+import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
 
 import Icon1 from "../../assets/book.png";
 import Icon2 from "../../assets/book (1).png";

@@ -1,14 +1,14 @@
-import RecordTabs from '../healthrecords/recordtabs'
-import Footer from '../../components/headfoot/Footer'
-import PatientHeader from '../../components/headfoot/PatientHeader'
-import PrescriptionTable from './prescriptiontable'
+import RecordTabs from "../healthrecords/recordtabs.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
+import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
+import PrescriptionTable from "./prescriptiontable.jsx";
 
-import PrescriptionIcon from '../../assets/task-square.png'
+import PrescriptionIcon from "../../assets/task-square.png";
 
 export default function PrescriptionRecords() {
   return (
     <div className="min-h-screen flex flex-col">
-      <PatientHeader activePage="records"/>
+      <PatientHeader activePage="records" />
 
       <main className="flex-grow px-4 md:px-12 py-8 max-w-5xl mx-auto mb-50">
         <section className="bg-white p-4 rounded-lg shadow-sm">
@@ -50,5 +50,5 @@ export default function PrescriptionRecords() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

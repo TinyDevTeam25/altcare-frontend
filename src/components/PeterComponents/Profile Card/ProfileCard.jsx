@@ -24,7 +24,9 @@ const ProfileCard = ({ setshowProfileCard }) => {
           SIgn out of AltCare
         </button>
 
-        <div onClick={() => setshowProfileCard(false)} className="cancel">X</div>
+        <div onClick={() => setshowProfileCard(false)} className="cancel">
+          X
+        </div>
       </div>
     </div>
   );

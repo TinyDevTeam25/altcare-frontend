@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Logo.png";
 import userAvatar from "../../assets/jane-doe-avatar.png";
 import walletIcon from "../../assets/wallet.png";
 import "./PatientHeader.css";

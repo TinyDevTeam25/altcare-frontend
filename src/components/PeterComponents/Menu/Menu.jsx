@@ -4,7 +4,7 @@ import calendar from "../../../assets/calendar2.png";
 import clock from "../../../assets/clock.png";
 import result from "../../../assets/result.png";
 import message from "../../../assets/messages.png";
-import Card from "../../PeterComponents/Card/Card";
+import Card from "../../PeterComponents/Card/Card.jsx";
 function Menu() {
   return (
     <section className="Menu">

@@ -1,5 +1,5 @@
 import React from "react";
-import "./dashboard.css";
+import "./Dashboard.css";
 // We don't need to import Nav2 or PatientHeader here anymore.
 import Top from "../../components/PeterComponents/Top/Top";
 import Menu from "../../components/PeterComponents/Menu/Menu";
@@ -10,8 +10,8 @@ function Dashboard() {
     // The global page layout class can be added here for consistency
     <div className="">
       <main className="dashboard">
-        <Top/>
-        <Menu/>
+        <Top />
+        <Menu />
         <Activity />
       </main>
       <Footer2 />

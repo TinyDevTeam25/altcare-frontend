@@ -2,7 +2,7 @@ import React from "react";
 import "./walletCard.css";
 import Plus from "../../../assets/plus.png";
 import LogOut from "../../../assets/logout.png";
-import Transaction from "../../../assets/transaction.png";
+import Transaction from "../../../assets/Transaction.png";
 const WalletCard = ({ setshowWalletCard }) => {
   return (
     <div className="walletCard" onClick={() => setshowWalletCard(false)}>

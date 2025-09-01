@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import Nav2 from "../components/PeterComponents/Nav2/Nav2.jsx";
 import Footer2 from "../components/PeterComponents/Footer2/Footer2.jsx";
 import ProfileCard from "../components/PeterComponents/Profile Card/ProfileCard.jsx";
-import WalletCard from "../components/PeterComponents/wallet Card/walletCard.jsx";
+import WalletCard from "../components/PeterComponents/walletCard/walletCard.jsx";
 
 function PatientLayout() {
   // This state and logic now lives in ONE place

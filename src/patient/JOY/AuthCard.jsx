@@ -14,6 +14,7 @@ export default function AuthCard({
   footerLinkText,
   footerLinkHref,
   image,
+ 
 }) {
   return (
     <div className="cont">
@@ -41,7 +42,7 @@ export default function AuthCard({
           fontWeight: "600",
           marginTop: "20px",
           cursor: "pointer",
-          }}
+          }}  type="submit"
         >
           {buttonText}
        </button>

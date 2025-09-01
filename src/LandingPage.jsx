@@ -10,6 +10,8 @@ import user from "./assets/jane-doe-avatar.png";
 import Footer from "./components/headfoot/Footer.jsx";
 import Nav from "./components/Nav1/Nav.jsx";
 import { Button } from "./components/Nav1/Nav.jsx";
+// import SignUp from "./patient/JOY/SignUp.jsx";
+
 
 
 const mainLinks = [
@@ -38,6 +40,7 @@ export default function LandingPage() {
 function Hero() {
   const words=["Control","Access","Management","Power","Toolkit"]
   const[currentordIndex,setCurrentWordIndex]=useState(0)
+  
 
   useEffect(function(){
     const interval=setInterval(()=>{
@@ -55,9 +58,12 @@ function Hero() {
         <p>
           Access your medical records, schedule appointments, view prescriptions, connect seamlessly with your healthcare team and track health. All in one place.
         </p>
-        <span style={{ display: "flex", gap: "10px", marginTop: "30px" }}>
-          <Button style={{ color: "white", backgroundColor: "#008080", border: "none", padding: "10px 40px", borderRadius: "30px", cursor: "pointer" }}>Get started</Button>
-          <Button style={{ border: "1px solid #319999", color: "#008080", backgroundColor: "#f5ffff", padding: "10px 20px", borderRadius: "30px", cursor: "pointer" }}>Take a tour</Button>
+        <span style={{ display: "flex",marginTop: "30px",gap: "10px" }}>
+          <Link to="/signup" style={{ flex: 1, textDecoration: "none"}}>
+            <button style={{ color: "white", backgroundColor: "#008080", border: "none", padding: "10px 20px", borderRadius: "30px", cursor: "pointer",width: "100%" }} >Get started</button>
+          </Link>
+
+          <Button style={{ border: "1px solid #319999", color: "#008080", backgroundColor: "#f5ffff", padding: "10px 0px", borderRadius:"30px", cursor: "pointer",flex: 1 }}>Take a tour</Button>
         </span>
       </div>
       <div className="hero-image">

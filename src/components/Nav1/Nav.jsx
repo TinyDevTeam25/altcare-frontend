@@ -38,7 +38,7 @@ function handleAnchorClick(e, href) {
       )}
 
       {showButton && (
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ display: "flex", gap: "20px", alignItems:"center" }}>
           <P style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}>{pText}</P>
          <Link to={linkTo}>
              <Button style={buttonStyle}>

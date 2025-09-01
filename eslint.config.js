@@ -6,7 +6,13 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores([
+    "dist",
+    "*.config.js",
+    "*.config.ts",
+    "vite.config.*",
+    "eslint.config.*",
+  ]),
   {
     files: ["**/*.{js,jsx}"],
     plugins: {

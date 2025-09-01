@@ -1,13 +1,13 @@
 import React from "react";
 import "./MyRecordTest.css";
 import Nav2 from "../../components/PeterComponents/Nav2/Nav2";
-import Footer2 from "../../components/PeterComponents/Footer2/Footer2";
-import Card2 from "../../components/PeterComponents/Card2/Card2";
+import Footer2 from "../../components/PeterComponents/Footer2/Footer2.jsx";
+import Card2 from "../../components/PeterComponents/Card2/Card2.jsx";
 import { Link } from "react-router";
-import Card3 from "../../components/PeterComponents/Card3/card3";
+import Card3 from "../../components/PeterComponents/Card3/Card3.jsx";
 import Document from "../../assets/document-text.png";
 import book from "../../assets/book.png";
-import Recordheader from "../../components/PeterComponents/Recordheader/Recordheader";
+import Recordheader from "../../components/PeterComponents/Recordheader/Recordheader.jsx";
 import { useState } from "react";
 function MyRecordTest() {
   let [activeLink, setActiveLink] = useState("All records");

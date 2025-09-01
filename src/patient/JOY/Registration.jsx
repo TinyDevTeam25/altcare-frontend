@@ -110,7 +110,7 @@ function Reg(){
       emergency_phone: emergencyContact,
       emergency_relationship: emergencyRelationship,
     };
-    console.log({payload});
+    
     
     try {
       const completeData = { ...signupData, ...payload };

@@ -11,7 +11,7 @@ import LandingPage from "./LandingPage.jsx";
 import AboutPage from "./patient/JOY/About.jsx";
 import SignIn from "./patient/JOY/SignIn.jsx";
 import SignUp from "./patient/JOY/SignUp.jsx";
-import Registration from "./patient/JOY/Registration.jsx"
+import Registration from "./patient/JOY/Registration.jsx";
 import FeaturesPage from "./patient/JOY/Features.jsx";
 import ContactPage from "./patient/JOY/Contact.jsx";
 import PatientDashboardPage from "./patient/patientdashboard/Dashboard.jsx";
@@ -45,7 +45,7 @@ function App() {
       {location.pathname === "/" ||
       location.pathname === "/signin" ||
       location.pathname === "/signup" ||
-      location.pathname ==="/registration"||
+      location.pathname === "/registration" ||
       location.pathname === "/patient/appointment-details" ? (
         ""
       ) : (
@@ -67,7 +67,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/registration" element={<Registration/>} />
+        <Route path="/registration" element={<Registration />} />
         {/* --- Patient Routes --- */}
         <Route
           path="/patient/patientdashboard/Dashboard"

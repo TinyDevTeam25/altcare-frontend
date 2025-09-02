@@ -8,9 +8,6 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #EAEAEA;
-  /* ADDED: These two properties are for the mobile menu overlay */
-  position: relative;
-  z-index: 100;
 }
 
 .header-content-patient {
@@ -25,6 +22,7 @@
   height: 50px;
   display: block;
 }
+
 
 .patient-nav-desktop {
   display: flex;
@@ -42,7 +40,8 @@
 }
 
 .patient-nav-desktop a.active {
-  color: #008080CC;
+  color: #38B2AC;
+  border-bottom: 2px solid #38B2AC;
   font-weight: 500;
 }
 
@@ -56,7 +55,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
 }
 
 .user-profile-patient .avatar {
@@ -72,17 +70,33 @@
   color: #008080CC;
 }
 
+.patient-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color: #DD0004;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 30px;
+}
+
 .wallet-display {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
 }
 
 .wallet-icon {
   width: 24px;
   height: 24px;
-  /* filter property for coloring SVG is here if needed */
+
+  filter: invert(48%) sepia(90%) saturate(1001%) hue-rotate(130deg) brightness(97%) contrast(101%);
 }
 
 .wallet-balance {
@@ -93,7 +107,7 @@
   white-space: nowrap;
 }
 
-/* Hamburger menu is hidden on desktop by default */
+/* Hamburger menu should be hidden on desktop by default */
 .hamburger-menu {
   display: none;
 }
@@ -107,14 +121,6 @@
   width: 100%;
   background-color: #FFFFFF;
   border-top: 1px solid #EAEAEA;
-
-  /* ADDED: These properties make it a proper dropdown overlay */
-  position: absolute;
-  top: 90px;
-  /* Position it right below the 90px tall header */
-  left: 0;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
-  /* Adds a subtle shadow */
 }
 
 .patient-nav-mobile a {
@@ -136,12 +142,12 @@
   font-weight: 600;
 }
 
-/* This is a new rule for when the header is open, it should not change its flex-direction */
 .patient-header.menu-open {
-  /* No special styles needed here anymore */
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* The only rule needed is to show the mobile nav when the parent is open */
 .patient-header.menu-open .patient-nav-mobile {
   display: block;
 }
@@ -165,6 +171,7 @@
   .patient-user-actions {
     display: none;
   }
+
 
   .hamburger-menu {
     display: flex;

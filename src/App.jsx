@@ -1,4 +1,3 @@
-//final merge
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PatientLayout from "./layouts/PatientLayout.jsx";

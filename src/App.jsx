@@ -20,7 +20,7 @@ import PatientAppointmentDetailsPage from "./patient/appointment-details/Patient
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
-// You will need to create this page for Immunizations
+//will need to create this page for Immunizations
 // import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
 
 function App() {
@@ -47,7 +47,6 @@ function App() {
         <Route path="profile" element={<ProfilePage />} />
         <Route path="activity-log" element={<ActivityLog />} />
 
-        {/* === CORRECTED & FINAL RECORDS ROUTING === */}
         {/* Main "All Records" page */}
         <Route path="records" element={<MyRecordTest />} />
         {/* Specific page for "Test Results" (can reuse the MyRecordTest component if it's designed to show just that) */}

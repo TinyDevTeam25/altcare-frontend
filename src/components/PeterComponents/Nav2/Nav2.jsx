@@ -1,20 +1,18 @@
 import React from "react";
 import "./Nav2.css";
-import { Link, useLocation } from "react-router-dom"; // Corrected import
+import { Link, useLocation } from "react-router";
 import logo from "../../../assets/Logo.png";
 import JaneDoe from "../../../assets/jane-doe-avatar.png";
 import Wallet from "../../../assets/wallet.png";
-
 function Nav2({ setshowProfileCard, setshowWalletCard }) {
   let navLinks = [
-    { path: "/patient/dashboard", name: "Dashboard" }, // Corrected path
-    { path: "/patient/records", name: "My Records" }, // Corrected path
-    { path: "/patient/appointments", name: "Appointments" }, // Corrected path
-    { path: "/patient/messages", name: "Messages" }, // Corrected path
-    { path: "/patient/profile", name: "Profile" }, // Corrected path
+    { path: "/patient/patientdashboard/Dashboard", name: "Dashboard" },
+    { path: "/patient/MyRecordTest/MyRecordTest", name: "My Records" },
+    { path: "/patient/appointment-details", name: "Appointments" },
+    { path: "/patient/messaging/SecureMessagesPage", name: "messages" },
+    { path: "/profile", name: "profile" },
   ];
   let location = useLocation();
-
   return (
     <nav className="nav">
       <Link to="/">
@@ -26,11 +24,10 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
 
       <ul>
         {navLinks.map(({ path, name }) => (
-          // Added the 'key' prop to the <li> element
-          <li key={path}>
+          <li>
             <Link
               to={path}
-              className={location.pathname.startsWith(path) ? "active" : ""}
+              className={location.pathname === path ? "active" : ""}
             >
               {name}
             </Link>

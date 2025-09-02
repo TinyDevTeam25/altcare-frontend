@@ -1,7 +1,7 @@
 import React from "react";
 import "./Nav2.css";
 import { Link, useLocation } from "react-router-dom"; // Corrected import
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/Logo.png";
 import JaneDoe from "../../../assets/jane-doe-avatar.png";
 import Wallet from "../../../assets/wallet.png";
 

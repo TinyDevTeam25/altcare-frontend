@@ -30,6 +30,8 @@ import { useLocation } from "react-router-dom";
 // Professional Feature Pages
 
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
+//will need to create this page for Immunizations
+// import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
 
 function App() {
   let location = useLocation();
@@ -124,21 +126,18 @@ function App() {
           <Route path="dashboard" element={<PatientDashboardPage />} />
           <Route path="appointments" element={<MyAppointmentsPage />} />
 
-          <Route
-            path="appointment-details"
-            element={<PatientAppointmentDetailsPage />}
-          />
-          <Route path="messages" element={<SecureMessagesPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="activity-log" element={<ActivityLog />} />
-          <Route path="records" element={<HealthRecords />} />
-          <Route
-            path="records/prescriptions"
-            element={<PrescriptionRecords />}
-          />
-          <Route path="records/test-results" element={<MyRecordTest />} />
-          <Route path="records/result-header" element={<Recordheader />} />
-        </Route>
+        {/* Main "All Records" page */}
+        <Route path="records" element={<MyRecordTest />} />
+        {/* Specific page for "Test Results" (can reuse the MyRecordTest component if it's designed to show just that) */}
+        <Route path="records/test-results" element={<MyRecordTest />} />
+        {/* Specific page for "Medical History" */}
+        <Route path="records/history" element={<HealthRecords />} />
+        {/* Specific page for "Prescriptions" */}
+        <Route path="records/prescriptions" element={<PrescriptionRecords />} />
+        {/* A route for the future "Immunizations" page */}
+        {/* <Route path="records/immunizations" element={<ImmunizationRecords />} /> */}
+      </Route>
+
 
         {/* --- Professional Route (Does NOT use the PatientLayout) --- */}
         <Route

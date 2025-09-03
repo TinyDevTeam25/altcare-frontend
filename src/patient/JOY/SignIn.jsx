@@ -126,8 +126,8 @@ function Sign() {
               value={password}
               required
             />
-            <a
-              href="/forgot-password"
+            <Link
+              to="/forgot-password"
               style={{
                 display: "block",
                 marginTop: "5px",
@@ -137,7 +137,7 @@ function Sign() {
               }}
             >
               Forgot your password?
-            </a>
+            </Link>
           </div>
 
           <div className="fieldd">

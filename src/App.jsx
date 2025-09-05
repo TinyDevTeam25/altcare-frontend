@@ -39,9 +39,9 @@ function App() {
       <Route path="/registration" element={<Registration />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       {/* For testing purposes, you can use this route to test ResetPasswordPage without a token */}
-      <Route path="/test-reset-password" element={<ResetPasswordPage />} />
+      {/* <Route path="/test-reset-password" element={<ResetPasswordPage />} /> */}
       {/* uncomment this for production use when backend is done */}
-      {/* <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> */}
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
 
       {/* --- Patient Routes (All use PatientLayout) --- */}
       <Route path="/patient" element={<PatientLayout />}>

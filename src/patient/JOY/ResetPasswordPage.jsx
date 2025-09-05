@@ -15,6 +15,7 @@ function ResetPasswordPage() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
@@ -29,9 +30,10 @@ function ResetPasswordPage() {
     setError("");
     setMessage("");
     try {
+      // Calls the 'verify-otp' endpoint from Postman
       await apiClient.post("/auth/verify-otp", { email, otp });
       setIsOtpVerified(true);
-      setMessage("OTP verified. Please create a new password.");
+      setMessage("OTP Verified. Please enter your new password.");
     } catch (err) {
       setError("The OTP is invalid or has expired. Please request a new one.");
       console.error("Verify OTP Error:", err);
@@ -46,9 +48,10 @@ function ResetPasswordPage() {
       return;
     }
     try {
-      await apiClient.post("/auth/reset-password-otp", {
+      // Using a placeholder for the final endpoint name.
+      // The backend will confirm if it should be POST /auth/reset-password or something else.
+      await apiClient.post("/auth/reset-password", {
         email,
-        otp,
         newPassword: password,
       });
       setMessage(
@@ -56,7 +59,7 @@ function ResetPasswordPage() {
       );
       setTimeout(() => navigate("/signin"), 3000);
     } catch (err) {
-      setError("Failed to reset password. Please try again.");
+      setError("Failed to reset password. Please try the process again.");
       console.error("Reset Password Error:", err);
     }
   };

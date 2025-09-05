@@ -17,7 +17,7 @@ function ForgotPasswordPage() {
 
     try {
       // This is the API call to request the OTP
-      await apiClient.post("/auth/request-otp", { email });
+      await apiClient.post("/auth/request-password-reset", { email });
 
       // On success, navigate to the reset page and pass the email
       navigate("/reset-password", { state: { email: email } });

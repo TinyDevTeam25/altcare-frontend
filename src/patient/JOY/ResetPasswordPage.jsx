@@ -14,7 +14,9 @@ function ResetPasswordPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
+
+  // This state will now hold the token we get from the verify step
+  const [resetToken, setResetToken] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,12 +32,20 @@ function ResetPasswordPage() {
     setError("");
     setMessage("");
     try {
-      // Calls the 'verify-otp' endpoint from Postman
-      await apiClient.post("/auth/verify-otp", { email, otp });
-      setIsOtpVerified(true);
-      setMessage("OTP Verified. Please enter your new password.");
+      // Call the 'verify-otp' endpoint
+      const response = await apiClient.post("/auth/verify-otp", { email, otp });
+
+      // On success, save the token from the response and show the password fields
+      if (response.data && response.data.resetToken) {
+        setResetToken(response.data.resetToken);
+        setMessage("OTP Verified. Please create a new password.");
+      } else {
+        setError(
+          "Verification failed. The response did not include a reset token."
+        );
+      }
     } catch (err) {
-      setError("The OTP is invalid or has expired. Please request a new one.");
+      setError("The OTP is invalid or has expired.");
       console.error("Verify OTP Error:", err);
     }
   };
@@ -48,28 +58,29 @@ function ResetPasswordPage() {
       return;
     }
     try {
-      // Using a placeholder for the final endpoint name.
-      // The backend will confirm if it should be POST /auth/reset-password or something else.
+      // Call the final endpoint with the token we saved in state
       await apiClient.post("/auth/reset-password", {
         email,
         newPassword: password,
+        resetToken: resetToken,
       });
       setMessage(
-        "Your password has been reset successfully! Redirecting to sign in..."
+        "Password has been reset successfully! Redirecting to sign in..."
       );
       setTimeout(() => navigate("/signin"), 3000);
     } catch (err) {
-      setError("Failed to reset password. Please try the process again.");
+      setError("Failed to reset password. Please try again.");
       console.error("Reset Password Error:", err);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isOtpVerified) {
-      handleResetPassword();
-    } else {
+    // If we don't have a token yet, we are in the OTP verification step
+    if (!resetToken) {
       handleVerifyOtp();
+    } else {
+      handleResetPassword();
     }
   };
 
@@ -79,16 +90,17 @@ function ResetPasswordPage() {
       <form onSubmit={handleSubmit}>
         <AuthCard
           image={Singleman}
-          title={isOtpVerified ? "Create New Password" : "Verify Your Identity"}
+          title={!resetToken ? "Verify Your Identity" : "Create New Password"}
           subtitle={
-            isOtpVerified
-              ? "Your new password must be strong."
-              : `An OTP has been sent to ${email}`
+            !resetToken
+              ? `An OTP has been sent to ${email}`
+              : "Your new password must be strong."
           }
-          buttonText={isOtpVerified ? "Reset Password" : "Verify OTP"}
+          buttonText={!resetToken ? "Verify OTP" : "Reset Password"}
         >
           <div className="the-form">
-            {!isOtpVerified && (
+            {/* Show OTP field if we don't have a token yet */}
+            {!resetToken && (
               <div className="field">
                 <label>OTP Code</label>
                 <input
@@ -106,7 +118,9 @@ function ResetPasswordPage() {
                 />
               </div>
             )}
-            {isOtpVerified && (
+
+            {/* Show Password fields AFTER we get a token */}
+            {resetToken && (
               <>
                 <div style={{ marginBottom: "15px", position: "relative" }}>
                   <label>New Password</label>
@@ -153,6 +167,7 @@ function ResetPasswordPage() {
                 </div>
               </>
             )}
+
             {error && (
               <p style={{ color: "red", fontSize: "14px", marginTop: "10px" }}>
                 {error}

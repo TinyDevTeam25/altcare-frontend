@@ -1,14 +1,15 @@
-// import axios from "axios"
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
 import "./sign.css";
 import Singleman from "../../assets/singleman.png";
-import React, { useState } from "react";
 import apiClient from "../../utils/axiosConfig";
-import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 
+// This is the main page component that assembles the page
 function SignIn() {
   return (
     <div>
@@ -26,29 +27,25 @@ function SignIn() {
           cursor: "pointer",
         }}
       />
-      <Sign />
-
+      <SignInForm /> {/* Changed from <Sign /> for clarity */}
       <Footer />
     </div>
   );
 }
-export default SignIn;
 
-function Sign() {
+// This is the inner component that contains the form and its logic
+function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Get the login function from our global context
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Remember me:", remember);
-
-    // Here you can call axios.post('/api/auth/login', { email, password }) later
-
     try {
+      // This is the REAL API call
       const res = await apiClient.post("/auth/login-patient", {
         email,
         password,
@@ -56,24 +53,20 @@ function Sign() {
 
       console.log("Login successful:", res.data);
 
-      const userData = { ...res.data, isNewUser: false };
-      if (remember) {
-        localStorage.setItem("userData", JSON.stringify(userData));
-      } else {
-        sessionStorage.setItem("userData", JSON.stringify(userData));
-      }
-      navigate("/patient/dashboard"); // redirect after successful login
+      // Call the global login function to save the user data
+      login(res.data);
+
+      // Navigate to the dashboard after successful login
+      navigate("/patient/dashboard");
     } catch (err) {
       console.error(err);
       if (err.response) {
-        // Backend returned an error
         alert(
           `❌ Error ${err.response.status}: ${
             err.response.data.message || "Login failed"
           }`
         );
       } else {
-        // Network or other error
         alert(`🌐 Network error: ${err.message}`);
       }
     }
@@ -91,8 +84,6 @@ function Sign() {
         footerLinkText="Sign up for AltCare"
         footerLinkHref="/signup"
       >
-        {/* Form fields go here */}
-
         <div className="the-form">
           <div className="field">
             <label>Email Address</label>
@@ -110,11 +101,10 @@ function Sign() {
               required
             />
           </div>
-
-          <div className="field">
+          <div className="field" style={{ position: "relative" }}>
             <label>Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="******"
               style={{
                 width: "100%",
@@ -126,6 +116,17 @@ function Sign() {
               value={password}
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "40%",
+                cursor: "pointer",
+              }}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
             <Link
               to="/forgot-password"
               style={{
@@ -139,7 +140,6 @@ function Sign() {
               Forgot your password?
             </Link>
           </div>
-
           <div className="fieldd">
             <input
               type="checkbox"
@@ -157,3 +157,5 @@ function Sign() {
     </form>
   );
 }
+
+export default SignIn;

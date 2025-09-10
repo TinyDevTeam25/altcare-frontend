@@ -27,7 +27,7 @@ function SignIn() {
           cursor: "pointer",
         }}
       />
-      <SignInForm /> {/* Changed from <Sign /> for clarity */}
+      <SignInForm />
       <Footer />
     </div>
   );
@@ -45,7 +45,7 @@ function SignInForm() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      // This is the REAL API call
+      // This is REAL API call
       const res = await apiClient.post("/auth/login-patient", {
         email,
         password,

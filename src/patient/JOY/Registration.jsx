@@ -1,10 +1,13 @@
-import Footer from "../Profile/Footer.jsx";
-import Nav from "../../components/Nav1/Nav.jsx";
-import "./sign.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Nav from "../../components/Nav1/Nav.jsx";
+import Footer from "../Profile/Footer.jsx";
 import apiClient from "../../utils/axiosConfig";
+import ConsentModal from "./ConsentModal.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+import "./sign.css";
 
+// Main Page Component
 export default function Registration() {
   return (
     <div>
@@ -28,6 +31,7 @@ export default function Registration() {
   );
 }
 
+// Inner Form Component
 function Reg() {
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
@@ -39,13 +43,14 @@ function Reg() {
   const [emergencyContact, setEmergencyContact] = useState("");
   const [emergencyRelationship, setEmergencyRelationship] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // const [success, setSuccess] = useState("");
+  const [showConsentModal, setShowConsentModal] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
     if (
       !fullName ||
       !dob ||
@@ -60,39 +65,33 @@ function Reg() {
       alert("⚠️ Please fill in all fields.");
       return;
     }
-
     const ninRegex = /^\d{11}$/;
     if (!ninRegex.test(nin)) {
       setError("NIN must be exactly 11 digits.");
       return;
     }
-
     const phoneRegex = /^\d{11}$/;
-    if (!phoneRegex.test(contact)) {
-      setError("Phone number must be exactly 11 digits.");
+    if (!phoneRegex.test(contact) || !phoneRegex.test(emergencyContact)) {
+      setError("Phone numbers must be exactly 11 digits.");
       return;
     }
-
-    if (!phoneRegex.test(emergencyContact)) {
-      setError("Emergency contact must be exactly 11 digits.");
-      return;
-    }
-
     setError("");
+    setShowConsentModal(true);
+  };
 
-    const signupData = JSON.parse(localStorage.getItem("signupData"));
-    localStorage.getItem("signupData");
-    if (!signupData) {
-      setError("Please Sign Up first.");
+  const handleFinalSubmit = async (consentGiven) => {
+    setShowConsentModal(false);
+    const registrationToken = localStorage.getItem("registrationToken");
+    if (!registrationToken) {
+      setError("Security token is missing. Please sign up again.");
+      setTimeout(() => navigate("/signup"), 3000);
       return;
     }
-    const formattedDob = new Date(dob).toISOString();
 
+    // The backend expects snake_case for d_o_b, NIN, etc.
     const payload = {
-      email: signupData.email,
-      password: signupData.password,
       full_name: fullName,
-      d_o_b: formattedDob,
+      d_o_b: dob,
       NIN: nin,
       gender,
       phone: contact,
@@ -100,53 +99,47 @@ function Reg() {
       emergency_name: emergencyName,
       emergency_phone: emergencyContact,
       emergency_relationship: emergencyRelationship,
+      consentGiven: consentGiven,
     };
 
     try {
-      const completeData = { ...signupData, ...payload };
-      const res = await apiClient.post("/auth/register-patient", completeData);
-
-      // Save userData with isNewUser flag
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({ ...res.data, isNewUser: true })
-      );
-
-      localStorage.removeItem("signupData");
-
-      alert(`Welcome ${payload.full_name}!`);
+      const res = await apiClient.post("/patient/register-profile", payload, {
+        headers: { Authorization: `Bearer ${registrationToken}` },
+      });
+      localStorage.removeItem("registrationToken");
+      login(res.data);
+      alert(`Welcome ${payload.full_name}! Your registration is complete.`);
       navigate("/patient/dashboard");
     } catch (err) {
-      if (!err.response) {
-        alert(`Network error: ${err.message}`);
-        return;
+      // ... error handling ...
+      console.error("Registration Error:", err);
+      if (err.response) {
+        const { status, data } = err.response;
+        const errorMessage =
+          data?.message || `An error occurred (Status ${status})`;
+        setError(errorMessage);
+        alert(`❌ Registration Failed: ${errorMessage}`);
+      } else if (err.request) {
+        setError("Network error. Please check your connection and try again.");
+        alert("🌐 Network error. Could not connect to the server.");
+      } else {
+        setError("An unexpected error occurred.");
+        alert("⚠️ An unexpected error occurred.");
       }
-      const { status, data } = err.response;
-      const details =
-        typeof data === "string"
-          ? data
-          : data?.message || data?.error || JSON.stringify(data);
-      alert(`❌ Error ${status}: ${details}`);
     }
   };
-
-  //
 
   return (
     <div className="all">
       <form className="formm" onSubmit={handleSubmit}>
         <article>
-          {success && (
-            <p style={{ color: "green", fontSize: "14px" }}>{success}</p>
-          )}
+          {/* {success && <p style={{ color: "green" }}>{success}</p>} */}
           <h1>Alt Care</h1>
           <h2>Complete Your Profile</h2>
-          <p>
-            Just a few more details to get started with your personalised health
-            journey.
-          </p>
+          <p>Just a few more details to get started...</p>
         </article>
-        {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <section>
           <div className="inputContainer">
             <label className="la">Full Name</label>
@@ -216,6 +209,7 @@ function Reg() {
             />
           </div>
         </section>
+
         <section>
           <div>
             <h1>Emergency Contact</h1>
@@ -254,8 +248,17 @@ function Reg() {
             />
           </div>
         </section>
+
         <button type="submit">Save Profile</button>
       </form>
+
+      {showConsentModal && (
+        <ConsentModal
+          onConsent={() => handleFinalSubmit(true)}
+          onDecline={() => handleFinalSubmit(false)}
+          onClose={() => setShowConsentModal(false)}
+        />
+      )}
     </div>
   );
 }

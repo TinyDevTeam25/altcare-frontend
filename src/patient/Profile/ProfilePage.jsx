@@ -1,18 +1,21 @@
-import React from "react";
+import { useAuth } from "../../context/AuthContext.jsx"; // 2. Import our context
+import { Navigate } from "react-router-dom"; // To protect the page
 
-// DELETED: import Header from './Header';
-// DELETED: import Footer from './Footer';
-
-// These are the components that are UNIQUE to the profile page, which is correct.
+// Import the child components
 import PersonalInfoSection from "./PersonalInfoSection.jsx";
 import EmergencyContactSection from "./EmergencyContactSection.jsx";
 import AccountSettingsSection from "./AccountSettingsSection.jsx";
-
 import "./Profile.css";
 
 const ProfilePage = () => {
-  // It now ONLY returns the <main> content for the profile page.
-  // The header and footer are provided automatically by the PatientLayout.
+  // 3. Get the user object from the global context
+  const { user } = useAuth();
+
+  // 4. Page Protection: If no user is logged in, redirect to the sign-in page
+  if (!user) {
+    return <Navigate to="/signin" />;
+  }
+
   return (
     <main className="profile-page-main-content">
       <h1 className="profile-page-title">My Profile</h1>
@@ -20,8 +23,9 @@ const ProfilePage = () => {
         View and update your personal and contact information.
       </p>
 
-      <PersonalInfoSection />
-      <EmergencyContactSection />
+      {/* 5. Pass the real user data down to the child components as props */}
+      <PersonalInfoSection userData={user.patient} />
+      <EmergencyContactSection emergencyData={user.patient.emergency_contact} />
       <AccountSettingsSection />
     </main>
   );

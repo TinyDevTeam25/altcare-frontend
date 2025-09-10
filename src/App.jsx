@@ -23,6 +23,7 @@ import ProfilePage from "./patient/Profile/ProfilePage.jsx";
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 // You will need to create this page for Immunizations
 // import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
+import VerifyEmailPage from "./patient/JOY/VerifyEmailPage.jsx";
 import ForgotPasswordPage from "./patient/JOY/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./patient/JOY/ResetPasswordPage.jsx";
 
@@ -36,6 +37,7 @@ function App() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       {/* For testing purposes, you can use this route to test ResetPasswordPage without a token */}

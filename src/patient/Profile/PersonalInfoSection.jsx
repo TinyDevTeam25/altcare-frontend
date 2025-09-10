@@ -1,14 +1,32 @@
-import React, { useState } from "react"; // THIS IS THE FIX
+import React, { useState, useEffect } from "react";
 import personalInfoIconUrl from "../../assets/user.svg";
 
-const PersonalInfoSection = () => {
+// The component now accepts 'userData' as a prop
+const PersonalInfoSection = ({ userData }) => {
+  // The state now includes all fields and is initialized to be empty
   const [personalInfo, setPersonalInfo] = useState({
-    fullName: "Jane Doe",
-    dateOfBirth: "15/01/1990",
-    gender: "Female",
-    contactNumber: "+234 (0)123-4567",
-    address: "123, address avenue, Address.",
+    fullName: "",
+    dateOfBirth: "",
+    gender: "",
+    contactNumber: "",
+    address: "",
   });
+
+  // This useEffect hook runs when the component loads or when userData changes.
+  // It safely populates the form with the real user data from the prop.
+  useEffect(() => {
+    if (userData) {
+      setPersonalInfo({
+        fullName: userData.full_name || "",
+        // Dates from the backend are often in ISO format (e.g., "1990-01-15T00:00:00.000Z")
+        // We split it at the 'T' to get just the 'YYYY-MM-DD' part for the date input.
+        dateOfBirth: userData.d_o_b ? userData.d_o_b.split("T")[0] : "",
+        gender: userData.gender || "",
+        contactNumber: userData.phone || "",
+        address: userData.address || "",
+      });
+    }
+  }, [userData]); // This effect depends on the userData prop
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +38,7 @@ const PersonalInfoSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Later, this will be an API call to PUT /api/patient/me
     console.log("Updating Personal Info:", personalInfo);
     alert("Personal information updated successfully!");
   };
@@ -56,7 +75,7 @@ const PersonalInfoSection = () => {
               Date of Birth
             </label>
             <input
-              type="date"
+              type="date" // Using type="date" provides a nice calendar picker
               id="dateOfBirth"
               name="dateOfBirth"
               value={personalInfo.dateOfBirth}
@@ -76,9 +95,10 @@ const PersonalInfoSection = () => {
               onChange={handleChange}
               className="form-select"
             >
-              <option>Female</option>
-              <option>Male</option>
-              <option>Other</option>
+              <option value="">Select Gender</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           {/* Contact Number */}
@@ -87,7 +107,7 @@ const PersonalInfoSection = () => {
               Contact Number
             </label>
             <input
-              type="cell"
+              type="tel" // Using type="tel" is better for phone numbers
               id="contactNumber"
               name="contactNumber"
               value={personalInfo.contactNumber}
@@ -102,7 +122,7 @@ const PersonalInfoSection = () => {
             Address
           </label>
           <input
-            type="adress"
+            type="text"
             id="address"
             name="address"
             value={personalInfo.address}

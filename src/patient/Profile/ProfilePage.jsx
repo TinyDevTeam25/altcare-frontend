@@ -1,5 +1,4 @@
-import React, { useContext } from "react"; // 1. Import useContext
-import { AuthContext } from "../../context/AuthContext.jsx"; // 2. Import our context
+import { useAuth } from "../../context/AuthContext.jsx"; // 2. Import our context
 import { Navigate } from "react-router-dom"; // To protect the page
 
 // Import the child components
@@ -10,7 +9,7 @@ import "./Profile.css";
 
 const ProfilePage = () => {
   // 3. Get the user object from the global context
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   // 4. Page Protection: If no user is logged in, redirect to the sign-in page
   if (!user) {

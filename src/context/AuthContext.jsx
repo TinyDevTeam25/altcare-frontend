@@ -1,35 +1,47 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
-// 1. Create the context
-export const AuthContext = createContext(null);
+// The context is created here but is NOT exported directly.
+const AuthContext = createContext(null);
 
-// 2. Create the "Provider" component
-export const AuthProvider = ({ children }) => {
+// This is the new, clean way to use the context.
+// Any component can import and call this custom hook.
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+// The AuthProvider component is now the single default export from this file.
+export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // 3. On initial load, check if user data exists in localStorage
+  // On initial application load, check if user data already exists in localStorage.
   useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      setUser(JSON.parse(storedUserData));
+    try {
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        setUser(JSON.parse(storedUserData));
+      }
+    } catch (error) {
+      console.error("Failed to parse user data from localStorage", error);
+      localStorage.removeItem("userData");
     }
   }, []);
 
-  // 4. Create login and logout functions to manage the user state and localStorage
+  // Function to handle logging in a user.
   const login = (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData));
     setUser(userData);
   };
 
+  // Function to handle logging out a user.
   const logout = () => {
     localStorage.removeItem("userData");
     setUser(null);
   };
 
-  // 5. Provide the user data and functions to the rest of the app
+  // Provide the user data and the login/logout functions to all child components.
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}

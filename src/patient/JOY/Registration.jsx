@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
 import apiClient from "../../utils/axiosConfig";
 import ConsentModal from "./ConsentModal.jsx";
-import { AuthContext } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import "./sign.css";
 
 // Main Page Component
@@ -43,10 +43,10 @@ function Reg() {
   const [emergencyContact, setEmergencyContact] = useState("");
   const [emergencyRelationship, setEmergencyRelationship] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // const [success, setSuccess] = useState("");
   const [showConsentModal, setShowConsentModal] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -133,7 +133,7 @@ function Reg() {
     <div className="all">
       <form className="formm" onSubmit={handleSubmit}>
         <article>
-          {success && <p style={{ color: "green" }}>{success}</p>}
+          {/* {success && <p style={{ color: "green" }}>{success}</p>} */}
           <h1>Alt Care</h1>
           <h2>Complete Your Profile</h2>
           <p>Just a few more details to get started...</p>

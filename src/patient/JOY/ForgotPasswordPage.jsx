@@ -1,32 +1,30 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom"; // Added Link for completeness
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
 import apiClient from "../../utils/axiosConfig";
 import Singleman from "../../assets/singleman.png";
 
-function ForgotPasswordPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setMessage("");
+    setMessage(""); // Clear previous messages
 
     try {
-      await apiClient.post("/auth/request-password-reset", { email });
-      // On success, just show a message. The user needs to go check their email.
-      setMessage(
-        "If an account with that email exists, a password reset link has been sent."
-      );
+      await apiClient.post("/patient/request-password-reset", { email });
+      // On success, we set a message AND navigate
+      setMessage("Request successful! Navigating to the next step...");
+      navigate("/reset-password", { state: { email: email } });
     } catch (err) {
-      // For security, always show the same generic success message
-      setMessage(
-        "If an account with that email exists, a password reset link has been sent."
-      );
-      console.error("Forgot Password Error:", err);
+      setError("An error occurred. Please try again.");
+      console.error("Request Password Reset Error:", err);
     }
   };
 
@@ -49,9 +47,9 @@ function ForgotPasswordPage() {
       <form onSubmit={handleSubmit}>
         <AuthCard
           image={Singleman}
-          title="Forgot Password"
-          subtitle="Enter your email address to receive a reset link."
-          buttonText="Send Reset Link"
+          title="Reset Your Password"
+          subtitle="Enter your email address and we'll send you an OTP to reset your password."
+          buttonText="Request OTP"
           footerText="Remembered your password?"
           footerLinkText="Sign in here"
           footerLinkHref="/signin"
@@ -78,6 +76,7 @@ function ForgotPasswordPage() {
                 {error}
               </p>
             )}
+
             {message && (
               <p
                 style={{ color: "green", fontSize: "14px", marginTop: "10px" }}
@@ -92,5 +91,3 @@ function ForgotPasswordPage() {
     </div>
   );
 }
-
-export default ForgotPasswordPage;

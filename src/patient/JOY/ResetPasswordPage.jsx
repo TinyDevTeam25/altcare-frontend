@@ -9,78 +9,46 @@ import Singleman from "../../assets/singleman.png";
 
 function ResetPasswordPage() {
   const [otp, setOtp] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // This state will now hold the token we get from the verify step
-  const [resetToken, setResetToken] = useState(null);
-
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Get the email passed from the previous page
   const email = location.state?.email;
 
+  // Security check: if the user lands here without an email, send them back.
   useEffect(() => {
     if (!email) {
       navigate("/forgot-password");
     }
   }, [email, navigate]);
 
-  const handleVerifyOtp = async () => {
-    setError("");
-    setMessage("");
-    try {
-      // Call the 'verify-otp' endpoint
-      const response = await apiClient.post("/auth/verify-otp", { email, otp });
-
-      // On success, save the token from the response and show the password fields
-      if (response.data && response.data.resetToken) {
-        setResetToken(response.data.resetToken);
-        setMessage("OTP Verified. Please create a new password.");
-      } else {
-        setError(
-          "Verification failed. The response did not include a reset token."
-        );
-      }
-    } catch (err) {
-      setError("The OTP is invalid or has expired.");
-      console.error("Verify OTP Error:", err);
-    }
-  };
-
-  const handleResetPassword = async () => {
-    setError("");
-    setMessage("");
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-    try {
-      // Call the final endpoint with the token we saved in state
-      await apiClient.post("/auth/reset-password", {
-        email,
-        newPassword: password,
-        resetToken: resetToken,
-      });
-      setMessage(
-        "Password has been reset successfully! Redirecting to sign in..."
-      );
-      setTimeout(() => navigate("/signin"), 3000);
-    } catch (err) {
-      setError("Failed to reset password. Please try again.");
-      console.error("Reset Password Error:", err);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // If we don't have a token yet, we are in the OTP verification step
-    if (!resetToken) {
-      handleVerifyOtp();
-    } else {
-      handleResetPassword();
+    setError("");
+    setMessage("");
+
+    try {
+      await apiClient.post("/patient/reset-password", {
+        email: email,
+        otp: otp,
+        newPassword: newPassword,
+      });
+
+      setMessage(
+        "Your password has been reset successfully! Redirecting to sign in..."
+      );
+
+      setTimeout(() => {
+        navigate("/signin");
+      }, 3000);
+    } catch (err) {
+      setError("Failed to reset password. The OTP may be invalid or expired.");
+      console.error("Reset Password Error:", err);
     }
   };
 
@@ -90,84 +58,54 @@ function ResetPasswordPage() {
       <form onSubmit={handleSubmit}>
         <AuthCard
           image={Singleman}
-          title={!resetToken ? "Verify Your Identity" : "Create New Password"}
-          subtitle={
-            !resetToken
-              ? `An OTP has been sent to ${email}`
-              : "Your new password must be strong."
-          }
-          buttonText={!resetToken ? "Verify OTP" : "Reset Password"}
+          title="Create New Password"
+          subtitle={`An OTP was sent to ${email}. Please enter it below.`}
+          buttonText="Reset Password"
         >
           <div className="the-form">
-            {/* Show OTP field if we don't have a token yet */}
-            {!resetToken && (
-              <div className="field">
-                <label>OTP Code</label>
-                <input
-                  type="text"
-                  placeholder="Enter the 6-digit code"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    border: "1px solid #ccc",
-                  }}
-                />
-              </div>
-            )}
-
-            {/* Show Password fields AFTER we get a token */}
-            {resetToken && (
-              <>
-                <div style={{ marginBottom: "15px", position: "relative" }}>
-                  <label>New Password</label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter new password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "8px",
-                      border: "1px solid #ccc",
-                    }}
-                  />
-                  <span
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                      position: "absolute",
-                      right: "10px",
-                      top: "50%",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </span>
-                </div>
-                <div style={{ marginBottom: "15px", position: "relative" }}>
-                  <label>Confirm New Password</label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "8px",
-                      border: "1px solid #ccc",
-                    }}
-                  />
-                </div>
-              </>
-            )}
-
+            <div className="field" style={{ marginBottom: "15px" }}>
+              <label>OTP Code</label>
+              <input
+                type="text"
+                placeholder="Enter the 6-digit code"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
+                }}
+              />
+            </div>
+            <div style={{ marginBottom: "15px", position: "relative" }}>
+              <label>New Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter new password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
+            </div>
             {error && (
               <p style={{ color: "red", fontSize: "14px", marginTop: "10px" }}>
                 {error}

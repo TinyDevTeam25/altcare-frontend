@@ -16,7 +16,7 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
     { path: "/patient/profile", name: "Profile" }, // Corrected path
   ];
   let location = useLocation();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   return (
     <nav className="nav">
@@ -49,7 +49,11 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
           {/* We add a check to make sure 'user' exists before trying to read its properties.
             This prevents the app from crashing before a user logs in. */}
           <div className="Jane">
-            {user ? user.patient.full_name.split(" ")[0] : "Guest"}
+            {loading
+              ? "..."
+              : user
+              ? user.patient.full_name.split(" ")[0]
+              : "Guest"}
           </div>
         </div>
         <div className="wallet" onClick={() => setshowWalletCard(true)}>

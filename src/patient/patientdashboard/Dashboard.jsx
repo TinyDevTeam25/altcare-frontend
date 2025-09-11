@@ -12,7 +12,7 @@ function Dashboard() {
   // Get the full user object from our global state
   const { user, loading } = useAuth();
   if (loading) {
-    return <div>Loading user data...</div>;
+    return <div>Loading Dashboard...</div>;
   }
 
   // Safely get the user's first name and isNewUser status

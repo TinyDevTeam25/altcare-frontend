@@ -4,25 +4,21 @@
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
-      // This script handles the redirect for single-page applications on GitHub Pages.
-      // It takes the URL path the user was trying to reach (like /patient/dashboard)
-      // and sends it back to the index.html page as a query parameter.
+      // Get the current URL path
       const path = window.location.pathname;
-      const url = new URL(window.location.href);
-      const searchParams = new URLSearchParams(url.search);
 
-      // We add a 'p' parameter with the path, and keep any other existing parameters.
-      searchParams.set("p", path);
+      // Store the path in sessionStorage. This is a simple and reliable way
+      // to pass the path back to the main index.html page.
+      sessionStorage.redirect = path;
 
-      // Redirect to the index.html with the new parameters.
-      window.location.href = `${url.origin}${url.pathname.substring(
-        0,
-        url.pathname.lastIndexOf("/")
-      )}/?${searchParams.toString()}`;
+      // Redirect to the root of the project (your index.html).
+      // The "?_dummy" is a cache-busting trick.
+      window.location.href = "/altcare-frontend/?_dummy";
     </script>
   </head>
   <body>
-    If you are not redirected automatically, follow this
-    <a href="/">link to the homepage</a>.
+    <p>
+      If you are not redirected, <a href="/altcare-frontend/">click here</a>.
+    </p>
   </body>
 </html>

@@ -1,52 +1,40 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-// The context is created here but is NOT exported directly.
-const AuthContext = createContext(null);
-
-// This is the clean way to use the context.
-export const useAuth = () => {
-  return useContext(AuthContext);
+// 1. We need a way to get the initial state synchronously
+const getInitialState = () => {
+  try {
+    const storedUserData = localStorage.getItem("userData");
+    return storedUserData ? JSON.parse(storedUserData) : null;
+  } catch (error) {
+    console.error("Failed to parse user data", error);
+    localStorage.removeItem("userData");
+    return null;
+  }
 };
 
-// The AuthProvider component is the single default export.
+const AuthContext = createContext(null);
+
+export const useAuth = () => useContext(AuthContext);
+
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  // 2. Initialize the state DIRECTLY with the data from localStorage
+  const [user, setUser] = useState(getInitialState());
 
-  // 1. ADD a new 'loading' state. It starts as true.
-  const [loading, setLoading] = useState(true);
+  // We no longer need the useEffect or the loading state for this problem.
 
-  // On initial application load, check if user data exists in localStorage.
-  useEffect(() => {
-    try {
-      const storedUserData = localStorage.getItem("userData");
-      if (storedUserData) {
-        setUser(JSON.parse(storedUserData));
-      }
-    } catch (error) {
-      console.error("Failed to parse user data from localStorage", error);
-      localStorage.removeItem("userData");
-    } finally {
-      // 2. CRITICAL: After the check is complete (whether successful or not),
-      //    set loading to false.
-      setLoading(false);
-    }
-  }, []);
-
-  // Function to handle logging in a user.
   const login = (userData) => {
+    // 3. When we log in, we update BOTH localStorage and the state
     localStorage.setItem("userData", JSON.stringify(userData));
     setUser(userData);
   };
 
-  // Function to handle logging out a user.
   const logout = () => {
     localStorage.removeItem("userData");
     setUser(null);
   };
 
-  // 3. Provide the new 'loading' state to all child components.
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

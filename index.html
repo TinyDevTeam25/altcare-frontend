@@ -18,13 +18,13 @@
     <title>Altcare App</title>
     <script>
       (function () {
-        const url = new URL(window.location.href);
-        const path = url.searchParams.get("p");
-        if (path) {
-          // If we find a 'p' parameter, it means we were redirected from 404.html.
-          // We rewrite the URL to the correct path and tell the browser to load it.
-          const newPath = `${url.origin}${path}`;
-          window.history.replaceState(null, "", newPath);
+        // Check if a redirect path was stored by the 404.html page
+        const redirect = sessionStorage.getItem("redirect");
+        if (redirect) {
+          // If it exists, clear it from storage
+          sessionStorage.removeItem("redirect");
+          // And rewrite the URL in the browser's history to the correct path
+          window.history.replaceState(null, null, redirect);
         }
       })();
     </script>

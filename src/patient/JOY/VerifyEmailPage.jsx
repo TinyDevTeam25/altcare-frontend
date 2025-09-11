@@ -14,6 +14,41 @@ function VerifyEmailPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
+  const [countdown, setCountdown] = useState(60);
+  const canResend = countdown === 0;
+
+  useEffect(() => {
+    // Set up a timer that runs every second
+    const timerId = setInterval(() => {
+      setCountdown((prevCountdown) => {
+        // Stop the timer if it reaches 0
+        if (prevCountdown <= 1) {
+          clearInterval(timerId);
+          return 0;
+        }
+        // Otherwise, decrement the timer
+        return prevCountdown - 1;
+      });
+    }, 1000);
+
+    // Clean up the timer when the component unmounts
+    return () => clearInterval(timerId);
+  }, []); // <-- An empty dependency array
+
+  const handleResendOtp = async () => {
+    if (!canResend) return; // Don't allow clicks while timer is running
+
+    setCountdown(60); // Reset the timer
+    setMessage("A new OTP has been sent."); // Provide user feedback
+
+    try {
+      // This is the future API call to request a new OTP
+      // await apiClient.post('/patient/resend-verification-otp', { email });
+    } catch (err) {
+      console.error("Resend OTP Error:", err);
+      setError("Failed to resend OTP. Please try again.");
+    }
+  };
 
   useEffect(() => {
     if (!email) {
@@ -83,6 +118,38 @@ function VerifyEmailPage() {
                   letterSpacing: "8px",
                 }}
               />
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: "20px",
+                fontSize: "14px",
+              }}
+            >
+              {canResend ? (
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#008080",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    fontSize: "inherit",
+                  }}
+                >
+                  Resend Code
+                </button>
+              ) : (
+                <span>
+                  Resend code in{" "}
+                  <span style={{ fontWeight: "bold", color: "#008080" }}>
+                    {countdown}s
+                  </span>
+                </span>
+              )}
             </div>
             {error && (
               <p style={{ color: "red", fontSize: "14px", marginTop: "10px" }}>

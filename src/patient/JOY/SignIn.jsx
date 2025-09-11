@@ -125,7 +125,7 @@ function SignInForm() {
                 cursor: "pointer",
               }}
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
             </span>
             <Link
               to="/forgot-password"

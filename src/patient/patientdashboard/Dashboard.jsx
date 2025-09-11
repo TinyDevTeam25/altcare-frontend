@@ -1,18 +1,26 @@
 import React from "react";
+import { useAuth } from "../../context/AuthContext.jsx"; // Use our global context
 import "./Dashboard.css";
-// Header and Footer imports are handled by PatientLayout.
-
-// These are the components that are UNIQUE to the dashboard page.
 import Top from "../../components/PeterComponents/Top/Top.jsx";
 import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
 import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
 
+// NOTE: This component should NOT render its own Nav2 or Footer2.
+// That is handled by the PatientLayout.
+
 function Dashboard() {
-  // It now ONLY returns the <main> content for the dashboard.
-  // The header and footer are provided automatically by the PatientLayout.
+  // Get the full user object from our global state
+  const { user } = useAuth();
+
+  // Safely get the user's first name and isNewUser status
+  // Provide default values in case the user object is not available yet
+  const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
+  const isNewUser = user?.isNewUser || false;
+
   return (
     <main className="dashboard">
-      <Top />
+      {/* Pass the data down to the Top component as props */}
+      <Top userName={firstName} isNewUser={isNewUser} />
       <Menu />
       <Activity />
     </main>

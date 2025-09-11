@@ -1,29 +1,29 @@
-import React, { createContext, useState, useContext } from "react";
-
-// 1. We need a way to get the initial state synchronously
-const getInitialState = () => {
-  try {
-    const storedUserData = localStorage.getItem("userData");
-    return storedUserData ? JSON.parse(storedUserData) : null;
-  } catch (error) {
-    console.error("Failed to parse user data", error);
-    localStorage.removeItem("userData");
-    return null;
-  }
-};
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthProvider({ children }) {
-  // 2. Initialize the state DIRECTLY with the data from localStorage
-  const [user, setUser] = useState(getInitialState());
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Start as true
 
-  // We no longer need the useEffect or the loading state for this problem.
+  useEffect(() => {
+    try {
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        setUser(JSON.parse(storedUserData));
+      }
+    } catch (error) {
+      console.error("Failed to parse user data from localStorage", error);
+      localStorage.removeItem("userData");
+    } finally {
+      // This runs regardless of whether user data was found
+      setLoading(false);
+    }
+  }, []); // Empty array ensures this runs only once on initial app load
 
   const login = (userData) => {
-    // 3. When we log in, we update BOTH localStorage and the state
     localStorage.setItem("userData", JSON.stringify(userData));
     setUser(userData);
   };
@@ -34,7 +34,7 @@ export default function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

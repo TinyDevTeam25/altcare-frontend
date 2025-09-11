@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom"; // Added Link for complete
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
-import apiClient from "../../utils/axiosConfig";
+import apiClient from "../../utils/axiosConfig.js";
 import Singleman from "../../assets/singleman.png";
 
 export default function ForgotPasswordPage() {

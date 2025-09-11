@@ -3,17 +3,19 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 // The context is created here but is NOT exported directly.
 const AuthContext = createContext(null);
 
-// This is the new, clean way to use the context.
-// Any component can import and call this custom hook.
+// This is the clean way to use the context.
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// The AuthProvider component is now the single default export from this file.
+// The AuthProvider component is the single default export.
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // On initial application load, check if user data already exists in localStorage.
+  // 1. ADD a new 'loading' state. It starts as true.
+  const [loading, setLoading] = useState(true);
+
+  // On initial application load, check if user data exists in localStorage.
   useEffect(() => {
     try {
       const storedUserData = localStorage.getItem("userData");
@@ -23,6 +25,10 @@ export default function AuthProvider({ children }) {
     } catch (error) {
       console.error("Failed to parse user data from localStorage", error);
       localStorage.removeItem("userData");
+    } finally {
+      // 2. CRITICAL: After the check is complete (whether successful or not),
+      //    set loading to false.
+      setLoading(false);
     }
   }, []);
 
@@ -38,9 +44,9 @@ export default function AuthProvider({ children }) {
     setUser(null);
   };
 
-  // Provide the user data and the login/logout functions to all child components.
+  // 3. Provide the new 'loading' state to all child components.
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

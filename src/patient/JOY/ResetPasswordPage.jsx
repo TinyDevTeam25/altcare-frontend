@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
-import apiClient from "../../utils/axiosConfig";
+import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";
 import Singleman from "../../assets/singleman.png";
 

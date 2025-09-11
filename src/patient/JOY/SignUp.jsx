@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Added Link for the footer
 import AuthCard from "./AuthCard.jsx";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
@@ -7,12 +7,13 @@ import Couple from "../../assets/Couple.png";
 import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";
 
+// Inner form component
 function SignU() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Default is hidden
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,10 +35,9 @@ function SignU() {
     setError("");
 
     try {
-      // This is the API call
+      // This is the correct API call for the first step
       await apiClient.post("/patient/sign-up", { email, password });
-
-      // Navigate to the verification page, passing the email
+      // Navigate to the verification page on success
       navigate("/verify-email", { state: { email } });
     } catch (err) {
       setError("This email may already be in use or another error occurred.");
@@ -94,9 +94,11 @@ function SignU() {
               right: "10px",
               top: "50%",
               cursor: "pointer",
+              // transform: "translateY(-50%)",
             }}
           >
-            <Eye size={20} />
+            {/* THIS IS THE ONLY CHANGE: The icons are now reversed to the correct logic */}
+            {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
           </span>
         </div>
         <div style={{ marginBottom: "15px", position: "relative" }}>
@@ -114,6 +116,19 @@ function SignU() {
               border: "1px solid #ccc",
             }}
           />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              cursor: "pointer",
+              // transform: "translateY(-50%)",
+            }}
+          >
+            {/* Also fixed the icon logic here for consistency */}
+            {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+          </span>
         </div>
         {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
       </AuthCard>
@@ -121,6 +136,7 @@ function SignU() {
   );
 }
 
+// Main page component
 export default function SignUp() {
   return (
     <div>

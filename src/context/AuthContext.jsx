@@ -6,7 +6,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Start as true
+  const [loading, setLoading] = useState(true); // Default to true
 
   useEffect(() => {
     try {
@@ -18,10 +18,10 @@ export default function AuthProvider({ children }) {
       console.error("Failed to parse user data from localStorage", error);
       localStorage.removeItem("userData");
     } finally {
-      // This runs regardless of whether user data was found
+      // After we're done checking, set loading to false.
       setLoading(false);
     }
-  }, []); // Empty array ensures this runs only once on initial app load
+  }, []); // Empty array ensures this runs only once on app load.
 
   const login = (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData));

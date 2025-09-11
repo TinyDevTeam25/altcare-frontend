@@ -46,7 +46,7 @@ function SignInForm() {
     e.preventDefault();
     try {
       // This is REAL API call
-      const res = await apiClient.post("/auth/login-patient", {
+      const res = await apiClient.post("/patient/login", {
         email,
         password,
       });

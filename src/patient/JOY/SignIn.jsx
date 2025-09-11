@@ -6,7 +6,7 @@ import Footer from "../Profile/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
 import "./sign.css";
 import Singleman from "../../assets/singleman.png";
-import apiClient from "../../utils/axiosConfig";
+import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";
 
 // This is the main page component that assembles the page

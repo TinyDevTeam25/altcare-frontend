@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
-import apiClient from "../../utils/axiosConfig";
+import apiClient from "../../utils/axiosConfig.js";
 import ConsentModal from "./ConsentModal.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import "./sign.css";

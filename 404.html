@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // This script handles the redirect for single-page applications on GitHub Pages.
+      // It takes the URL path the user was trying to reach (like /patient/dashboard)
+      // and sends it back to the index.html page as a query parameter.
+      const path = window.location.pathname;
+      const url = new URL(window.location.href);
+      const searchParams = new URLSearchParams(url.search);
+
+      // We add a 'p' parameter with the path, and keep any other existing parameters.
+      searchParams.set("p", path);
+
+      // Redirect to the index.html with the new parameters.
+      window.location.href = `${url.origin}${url.pathname.substring(
+        0,
+        url.pathname.lastIndexOf("/")
+      )}/?${searchParams.toString()}`;
+    </script>
+  </head>
+  <body>
+    If you are not redirected automatically, follow this
+    <a href="/">link to the homepage</a>.
+  </body>
+</html>

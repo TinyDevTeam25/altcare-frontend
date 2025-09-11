@@ -18,13 +18,21 @@
     <title>Altcare App</title>
     <script>
       (function () {
-        // Check if a redirect path was stored by the 404.html page
-        const redirect = sessionStorage.getItem("redirect");
-        if (redirect) {
-          // If it exists, clear it from storage
-          sessionStorage.removeItem("redirect");
-          // And rewrite the URL in the browser's history to the correct path
-          window.history.replaceState(null, null, redirect);
+        const l = window.location;
+        const params = new URLSearchParams(l.search);
+        const p = params.get("p");
+        if (p) {
+          // This script correctly rebuilds the path and rewrites history
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) +
+              p.replace(/~and~/g, "&") +
+              (params.get("q")
+                ? "?" + params.get("q").replace(/~and~/g, "&")
+                : "") +
+              l.hash
+          );
         }
       })();
     </script>

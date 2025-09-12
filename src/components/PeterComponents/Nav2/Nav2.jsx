@@ -1,4 +1,3 @@
-// import React from "react";
 import React from "react";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import "./Nav2.css";
@@ -8,6 +7,9 @@ import JaneDoe from "../../../assets/jane-doe-avatar.png";
 import Wallet from "../../../assets/wallet.png";
 
 function Nav2({ setshowProfileCard, setshowWalletCard }) {
+  const { user } = useAuth();
+  const location = useLocation();
+
   let navLinks = [
     { path: "/patient/dashboard", name: "Dashboard" }, // Corrected path
     { path: "/patient/records", name: "My Records" }, // Corrected path
@@ -15,8 +17,6 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
     { path: "/patient/messages", name: "Messages" }, // Corrected path
     { path: "/patient/profile", name: "Profile" }, // Corrected path
   ];
-  let location = useLocation();
-  const { user, loading } = useAuth();
 
   return (
     <nav className="nav">
@@ -49,11 +49,7 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
           {/* We add a check to make sure 'user' exists before trying to read its properties.
             This prevents the app from crashing before a user logs in. */}
           <div className="Jane">
-            {loading
-              ? "..."
-              : user
-              ? user.patient.full_name.split(" ")[0]
-              : "Guest"}
+            {user?.patient?.full_name?.split(" ")[0] || "Guest"}
           </div>
         </div>
         <div className="wallet" onClick={() => setshowWalletCard(true)}>

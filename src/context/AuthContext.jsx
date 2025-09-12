@@ -40,6 +40,46 @@
 //     </AuthContext.Provider>
 //   );
 // }
+// import React, { createContext, useState, useEffect, useContext } from "react";
+
+// const AuthContext = createContext(null);
+
+// export const useAuth = () => useContext(AuthContext);
+
+// export default function AuthProvider({ children }) {
+//   const [user, setUser] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     try {
+//       const storedUserData = localStorage.getItem("userData");
+//       if (storedUserData) {
+//         setUser(JSON.parse(storedUserData));
+//       }
+//     } catch (error) {
+//       console.error("Failed to parse user data from localStorage", error);
+//       localStorage.removeItem("userData");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, []);
+
+//   const login = (userData) => {
+//     localStorage.setItem("userData", JSON.stringify(userData));
+//     setUser(userData);
+//   };
+
+//   const logout = () => {
+//     localStorage.removeItem("userData");
+//     setUser(null);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, loading, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// }
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 const AuthContext = createContext(null);
@@ -58,15 +98,33 @@ export default function AuthProvider({ children }) {
       }
     } catch (error) {
       console.error("Failed to parse user data from localStorage", error);
-      localStorage.removeItem("userData");
     } finally {
       setLoading(false);
     }
   }, []);
 
   const login = (userData) => {
-    localStorage.setItem("userData", JSON.stringify(userData));
-    setUser(userData);
+    // ===================================================================
+    // ===log error   ===
+    // ===================================================================
+    console.log("AuthContext: login function CALLED with:", userData);
+    // ===================================================================
+
+    try {
+      if (!userData) {
+        console.error(
+          "AuthContext: login function called with null or undefined userData."
+        );
+        return;
+      }
+      localStorage.setItem("userData", JSON.stringify(userData));
+      setUser(userData);
+    } catch (error) {
+      console.error(
+        "AuthContext: Failed to save user data to localStorage.",
+        error
+      );
+    }
   };
 
   const logout = () => {

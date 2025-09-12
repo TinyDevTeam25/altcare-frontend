@@ -27,32 +27,68 @@
 // }
 
 // export default Dashboard;
+// import React from "react";
+// import "./Dashboard.css";
+// import { useAuth } from "../../context/AuthContext.jsx";
+// import Top from "../../components/PeterComponents/Top/Top.jsx";
+// import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
+// import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
+// // This component should not render its own header or footer.
+// function Dashboard() {
+//   // Get the full user object and the loading state from our global context.
+//   const { user, loading } = useAuth();
+//   // While the context is checking localStorage, show a simple loading message.
+//   // This prevents any part of the page from rendering with null data.
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+//   // Safely get the user's data after loading is complete.
+//   // The optional chaining (?.) is a final safety measure.
+//   const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
+//   const isNewUser = user?.isNewUser || false;
+//   return (
+//     <main className="dashboard">
+//       {/* Pass the prepared data down as props. */}
+//       <Top userName={firstName} isNewUser={isNewUser} />
+//       <Menu />
+//       <Activity />
+//     </main>
+//   );
+// }
+// export default Dashboard;
 import React from "react";
-import "./Dashboard.css";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { Navigate } from "react-router-dom"; // For page protection
 import Top from "../../components/PeterComponents/Top/Top.jsx";
 import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
 import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
-// This component should not render its own header or footer.
+import "./Dashboard.css";
+
 function Dashboard() {
-  // Get the full user object and the loading state from our global context.
   const { user, loading } = useAuth();
-  // While the context is checking localStorage, show a simple loading message.
-  // This prevents any part of the page from rendering with null data.
+
+  // 1. While the context is doing its initial check, show a loading state.
   if (loading) {
     return <div>Loading...</div>;
   }
-  // Safely get the user's data after loading is complete.
-  // The optional chaining (?.) is a final safety measure.
-  const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
-  const isNewUser = user?.isNewUser || false;
+
+  // 2. After loading, if there is NO user, redirect them to the sign-in page.
+  //    This is professional-grade page protection.
+  if (!user) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  // 3. This code is now GUARANTEED to run only when 'user' is a valid object.
+  const firstName = user.patient.full_name.split(" ")[0];
+  const isNewUser = user.isNewUser || false;
+
   return (
     <main className="dashboard">
-      {/* Pass the prepared data down as props. */}
       <Top userName={firstName} isNewUser={isNewUser} />
       <Menu />
       <Activity />
     </main>
   );
 }
+
 export default Dashboard;

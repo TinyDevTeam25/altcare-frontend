@@ -93,6 +93,31 @@
 
 // export default Dashboard;
 
+// import React from "react";
+// import { useAuth } from "../../context/AuthContext.jsx";
+// import Top from "../../components/PeterComponents/Top/Top.jsx";
+// import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
+// import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
+// import "./Dashboard.css";
+
+// function Dashboard() {
+//   const { user } = useAuth();
+
+//   // THIS IS THE FIX: Use optional chaining for safety.
+//   // This line can no longer crash the application.
+//   const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
+//   const isNewUser = user?.isNewUser || false;
+
+//   return (
+//     <main className="dashboard">
+//       <Top userName={firstName} isNewUser={isNewUser} />
+//       <Menu />
+//       <Activity />
+//     </main>
+//   );
+// }
+
+// export default Dashboard;
 import React from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Top from "../../components/PeterComponents/Top/Top.jsx";
@@ -101,10 +126,16 @@ import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
 import "./Dashboard.css";
 
 function Dashboard() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
-  // THIS IS THE FIX: Use optional chaining for safety.
-  // This line can no longer crash the application.
+  // If the context is still doing its initial check of localStorage,
+  // we render nothing or a loading spinner. This prevents the crash.
+  if (loading) {
+    return <div>Loading dashboard...</div>;
+  }
+
+  // This code is now guaranteed to run only after the initial load is complete.
+  // We still use optional chaining as a best practice for safety.
   const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
   const isNewUser = user?.isNewUser || false;
 

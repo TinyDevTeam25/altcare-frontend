@@ -1,3 +1,4 @@
+import React from "react"; // 1. Import React
 import { useAuth } from "../../context/AuthContext.jsx"; // 2. Import our context
 import { Navigate } from "react-router-dom"; // To protect the page
 
@@ -8,12 +9,17 @@ import AccountSettingsSection from "./AccountSettingsSection.jsx";
 import "./Profile.css";
 
 const ProfilePage = () => {
-  // 3. Get the user object from the global context
-  const { user } = useAuth();
+  // 3. Get the user object and loading state from the global context
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    // 4a. While loading, show a loading message
+    return <div>Loading profile...</div>;
+  }
 
   // 4. Page Protection: If no user is logged in, redirect to the sign-in page
   if (!user) {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/signin" replace />;
   }
 
   return (

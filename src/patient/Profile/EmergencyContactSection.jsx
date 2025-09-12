@@ -1,13 +1,26 @@
-import React, { useState } from "react";
-// This import gives you the URL to the icon
+import React, { useState, useEffect } from "react";
 import emergencyContactIconUrl from "../../assets/user-octagon.svg";
+import apiClient from "../../utils/axiosConfig"; // Import apiClient for API calls
 
-const EmergencyContactSection = () => {
+// The component now accepts the initial emergency contact data as a prop
+const EmergencyContactSection = ({ emergencyData }) => {
   const [emergencyContact, setEmergencyContact] = useState({
-    fullName: "John Doe",
-    contactNumber: "+234 (0)987-6543",
-    relationship: "Spouse",
+    fullName: "",
+    contactNumber: "",
+    relationship: "",
   });
+
+  // This hook runs when the component loads, populating the form with real data
+  useEffect(() => {
+    // The emergency_contact object might be null if the user hasn't added one yet
+    if (emergencyData) {
+      setEmergencyContact({
+        fullName: emergencyData.full_name || "",
+        contactNumber: emergencyData.phone || "",
+        relationship: emergencyData.relationship || "",
+      });
+    }
+  }, [emergencyData]); // This effect depends on the emergencyData prop
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,16 +30,27 @@ const EmergencyContactSection = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updating Emergency Contact:", emergencyContact);
-    alert("Emergency contact updated successfully!");
+    try {
+      // This is the REAL API call to update the profile
+      // We send the emergency contact fields inside a nested object
+      const response = await apiClient.put("/patient/get-profile", {
+        emergency_name: emergencyContact.fullName,
+        emergency_phone: emergencyContact.contactNumber,
+        emergency_relationship: emergencyContact.relationship,
+      });
+      console.log("Update successful:", response.data);
+      alert("Emergency contact updated successfully!");
+    } catch (err) {
+      console.error("Profile Update Error (Emergency):", err);
+      alert("Failed to update emergency contact. Please try again.");
+    }
   };
 
   return (
     <section className="profile-section">
       <h2 className="section-heading">
-        {/* THIS IS THE FIX: Use a standard <img> tag */}
         <img
           src={emergencyContactIconUrl}
           alt="Emergency Contact"
@@ -56,7 +80,7 @@ const EmergencyContactSection = () => {
               Contact Number
             </label>
             <input
-              type="text"
+              type="tel"
               id="ecContactNumber"
               name="contactNumber"
               value={emergencyContact.contactNumber}
@@ -79,7 +103,6 @@ const EmergencyContactSection = () => {
             />
           </div>
         </div>
-        {/* Update Button */}
         <button type="submit" className="btn-primary">
           Update Emergency Info
         </button>

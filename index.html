@@ -18,10 +18,21 @@
     <title>Altcare App</title>
     <script>
       (function () {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.pathname) {
-          history.replaceState(null, null, redirect);
+        const l = window.location;
+        const params = new URLSearchParams(l.search);
+        const p = params.get("p"); // Get the path from the 'p' parameter
+        if (p) {
+          // If a path was passed from 404.html, rewrite the URL history
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, l.pathname.lastIndexOf("/") + 1) +
+              p.replace(/~and~/g, "&") +
+              (params.get("q")
+                ? "?" + params.get("q").replace(/~and~/g, "&")
+                : "") +
+              l.hash
+          );
         }
       })();
     </script>

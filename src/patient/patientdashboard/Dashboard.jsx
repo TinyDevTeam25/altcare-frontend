@@ -56,31 +56,57 @@
 //   );
 // }
 // export default Dashboard;
+// import React from "react";
+// import { useAuth } from "../../context/AuthContext.jsx";
+// import { Navigate } from "react-router-dom"; // For page protection
+// import Top from "../../components/PeterComponents/Top/Top.jsx";
+// import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
+// import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
+// import "./Dashboard.css";
+
+// function Dashboard() {
+//   const { user, loading } = useAuth();
+
+//   // 1. While the context is doing its initial check, show a loading state.
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   // 2. After loading, if there is NO user, redirect them to the sign-in page.
+//   //    This is professional-grade page protection.
+//   if (!user) {
+//     return <Navigate to="/signin" replace />;
+//   }
+
+//   // 3. This code is now GUARANTEED to run only when 'user' is a valid object.
+//   const firstName = user.patient.full_name.split(" ")[0];
+//   const isNewUser = user.isNewUser || false;
+
+//   return (
+//     <main className="dashboard">
+//       <Top userName={firstName} isNewUser={isNewUser} />
+//       <Menu />
+//       <Activity />
+//     </main>
+//   );
+// }
+
+// export default Dashboard;
+
 import React from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { Navigate } from "react-router-dom"; // For page protection
 import Top from "../../components/PeterComponents/Top/Top.jsx";
 import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
 import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
 import "./Dashboard.css";
 
 function Dashboard() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
-  // 1. While the context is doing its initial check, show a loading state.
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // 2. After loading, if there is NO user, redirect them to the sign-in page.
-  //    This is professional-grade page protection.
-  if (!user) {
-    return <Navigate to="/signin" replace />;
-  }
-
-  // 3. This code is now GUARANTEED to run only when 'user' is a valid object.
-  const firstName = user.patient.full_name.split(" ")[0];
-  const isNewUser = user.isNewUser || false;
+  // THIS IS THE FIX: Use optional chaining for safety.
+  // This line can no longer crash the application.
+  const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
+  const isNewUser = user?.isNewUser || false;
 
   return (
     <main className="dashboard">

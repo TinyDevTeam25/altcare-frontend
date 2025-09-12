@@ -18,6 +18,13 @@ export default defineConfig([
     plugins: {
       import: importPlugin,
     },
+    settings: {
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx"],
+        },
+      },
+    },
     extends: [
       js.configs.recommended,
       reactHooks.configs["recommended-latest"],

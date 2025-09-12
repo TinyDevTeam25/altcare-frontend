@@ -4,24 +4,25 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
+// Initialize state directly from localStorage for immediate access
+const getInitialState = () => {
+  try {
+    const storedUserData = localStorage.getItem("userData");
+    return storedUserData ? JSON.parse(storedUserData) : null;
+  } catch (error) {
+    console.error("Failed to parse user data", error);
+    return null;
+  }
+};
+
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Default to true
+  const [user, setUser] = useState(getInitialState());
+  const [loading, setLoading] = useState(true); // Still useful for initial load
 
   useEffect(() => {
-    try {
-      const storedUserData = localStorage.getItem("userData");
-      if (storedUserData) {
-        setUser(JSON.parse(storedUserData));
-      }
-    } catch (error) {
-      console.error("Failed to parse user data from localStorage", error);
-      localStorage.removeItem("userData");
-    } finally {
-      // After we're done checking, set loading to false.
-      setLoading(false);
-    }
-  }, []); // Empty array ensures this runs only once on app load.
+    // This effect's only job is to turn off the loading flag
+    setLoading(false);
+  }, []);
 
   const login = (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData));

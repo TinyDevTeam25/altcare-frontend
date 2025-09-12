@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -13,4 +13,46 @@
 
 <body></body>
 
+</html> -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // This is the robust redirect script for GitHub Pages SPAs.
+      // It captures the path the user was trying to access.
+      const segmentCount = 1; // This should match the number of segments in your repo name's path (/altcare-frontend/ = 1)
+      const l = window.location;
+
+      // This complex-looking line correctly rebuilds the URL and passes the
+      // original path as a query parameter 'p'.
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + segmentCount)
+            .join("/") +
+          "/?p=/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(segmentCount)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&q=" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
+    </script>
+  </head>
+  <body>
+    <!-- Fallback content in case JavaScript is disabled -->
+    <p>
+      If you are not redirected automatically, please follow this
+      <a href="/altcare-frontend/">link to the homepage</a>.
+    </p>
+  </body>
 </html>

@@ -133,10 +133,9 @@ function Dashboard() {
   if (loading) {
     return <div>Loading dashboard...</div>;
   }
-
-  // This code is now guaranteed to run only after the initial load is complete.
-  // We still use optional chaining as a best practice for safety.
-  const firstName = user?.patient?.full_name?.split(" ")[0] || "User";
+  // Now that loading is false, we can safely access user data.
+  const firstName =
+    user?.patient?.full_name?.split(" ")[0] || user?.patient?.email || "User";
   const isNewUser = user?.isNewUser || false;
 
   return (

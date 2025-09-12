@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import personalInfoIconUrl from "../../assets/user.svg";
+import apiClient from "../../utils/axiosConfig"; // For making API calls
 
-// The component now accepts 'userData' as a prop
+// The component now accepts the initial user data as a prop
 const PersonalInfoSection = ({ userData }) => {
-  // The state now includes all fields and is initialized to be empty
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -12,21 +12,18 @@ const PersonalInfoSection = ({ userData }) => {
     address: "",
   });
 
-  // This useEffect hook runs when the component loads or when userData changes.
-  // It safely populates the form with the real user data from the prop.
+  // This hook runs when the component loads, populating the form with the user's data
   useEffect(() => {
     if (userData) {
       setPersonalInfo({
         fullName: userData.full_name || "",
-        // Dates from the backend are often in ISO format (e.g., "1990-01-15T00:00:00.000Z")
-        // We split it at the 'T' to get just the 'YYYY-MM-DD' part for the date input.
         dateOfBirth: userData.d_o_b ? userData.d_o_b.split("T")[0] : "",
         gender: userData.gender || "",
         contactNumber: userData.phone || "",
         address: userData.address || "",
       });
     }
-  }, [userData]); // This effect depends on the userData prop
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,11 +33,22 @@ const PersonalInfoSection = ({ userData }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Later, this will be an API call to PUT /api/patient/me
-    console.log("Updating Personal Info:", personalInfo);
-    alert("Personal information updated successfully!");
+    try {
+      // This is the API call to update the profile
+      const response = await apiClient.put("/patient/get-profile", {
+        phone: personalInfo.contactNumber,
+        address: personalInfo.address,
+        // Add other fields the backend allows to be updated
+      });
+      // It's good practice to update the UI with the confirmed data from the server
+      console.log("Update successful:", response.data);
+      alert("Personal information updated successfully!");
+    } catch (err) {
+      console.error("Profile Update Error:", err);
+      alert("Failed to update profile. Please try again.");
+    }
   };
 
   return (
@@ -55,7 +63,7 @@ const PersonalInfoSection = ({ userData }) => {
       </h2>
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
-          {/* Full Name */}
+          {/* Full Name (Read-only - users usually can't change their name easily) */}
           <div>
             <label htmlFor="fullName" className="form-label">
               Full Name
@@ -65,49 +73,45 @@ const PersonalInfoSection = ({ userData }) => {
               id="fullName"
               name="fullName"
               value={personalInfo.fullName}
-              onChange={handleChange}
               className="form-input"
+              readOnly
             />
           </div>
-          {/* Date of Birth */}
+          {/* Date of Birth (Read-only) */}
           <div>
             <label htmlFor="dateOfBirth" className="form-label">
               Date of Birth
             </label>
             <input
-              type="date" // Using type="date" provides a nice calendar picker
+              type="date"
               id="dateOfBirth"
               name="dateOfBirth"
               value={personalInfo.dateOfBirth}
-              onChange={handleChange}
               className="form-input"
+              readOnly
             />
           </div>
-          {/* Gender */}
+          {/* Gender (Read-only) */}
           <div>
             <label htmlFor="gender" className="form-label">
               Gender
             </label>
-            <select
+            <input
+              type="text"
               id="gender"
               name="gender"
               value={personalInfo.gender}
-              onChange={handleChange}
-              className="form-select"
-            >
-              <option value="">Select Gender</option>
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-              <option value="Other">Other</option>
-            </select>
+              className="form-input"
+              readOnly
+            />
           </div>
-          {/* Contact Number */}
+          {/* Contact Number (Editable) */}
           <div>
             <label htmlFor="contactNumber" className="form-label">
               Contact Number
             </label>
             <input
-              type="tel" // Using type="tel" is better for phone numbers
+              type="tel"
               id="contactNumber"
               name="contactNumber"
               value={personalInfo.contactNumber}
@@ -116,7 +120,7 @@ const PersonalInfoSection = ({ userData }) => {
             />
           </div>
         </div>
-        {/* Address */}
+        {/* Address (Editable) */}
         <div className="form-field-full-width">
           <label htmlFor="address" className="form-label">
             Address
@@ -130,7 +134,6 @@ const PersonalInfoSection = ({ userData }) => {
             className="form-input"
           />
         </div>
-        {/* Update Button */}
         <button type="submit" className="btn-primary">
           Update Personal Info
         </button>

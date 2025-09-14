@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import readMessageIcon from "../../assets/arrow-right-icon.svg";
+// import React from "react";
+// import { Link } from "react-router-dom";
+// import readMessageIcon from "../../assets/arrow-right -icon.svg";
 
 function MessageList() {
   return (

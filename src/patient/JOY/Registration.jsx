@@ -1,0 +1,264 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Nav from "../../components/Nav1/Nav.jsx";
+import Footer from "../Profile/Footer.jsx";
+import apiClient from "../../utils/axiosConfig.js";
+import ConsentModal from "./ConsentModal.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+import "./sign.css";
+
+// Main Page Component
+export default function Registration() {
+  return (
+    <div>
+      <Nav
+        linkTo="/"
+        buttonText="Back Home"
+        pText="Need Help?"
+        buttonStyle={{
+          borderRadius: "30px",
+          backgroundColor: "#fff",
+          color: "#008080",
+          border: "1px solid #008080",
+          padding: "10px 20px",
+          fontWeight: "600",
+          cursor: "pointer",
+        }}
+      />
+      <Reg />
+      <Footer />
+    </div>
+  );
+}
+
+// Inner Form Component
+function Reg() {
+  const [fullName, setFullName] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [contact, setContact] = useState("");
+  const [nin, setNin] = useState("");
+  const [address, setAddress] = useState("");
+  const [emergencyName, setEmergencyName] = useState("");
+  const [emergencyContact, setEmergencyContact] = useState("");
+  const [emergencyRelationship, setEmergencyRelationship] = useState("");
+  const [error, setError] = useState("");
+  // const [success, setSuccess] = useState("");
+  const [showConsentModal, setShowConsentModal] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    if (
+      !fullName ||
+      !dob ||
+      !gender ||
+      !contact ||
+      !nin ||
+      !address ||
+      !emergencyName ||
+      !emergencyContact ||
+      !emergencyRelationship
+    ) {
+      alert("⚠️ Please fill in all fields.");
+      return;
+    }
+    const ninRegex = /^\d{11}$/;
+    if (!ninRegex.test(nin)) {
+      setError("NIN must be exactly 11 digits.");
+      return;
+    }
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(contact) || !phoneRegex.test(emergencyContact)) {
+      setError("Phone numbers must be exactly 11 digits.");
+      return;
+    }
+    setError("");
+    setShowConsentModal(true);
+  };
+
+  const handleFinalSubmit = async (consentGiven) => {
+    setShowConsentModal(false);
+    const registrationToken = localStorage.getItem("registrationToken");
+    if (!registrationToken) {
+      setError("Security token is missing. Please sign up again.");
+      setTimeout(() => navigate("/signup"), 3000);
+      return;
+    }
+
+    // The backend expects snake_case for d_o_b, NIN, etc.
+    const payload = {
+      full_name: fullName,
+      d_o_b: dob,
+      NIN: nin,
+      gender,
+      phone: contact,
+      address,
+      emergency_name: emergencyName,
+      emergency_phone: emergencyContact,
+      emergency_relationship: emergencyRelationship,
+      consentGiven: consentGiven,
+    };
+
+    try {
+      const res = await apiClient.post("/patient/register-profile", payload, {
+        headers: { Authorization: `Bearer ${registrationToken}` },
+      });
+      localStorage.removeItem("registrationToken");
+      login(res.data);
+      alert(`Welcome ${payload.full_name}! Your registration is complete.`);
+      navigate("/patient/dashboard");
+    } catch (err) {
+      // ... error handling ...
+      console.error("Registration Error:", err);
+      if (err.response) {
+        const { status, data } = err.response;
+        const errorMessage =
+          data?.message || `An error occurred (Status ${status})`;
+        setError(errorMessage);
+        alert(`❌ Registration Failed: ${errorMessage}`);
+      } else if (err.request) {
+        setError("Network error. Please check your connection and try again.");
+        alert("🌐 Network error. Could not connect to the server.");
+      } else {
+        setError("An unexpected error occurred.");
+        alert("⚠️ An unexpected error occurred.");
+      }
+    }
+  };
+
+  return (
+    <div className="all">
+      <form className="formm" onSubmit={handleSubmit}>
+        <article>
+          {/* {success && <p style={{ color: "green" }}>{success}</p>} */}
+          <h1>Alt Care</h1>
+          <h2>Complete Your Profile</h2>
+          <p>Just a few more details to get started...</p>
+        </article>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <section>
+          <div className="inputContainer">
+            <label className="la">Full Name</label>
+            <input
+              placeholder="John Doe"
+              required
+              className="in"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">Date of Birth</label>
+            <input
+              type="date"
+              required
+              className="in"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">Gender</label>
+            <select
+              className="in select"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Gender
+              </option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+          <div className="inputContainer">
+            <label className="la">Contact</label>
+            <input
+              type="text"
+              placeholder="08123456789"
+              required
+              className="in"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">National Identification Number</label>
+            <input
+              type="text"
+              placeholder="11232624254"
+              required
+              className="in"
+              value={nin}
+              onChange={(e) => setNin(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">Address</label>
+            <textarea
+              placeholder="Your full address"
+              required
+              className="tex"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h1>Emergency Contact</h1>
+          </div>
+          <div className="inputContainer">
+            <label className="la">Full Name</label>
+            <input
+              placeholder="Emergency contact full name"
+              required
+              type="text"
+              className="in"
+              value={emergencyName}
+              onChange={(e) => setEmergencyName(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">Contact Number</label>
+            <input
+              placeholder="08102017392"
+              required
+              type="text"
+              className="in"
+              value={emergencyContact}
+              onChange={(e) => setEmergencyContact(e.target.value)}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="la">Relationship</label>
+            <input
+              placeholder="e.g., Spouse, Parent, Sibling"
+              required
+              type="text"
+              className="in"
+              value={emergencyRelationship}
+              onChange={(e) => setEmergencyRelationship(e.target.value)}
+            />
+          </div>
+        </section>
+
+        <button type="submit">Save Profile</button>
+      </form>
+
+      {showConsentModal && (
+        <ConsentModal
+          onConsent={() => handleFinalSubmit(true)}
+          onDecline={() => handleFinalSubmit(false)}
+          onClose={() => setShowConsentModal(false)}
+        />
+      )}
+    </div>
+  );
+}

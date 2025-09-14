@@ -1,41 +1,30 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 import "./MyRecordTest.css";
-import Nav2 from '../../components/PeterComponents/Nav2/Nav2';
-import Footer2 from '../../components/PeterComponents/Footer2/Footer2';
-import Card2 from '../../components/PeterComponents/Card2/Card2';
-import { Link } from 'react-router';
-import Card3 from "../../components/PeterComponents/Card3/card3"
-import Document from "../../assets/document-text .png"
+import Card2 from "../../components/PeterComponents/Card2/Card2.jsx";
+import Card3 from "../../components/PeterComponents/Card3/Card3.jsx";
+import Document from "../../assets/document-text.png";
+import book from "../../assets/book.png";
+import Recordheader from "../../components/PeterComponents/Recordheader/Recordheader.jsx";
+
+// This component is now simpler. It represents the "All Records" view by default.
+// The state logic has been removed because the router now handles which page is shown.
 function MyRecordTest() {
+  const bookAltText =
+    "Open book icon representing medical history highlights section";
+
   return (
-    <>
-      <Nav2 />
-      <main className="dashboard">
-        <Card2
-          Headline="My Health Records"
-          Textline="Access your comprehensive medical history, test results, and prescriptions."
-        />
+    <main className="dashboard">
+      <Card2
+        Headline="My Health Records"
+        Textline="Access your comprehensive medical history, test results, and prescriptions."
+      />
 
-        <section className="ls">
-          <ul>
-            <li>
-              <Link to="">All records</Link>
-            </li>
-            <li>
-              <Link to="">Test Result</Link>
-            </li>
-            <li>
-              <Link to="">Prescription</Link>
-            </li>
-            <li>
-              <Link to="">Medical History</Link>
-            </li>
-            <li>
-              <Link to="">Immunization</Link>
-            </li>
-          </ul>
-        </section>
+      {/* The Recordheader component now handles its own active state via routing */}
+      <Recordheader />
 
+      {/* This section always shows the content for the "All Records" tab */}
+      <>
         <div className="resultss-container">
           <Card3
             pix={Document}
@@ -92,10 +81,37 @@ function MyRecordTest() {
             arrow="→"
           />
         </div>
-      </main>
-
-      <Footer2 />
-    </>
+        <div className="containerRecord">
+          <div className="Recordcontainer">
+            <div className="Record-header">
+              <img src={book} alt={bookAltText} />
+              <p>Medical History Highlights</p>
+            </div>
+            <ul className="Record-list">
+              <li className="Record-item">
+                <span className="dot green"></span>
+                Diagnosed with Type 2 Diabetes (2020)
+              </li>
+              <li className="Record-item">
+                <span className="dot red"></span>
+                Appendectomy surgery (2018)
+              </li>
+              <li className="Record-item">
+                <span className="dot blue"></span>
+                Allergy to Penicillin (Severe)
+              </li>
+              <li className="Record-item">
+                <span className="dot brown"></span>
+                Annual Physicals completed regularly
+              </li>
+            </ul>
+            <Link to="/patient/records/history" className="view-History">
+              View Full Medical History &rarr;
+            </Link>
+          </div>
+        </div>
+      </>
+    </main>
   );
 }
 export default MyRecordTest;

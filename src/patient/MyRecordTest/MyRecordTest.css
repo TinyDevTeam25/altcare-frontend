@@ -1,22 +1,7 @@
 .dashboard {
-  min-height: 170vh;
+  /* min-height: 170vh; */
   max-width: 85%;
   margin: 60px auto;
-}
-
-.ls ul {
-  gap: 5px;
-  margin: 50px 200px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  font-family: var(--primary-font);
-  font-size: 13px;
-}
-.ls ul li a {
-  color: #000;
 }
 
 .results-header {
@@ -39,7 +24,7 @@
 }
 
 .results-container h2 {
-  font-size: 20px;
+  font-size: 17px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -91,3 +76,61 @@ td {
 .view-all:hover {
   text-decoration: underline;
 }
+
+.Recordcontainer {
+  width: 100%;
+  margin: 30px auto;
+  padding: 24px;
+  font-family: var(--primary-font);
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+.containerRecord p, .topi {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.Record-list{ list-style: none;
+padding: 0;
+margin: 0;}
+
+.Record-item{line-height: 40px;font-size: 14px;}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 20px;
+  border: 0;
+}
+
+
+.green {
+  background-color: #2ecc71;
+}
+
+.red {
+  background-color: #e74c3c;
+}
+.blue {
+  background-color: #6A20dA;
+}
+
+.brown{background-color: #B5A817;}
+
+
+.view-History {
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #00bfa6;
+  text-decoration: none;
+}
+.Record-header{display: flex;
+  width: 100%;
+margin: 0 auto;
+gap:0.9rem;
+padding:15px 0px;}

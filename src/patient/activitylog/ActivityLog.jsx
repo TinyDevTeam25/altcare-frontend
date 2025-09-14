@@ -1,7 +1,7 @@
 import React from "react";
-import leftArrow from "./assets/arrow-left-icon.svg";
-import rightArrow from "./assets/arrow-right -icon.svg"
-import calenderIcon from "./assets/calendar.svg";
+import leftArrow from "../../assets/arrow-left-icon.svg";
+import rightArrow from "../../assets/arrow-right-icon.svg"
+import calenderIcon from "../../assets/calendar.svg";
 import clock from "../../assets/clock.png"
 import documentText from "../../assets/document-text.png"
 import userIcon from "../../assets/user.svg"

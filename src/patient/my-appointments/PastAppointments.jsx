@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import calendarIcon from "../../assets/calendar.svg";
-import viewDetailsIcon from "../../assets/arrow-right -icon.svg";
+import viewDetailsIcon from "../../assets/arrow-right-icon.svg";
 
 function PastAppointments() {
   return (

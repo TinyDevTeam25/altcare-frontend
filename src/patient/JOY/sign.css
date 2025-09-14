@@ -1,0 +1,233 @@
+body{
+  max-height: 100vh;
+}
+
+.cont {
+  display: flex;
+  justify-content: space-between;
+  padding: 70px;
+  /* background-color: "#fff";
+  border-radius: "12px";
+  padding: "40px";
+  width: "100%";
+  max-width: "450px";
+  box-shadow: "0 4px 20px rgba(0,0,0,0.05)"; */
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+.text{
+  text-align: center;
+}
+.text h2:first-child{
+  font-size: 36px;
+  font-weight: 700;
+  color: #38B2AC;
+  letter-spacing: -0.5px;
+  line-height: 54px;
+}
+.welcome{
+  font-size: 32px;
+  color: #121;
+  line-height: 48px;
+  letter-spacing: -0.5px;
+  font-weight: 500;
+}
+.text h2:last-child{
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  margin-bottom: 15px;
+}
+.const img{
+    width: 610px;
+    height: 700px;
+}
+.the-form{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.form{
+ width: 650px;
+ height: 710px;
+ display: flex;
+ flex-direction: column;
+ row-gap:30px ;
+padding: 0 90px 90px;
+}
+.field{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.fieldd{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  column-gap: 5px;
+}
+.fieldd input{
+  width: 30px;
+  height: 30px;
+  color: #131;
+}
+.fieldd label span{
+  color: #D9D9D9;
+}
+.foot{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:5px;
+}
+
+
+/* registration css */
+
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+   
+} 
+
+/* Article Section */
+.all{
+  background-color:#F5FFFF;
+}
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  padding: 2rem 1rem;
+  
+}
+
+article h1 {
+    color: #008080;
+  font-weight: 600;
+    font-size: 36px;
+}
+
+article h2 {
+    font-weight: 600;
+   font-size: 32px;
+}
+
+article p {
+    color: #555;
+    font-size: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Form Styling */
+.formm {
+    background-color: #fff;
+    max-width: 600px;
+    margin: 1rem auto 3rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
+}
+
+/* Input Container */
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+/* Label */
+.la {
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    color: #333;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+}
+
+/* Input & Select */
+.in {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.in:focus {
+    border-color: #008080;
+}
+input::placeholder{
+  color: gray;
+  font-size: 14px;
+}
+input[type="date"]{
+  color:gray
+}
+.select{
+  color: gray;
+}
+ 
+ .select option:first-child {
+  color: #333;
+}
+/* Textarea */
+.tex {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.tex:focus {
+    border-color: #008080;
+}
+
+/* Emergency Contact Title */
+h1 {
+    color: #008080;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #008080;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #006666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    form {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}
+
+   

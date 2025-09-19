@@ -88,7 +88,6 @@ function Reg() {
       return;
     }
 
-    // The backend expects snake_case for d_o_b, NIN, etc.
     const payload = {
       full_name: fullName,
       d_o_b: dob,
@@ -108,8 +107,8 @@ function Reg() {
       });
       localStorage.removeItem("registrationToken");
       login(res.data);
-      alert(`Welcome ${payload.full_name}! Your registration is complete.`);
-      navigate("/patient/dashboard");
+      alert(`Thank you, ${payload.full_name}! Your registration is complete.`);
+      navigate("/signin");
     } catch (err) {
       // ... error handling ...
       console.error("Registration Error:", err);

@@ -35,7 +35,6 @@ function SignU() {
     setError("");
 
     try {
-      // This is the correct API call for the first step
       await apiClient.post("/patient/sign-up", { email, password });
       // Navigate to the verification page on success
       navigate("/verify-email", { state: { email } });

@@ -16,7 +16,7 @@ const EmergencyContactSection = ({ emergencyData }) => {
     if (emergencyData) {
       setEmergencyContact({
         fullName: emergencyData.full_name || "",
-        contactNumber: emergencyData.phone || "",
+        contactNumber: emergencyData.contact_number || "",
         relationship: emergencyData.relationship || "",
       });
     }

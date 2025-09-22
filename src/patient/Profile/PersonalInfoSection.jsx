@@ -17,7 +17,7 @@ const PersonalInfoSection = ({ userData }) => {
     if (userData) {
       setPersonalInfo({
         fullName: userData.full_name || "",
-        dateOfBirth: userData.d_o_b ? userData.d_o_b.split("T")[0] : "",
+        dateOfBirth: userData.date_of_birth ? userData.date_of_birth.split("T")[0] : "",
         gender: userData.gender || "",
         contactNumber: userData.phone || "",
         address: userData.address || "",
@@ -37,7 +37,7 @@ const PersonalInfoSection = ({ userData }) => {
     e.preventDefault();
     try {
       // This is the API call to update the profile
-      const response = await apiClient.put("/patient/get-profile", {
+      const response = await apiClient.put("/patient/update-profile", {
         phone: personalInfo.contactNumber,
         address: personalInfo.address,
         // Add other fields the backend allows to be updated
@@ -50,6 +50,7 @@ const PersonalInfoSection = ({ userData }) => {
       alert("Failed to update profile. Please try again.");
     }
   };
+
 
   return (
     <section className="profile-section">
@@ -74,7 +75,7 @@ const PersonalInfoSection = ({ userData }) => {
               name="fullName"
               value={personalInfo.fullName}
               className="form-input"
-              readOnly
+              readOnly 
             />
           </div>
           {/* Date of Birth (Read-only) */}
@@ -88,7 +89,7 @@ const PersonalInfoSection = ({ userData }) => {
               name="dateOfBirth"
               value={personalInfo.dateOfBirth}
               className="form-input"
-              readOnly
+              readOnly 
             />
           </div>
           {/* Gender (Read-only) */}

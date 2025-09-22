@@ -26,11 +26,14 @@ import Card2 from "../Card2/Card2.jsx";
 function Top({ userName, isNewUser }) {
   // Determine the welcome message based on the prop.
   const welcomeText = isNewUser ? "Welcome" : "Welcome back";
+  const subText = isNewUser
+    ? "Thanks for joining! Your personalized health overview is ready."
+    : "Your personalized health overview at a glance.";
 
   return (
     <Card2
       Headline={`${welcomeText}, ${userName}!`}
-      Textline="Your personalized health overview at a glance"
+      Textline={subText}
     />
   );
 }

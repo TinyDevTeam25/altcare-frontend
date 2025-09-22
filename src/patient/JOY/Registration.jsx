@@ -106,7 +106,7 @@ function Reg() {
         headers: { Authorization: `Bearer ${registrationToken}` },
       });
       localStorage.removeItem("registrationToken");
-      login(res.data);
+      login({ token: null, patient: res.data });
       alert(`Thank you, ${payload.full_name}! Your registration is complete.`);
       navigate("/signin");
     } catch (err) {

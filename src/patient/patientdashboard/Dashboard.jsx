@@ -120,6 +120,7 @@
 // export default Dashboard;
 import React from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { Navigate } from "react-router-dom";
 import Top from "../../components/PeterComponents/Top/Top.jsx";
 import Menu from "../../components/PeterComponents/Menu/Menu.jsx";
 import Activity from "../../components/PeterComponents/Activity/Activity.jsx";
@@ -128,19 +129,27 @@ import "./Dashboard.css";
 function Dashboard() {
   const { user, loading } = useAuth();
 
-  // If the context is still doing its initial check of localStorage,
-  // we render nothing or a loading spinner. This prevents the crash.
   if (loading) {
     return <div>Loading dashboard...</div>;
   }
-  // Now that loading is false, we can safely access user data.
-  const firstName =
-    user?.patient?.full_name?.split(" ")[0] || user?.patient?.email || "User";
+
+  // Redirect if not logged in
+  if (!user) return <Navigate to="/signin" replace />;
+
+  // ✅ Your user object shape: user.profile.profile.full_name
+  const profile = user.profile?.profile;
+  const fullName = profile?.full_name || "User";
+
+  // Grab just the first name if you prefer "Welcome, Aniekan"
+  const firstName = fullName.split(" ")[0];
+
   const isNewUser = user?.isNewUser || false;
+  console.log("User object from context:", user);
 
   return (
     <main className="dashboard">
-      <Top userName={firstName} isNewUser={isNewUser} />
+      {/* You can choose: use fullName OR firstName */}
+      <Top userName={fullName} isNewUser={isNewUser} />
       <Menu />
       <Activity />
     </main>

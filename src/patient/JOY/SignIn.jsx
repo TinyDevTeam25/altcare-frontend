@@ -50,11 +50,13 @@ function SignInForm() {
         email,
         password,
       });
+      
 
       console.log("Login successful:", res.data);
 
       // Call the global login function to save the user data
-      login(res.data);
+       login(res.data);
+      
 
       // Navigate to the dashboard after successful login
       navigate("/patient/dashboard");

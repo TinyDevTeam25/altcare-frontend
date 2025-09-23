@@ -109,8 +109,8 @@ function Nav2({ setshowProfileCard, setshowWalletCard }) {
               split second before the state updates, and then automatically
               re-render to show the real name. It will not crash.
             */}
-            {user?.patient?.profile?.full_name?.split(" ")[0] ||
-              user?.patient?.email ||
+            {user?.profile?.profile?.full_name?.split(" ")[0] ||
+              user?.profile?.email ||
               "Guest"}
           </div>
         </div>

@@ -6,6 +6,38 @@ import apiClient from "../../utils/axiosConfig.js";
 import ConsentModal from "./ConsentModal.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import "./sign.css";
+import { toast } from "react-toastify"; // <-- Import toast
+
+// Spinner component
+function Spinner() {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        width: 18,
+        height: 18,
+        border: "2px solid #008080",
+        borderTop: "2px solid transparent",
+        borderRadius: "50%",
+        marginRight: 8,
+        animation: "spin 0.7s linear infinite",
+        verticalAlign: "middle",
+      }}
+    />
+  );
+}
+
+// Add spinner keyframes to the page (only once)
+if (!document.getElementById("spin-keyframes")) {
+  const spinnerStyle = document.createElement("style");
+  spinnerStyle.id = "spin-keyframes";
+  spinnerStyle.innerHTML = `
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(spinnerStyle);
+}
 
 // Main Page Component
 export default function Registration() {
@@ -43,8 +75,8 @@ function Reg() {
   const [emergencyContact, setEmergencyContact] = useState("");
   const [emergencyRelationship, setEmergencyRelationship] = useState("");
   const [error, setError] = useState("");
-  // const [success, setSuccess] = useState("");
   const [showConsentModal, setShowConsentModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -62,17 +94,19 @@ function Reg() {
       !emergencyContact ||
       !emergencyRelationship
     ) {
-      alert("⚠️ Please fill in all fields.");
+      toast.error("⚠️ Please fill in all fields."); // <-- Toast instead of alert
       return;
     }
     const ninRegex = /^\d{11}$/;
     if (!ninRegex.test(nin)) {
       setError("NIN must be exactly 11 digits.");
+      toast.error("NIN must be exactly 11 digits."); // <-- Toast
       return;
     }
     const phoneRegex = /^\d{11}$/;
     if (!phoneRegex.test(contact) || !phoneRegex.test(emergencyContact)) {
       setError("Phone numbers must be exactly 11 digits.");
+      toast.error("Phone numbers must be exactly 11 digits."); // <-- Toast
       return;
     }
     setError("");
@@ -81,10 +115,13 @@ function Reg() {
 
   const handleFinalSubmit = async (consentGiven) => {
     setShowConsentModal(false);
+    setLoading(true);
     const registrationToken = localStorage.getItem("registrationToken");
     if (!registrationToken) {
       setError("Security token is missing. Please sign up again.");
+      toast.error("Security token is missing. Please sign up again."); // <-- Toast
       setTimeout(() => navigate("/signup"), 3000);
+      setLoading(false);
       return;
     }
 
@@ -107,24 +144,25 @@ function Reg() {
       });
       localStorage.removeItem("registrationToken");
       login({ token: null, patient: res.data });
-      alert(`Thank you, ${payload.full_name}! Your registration is complete.`);
+      toast.success(`Thank you, ${payload.full_name}! Your registration is complete.`); // <-- Toast
       navigate("/signin");
     } catch (err) {
-      // ... error handling ...
       console.error("Registration Error:", err);
       if (err.response) {
         const { status, data } = err.response;
         const errorMessage =
           data?.message || `An error occurred (Status ${status})`;
         setError(errorMessage);
-        alert(`❌ Registration Failed: ${errorMessage}`);
+        toast.error(`❌ Registration Failed: ${errorMessage}`); // <-- Toast
       } else if (err.request) {
         setError("Network error. Please check your connection and try again.");
-        alert("🌐 Network error. Could not connect to the server.");
+        toast.error("🌐 Network error. Could not connect to the server."); // <-- Toast
       } else {
         setError("An unexpected error occurred.");
-        alert("⚠️ An unexpected error occurred.");
+        toast.error("⚠️ An unexpected error occurred."); // <-- Toast
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,7 +170,6 @@ function Reg() {
     <div className="all">
       <form className="formm" onSubmit={handleSubmit}>
         <article>
-          {/* {success && <p style={{ color: "green" }}>{success}</p>} */}
           <h1>Alt Care</h1>
           <h2>Complete Your Profile</h2>
           <p>Just a few more details to get started...</p>
@@ -248,7 +285,32 @@ function Reg() {
           </div>
         </section>
 
-        <button type="submit">Save Profile</button>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: "100%",
+            backgroundColor: "#008080",
+            color: "#fff",
+            border: "none",
+            borderRadius: "30px",
+            padding: "12px",
+            fontWeight: "600",
+            marginTop: "20px",
+            cursor: loading ? "not-allowed" : "pointer",
+            opacity: loading ? 0.7 : 1,
+            transition: "opacity 0.2s",
+          }}
+        >
+          {loading ? (
+            <>
+              <Spinner />
+              Saving...
+            </>
+          ) : (
+            "Save Profile"
+          )}
+        </button>
       </form>
 
       {showConsentModal && (

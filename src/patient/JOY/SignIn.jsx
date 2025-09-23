@@ -8,6 +8,38 @@ import "./sign.css";
 import Singleman from "../../assets/singleman.png";
 import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "react-toastify"; // <-- Import toast
+
+// Spinner component
+function Spinner() {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        width: 18,
+        height: 18,
+        border: "2px solid #008080",
+        borderTop: "2px solid transparent",
+        borderRadius: "50%",
+        marginRight: 8,
+        animation: "spin 0.7s linear infinite",
+        verticalAlign: "middle",
+      }}
+    />
+  );
+}
+
+// Add spinner keyframes to the page (only once)
+if (!document.getElementById("spin-keyframes")) {
+  const spinnerStyle = document.createElement("style");
+  spinnerStyle.id = "spin-keyframes";
+  spinnerStyle.innerHTML = `
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(spinnerStyle);
+}
 
 // This is the main page component that assembles the page
 function SignIn() {
@@ -39,38 +71,40 @@ function SignInForm() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth(); // Get the login function from our global context
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       // This is REAL API call
       const res = await apiClient.post("/patient/login", {
         email,
         password,
       });
-      
 
-      console.log("Login successful:", res.data);
+      toast.success("Login successful!"); // <-- Toast for success
 
       // Call the global login function to save the user data
-       login(res.data);
-      
+      login(res.data);
 
       // Navigate to the dashboard after successful login
       navigate("/patient/dashboard");
     } catch (err) {
       console.error(err);
       if (err.response) {
-        alert(
+        toast.error(
           `❌ Error ${err.response.status}: ${
             err.response.data.message || "Login failed"
           }`
-        );
+        ); // <-- Toast for error
       } else {
-        alert(`🌐 Network error: ${err.message}`);
+        toast.error(`🌐 Network error: ${err.message}`); // <-- Toast for network error
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,7 +115,17 @@ function SignInForm() {
         title="AltCare"
         subtitle="Welcome Back!"
         p="Sign in to access to your patient portal."
-        buttonText="Sign In"
+        buttonText={
+          loading ? (
+            <>
+              <Spinner />
+              Signing In...
+            </>
+          ) : (
+            "Sign In"
+          )
+        }
+        buttonDisabled={loading}
         footerText="Don’t have an account yet?"
         footerLinkText="Sign up for AltCare"
         footerLinkHref="/signup"
@@ -101,6 +145,7 @@ function SignInForm() {
               }}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className="field" style={{ position: "relative" }}>
@@ -117,6 +162,7 @@ function SignInForm() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               required
+              disabled={loading}
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -127,7 +173,7 @@ function SignInForm() {
                 cursor: "pointer",
               }}
             >
-              {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </span>
             <Link
               to="/forgot-password"
@@ -148,6 +194,7 @@ function SignInForm() {
               id="remember"
               onChange={(e) => setRemember(e.target.checked)}
               checked={remember}
+              disabled={loading}
             />
             <label htmlFor="remember">
               Remember me <br />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Added Link for the footer
+import { useNavigate, Link } from "react-router-dom";
 import AuthCard from "./AuthCard.jsx";
 import Nav from "../../components/Nav1/Nav.jsx";
 import Footer from "../Profile/Footer.jsx";
@@ -7,13 +7,42 @@ import Couple from "../../assets/Couple.png";
 import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";
 
+// Spinner component
+function Spinner() {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        width: 18,
+        height: 18,
+        border: "2px solid #008080",
+        borderTop: "2px solid transparent",
+        borderRadius: "50%",
+        marginRight: 8,
+        animation: "spin 0.7s linear infinite",
+        verticalAlign: "middle",
+      }}
+    />
+  );
+}
+
+// Add spinner keyframes to the page
+const spinnerStyle = document.createElement("style");
+spinnerStyle.innerHTML = `
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+`;
+document.head.appendChild(spinnerStyle);
+
 // Inner form component
 function SignU() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Default is hidden
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -33,14 +62,16 @@ function SignU() {
       return;
     }
     setError("");
+    setLoading(true);
 
     try {
       await apiClient.post("/patient/sign-up", { email, password });
-      // Navigate to the verification page on success
       navigate("/verify-email", { state: { email } });
     } catch (err) {
       setError("This email may already be in use or another error occurred.");
       console.error("Sign Up Error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,7 +81,17 @@ function SignU() {
         image={Couple}
         title="AltCare"
         subtitle="Create Your Account"
-        buttonText="Sign up"
+        buttonText={
+          loading ? (
+            <>
+              <Spinner />
+              Signing Up...
+            </>
+          ) : (
+            "Sign up"
+          )
+        }
+        buttonDisabled={loading}
         footerText="Already have an account?"
         footerLinkText="Sign in here"
         footerLinkHref="/signin"
@@ -69,6 +110,7 @@ function SignU() {
               borderRadius: "8px",
               border: "1px solid #ccc",
             }}
+            disabled={loading}
           />
         </div>
         <div style={{ marginBottom: "15px", position: "relative" }}>
@@ -85,6 +127,7 @@ function SignU() {
               border: "1px solid #ccc",
               padding: "10px",
             }}
+            disabled={loading}
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
@@ -93,11 +136,9 @@ function SignU() {
               right: "10px",
               top: "50%",
               cursor: "pointer",
-              // transform: "translateY(-50%)",
             }}
           >
-            {/* THIS IS THE ONLY CHANGE: The icons are now reversed to the correct logic */}
-            {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </span>
         </div>
         <div style={{ marginBottom: "15px", position: "relative" }}>
@@ -114,6 +155,7 @@ function SignU() {
               borderRadius: "8px",
               border: "1px solid #ccc",
             }}
+            disabled={loading}
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
@@ -122,11 +164,9 @@ function SignU() {
               right: "10px",
               top: "50%",
               cursor: "pointer",
-              // transform: "translateY(-50%)",
             }}
           >
-            {/* Also fixed the icon logic here for consistency */}
-            {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </span>
         </div>
         {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
@@ -135,7 +175,6 @@ function SignU() {
   );
 }
 
-// Main page component
 export default function SignUp() {
   return (
     <div>

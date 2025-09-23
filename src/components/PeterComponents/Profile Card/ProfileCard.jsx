@@ -7,7 +7,7 @@ import image from "../../../assets/jane-doe-avatar.png";
 import camera from "../../../assets/camera.png";
 
 const ProfileCard = ({ setshowProfileCard }) => {
-  // 4. Get the user and logout function from the context
+  //  Get the user and logout function from the context
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const ProfileCard = ({ setshowProfileCard }) => {
       <div className="pcard" onClick={(e) => e.stopPropagation()}>
         {/* Display the user's full email from the context */}
         <p className="email">
-          {user ? user.patient.email : "user@example.com"}
+          {user ? user.profile?.profile?.full_name || user.profile?.profile?.email || "Guest" : "Guest"}
         </p>
         <div className="profile-info">
           <div className="pics">
@@ -30,8 +30,8 @@ const ProfileCard = ({ setshowProfileCard }) => {
           </div>
           <div>
             {/* Display user's name and ID from the context */}
-            <p>{user ? user.patient.full_name : "Jane Doe"}</p>
-            <p>{user ? `ID: ${user.patient.id}` : "P-001-XYZ"}</p>
+            <p>{user ? user.profile?.profile?.full_name || "Jane Doe" : "Jane Doe"}</p>
+            <p>{user?.profile?.id? `ID: ${user.profile?.profile?.id}` : "P-001-XYZ"}</p>
           </div>
         </div>
         <button className="green-btn">Manage your AltCare Account</button>

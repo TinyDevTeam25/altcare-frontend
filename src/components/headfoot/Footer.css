@@ -1,41 +1,41 @@
 /* ================================= */
 /* --      SHARED FOOTER          -- */
 /* ================================= */
-
+/* 
 .main-footer-container {
   width: 100%;
   /* Use 100% to be responsive inside the body containers */
-  height: 84px;
+  /* min-height: 84px;
   background-color: #171717;
   padding: 30px 100px;
   box-sizing: border-box;
-  margin-top: auto;
-  /* This is key to push the footer to the bottom */
-}
+margin-top: auto; */
+/* This is key to push the footer to the bottom */
 
-.footer-content {
+/* .footer-content {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-}
+} */
 
-.footer-copyright {
+/* .footer-copyright {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.5px;
   color: #FFFFFF;
-}
+} */
 
-.footer-links {
+/* .footer-links {
   display: flex;
   gap: 32px;
   /* A standard gap between links */
-}
+/* } */
 
-.footer-links a {
+/* .footer-links a {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -43,4 +43,32 @@
   letter-spacing: -0.5px;
   color: #FFFFFF;
   text-decoration: none;
+} */ 
+
+
+.Footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 150px;
+  background-color: #000;
+  color: #fff;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: sans-serif;
+}
+@media screen and (max-width: 801px) {
+  .Footer {
+    padding: 20px;
+    justify-content: center;
+  
+  }
+}
+.Footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 15px 0px;
+  gap: 20px;
 }

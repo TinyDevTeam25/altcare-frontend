@@ -26,6 +26,7 @@ export default function LandingPage() {
   return (
     <div className="wrapper">
       <Nav links={mainLinks} />
+      {/* <Nav links={mainLinks} /> */}
       <Hero />
       <HealthCards />
       <WhatUsersSay />

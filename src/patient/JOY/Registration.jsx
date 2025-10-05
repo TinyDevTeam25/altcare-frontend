@@ -6,9 +6,11 @@ import apiClient from "../../utils/axiosConfig.js";
 import ConsentModal from "./ConsentModal.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import "./sign.css";
-import { toast } from "react-toastify"; // <-- Import toast
+import { toast } from "react-toastify";
+// ADDED: icons for NIN show/hide toggle
+import { Eye, EyeOff } from "lucide-react";
 
-// Spinner component
+// Spinner component (kept)
 function Spinner() {
   return (
     <span
@@ -27,7 +29,7 @@ function Spinner() {
   );
 }
 
-// Add spinner keyframes to the page (only once)
+// Add spinner keyframes to the page (only once) (kept)
 if (!document.getElementById("spin-keyframes")) {
   const spinnerStyle = document.createElement("style");
   spinnerStyle.id = "spin-keyframes";
@@ -39,7 +41,7 @@ if (!document.getElementById("spin-keyframes")) {
   document.head.appendChild(spinnerStyle);
 }
 
-// Main Page Component
+// Main Page Component (kept)
 export default function Registration() {
   return (
     <div>
@@ -69,7 +71,7 @@ function Reg() {
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [contact, setContact] = useState("");
-  const [nin, setNin] = useState("");
+  const [nin, setNin] = useState(""); // (kept)
   const [address, setAddress] = useState("");
   const [emergencyName, setEmergencyName] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
@@ -80,9 +82,19 @@ function Reg() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  // ADDED: toggle visibility for NIN field
+  const [showNIN, setShowNIN] = useState(false);
+
+  // ADDED: digits-only input for NIN and cap at 11 characters
+  const handleNinChange = (e) => {
+    const onlyDigits = e.target.value.replace(/\D/g, "").slice(0, 11);
+    setNin(onlyDigits);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
+
     if (
       !fullName ||
       !dob ||
@@ -94,21 +106,24 @@ function Reg() {
       !emergencyContact ||
       !emergencyRelationship
     ) {
-      toast.error("⚠️ Please fill in all fields."); // <-- Toast instead of alert
+      toast.error("⚠️ Please fill in all fields.");
       return;
     }
+
     const ninRegex = /^\d{11}$/;
     if (!ninRegex.test(nin)) {
       setError("NIN must be exactly 11 digits.");
-      toast.error("NIN must be exactly 11 digits."); // <-- Toast
+      toast.error("NIN must be exactly 11 digits.");
       return;
     }
+
     const phoneRegex = /^\d{11}$/;
     if (!phoneRegex.test(contact) || !phoneRegex.test(emergencyContact)) {
       setError("Phone numbers must be exactly 11 digits.");
-      toast.error("Phone numbers must be exactly 11 digits."); // <-- Toast
+      toast.error("Phone numbers must be exactly 11 digits.");
       return;
     }
+
     setError("");
     setShowConsentModal(true);
   };
@@ -116,10 +131,11 @@ function Reg() {
   const handleFinalSubmit = async (consentGiven) => {
     setShowConsentModal(false);
     setLoading(true);
+
     const registrationToken = localStorage.getItem("registrationToken");
     if (!registrationToken) {
       setError("Security token is missing. Please sign up again.");
-      toast.error("Security token is missing. Please sign up again."); // <-- Toast
+      toast.error("Security token is missing. Please sign up again.");
       setTimeout(() => navigate("/signup"), 3000);
       setLoading(false);
       return;
@@ -144,7 +160,9 @@ function Reg() {
       });
       localStorage.removeItem("registrationToken");
       login({ token: null, patient: res.data });
-      toast.success(`Thank you, ${payload.full_name}! Your registration is complete.`); // <-- Toast
+      toast.success(
+        `Thank you, ${payload.full_name}! Your registration is complete.`
+      );
       navigate("/signin");
     } catch (err) {
       console.error("Registration Error:", err);
@@ -153,13 +171,13 @@ function Reg() {
         const errorMessage =
           data?.message || `An error occurred (Status ${status})`;
         setError(errorMessage);
-        toast.error(`❌ Registration Failed: ${errorMessage}`); // <-- Toast
+        toast.error(`❌ Registration Failed: ${errorMessage}`);
       } else if (err.request) {
         setError("Network error. Please check your connection and try again.");
-        toast.error("🌐 Network error. Could not connect to the server."); // <-- Toast
+        toast.error("🌐 Network error. Could not connect to the server.");
       } else {
         setError("An unexpected error occurred.");
-        toast.error("⚠️ An unexpected error occurred."); // <-- Toast
+        toast.error("⚠️ An unexpected error occurred.");
       }
     } finally {
       setLoading(false);
@@ -187,6 +205,7 @@ function Reg() {
               onChange={(e) => setFullName(e.target.value)}
             />
           </div>
+
           <div className="inputContainer">
             <label className="la">Date of Birth</label>
             <input
@@ -197,6 +216,7 @@ function Reg() {
               onChange={(e) => setDob(e.target.value)}
             />
           </div>
+
           <div className="inputContainer">
             <label className="la">Gender</label>
             <select
@@ -212,6 +232,7 @@ function Reg() {
               <option value="male">Male</option>
             </select>
           </div>
+
           <div className="inputContainer">
             <label className="la">Contact</label>
             <input
@@ -223,17 +244,46 @@ function Reg() {
               onChange={(e) => setContact(e.target.value)}
             />
           </div>
-          <div className="inputContainer">
+
+          {/* EDITED: NIN input masked like password with Eye/EyeOff toggle (comments moved out of tag) */}
+          <div className="inputContainer" style={{ position: "relative" }}>
             <label className="la">National Identification Number</label>
+
+            {/* We toggle between password/text using showNIN */}
             <input
-              type="text"
-              placeholder="11232624254"
+              type={showNIN ? "text" : "password"}
+              placeholder="•••••••••••"
               required
               className="in"
               value={nin}
-              onChange={(e) => setNin(e.target.value)}
+              onChange={handleNinChange}
+              inputMode="numeric"
+              pattern="[0-9]{11}"
+              maxLength={11}
+              autoComplete="off"
+              spellCheck="false"
+              // keep text cursor away from the icon
+              style={{ paddingRight: 44 }}
             />
+
+            {/* Toggle button absolutely positioned to the right end */}
+            <span
+              onClick={() => setShowNIN(!showNIN)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                // transform: "translateY(-50%)",
+                cursor: "pointer",
+                lineHeight: 0,
+              }}
+              aria-label={showNIN ? "Hide NIN" : "Show NIN"}
+              title={showNIN ? "Hide NIN" : "Show NIN"}
+            >
+              {showNIN ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
           </div>
+
           <div className="inputContainer">
             <label className="la">Address</label>
             <textarea
@@ -250,6 +300,7 @@ function Reg() {
           <div>
             <h1>Emergency Contact</h1>
           </div>
+
           <div className="inputContainer">
             <label className="la">Full Name</label>
             <input
@@ -261,6 +312,7 @@ function Reg() {
               onChange={(e) => setEmergencyName(e.target.value)}
             />
           </div>
+
           <div className="inputContainer">
             <label className="la">Contact Number</label>
             <input
@@ -272,6 +324,7 @@ function Reg() {
               onChange={(e) => setEmergencyContact(e.target.value)}
             />
           </div>
+
           <div className="inputContainer">
             <label className="la">Relationship</label>
             <input

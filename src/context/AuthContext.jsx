@@ -294,7 +294,7 @@ export default function AuthProvider({ children }) {
     };
     events.forEach((event) => window.addEventListener(event, refreshSession));
     return () => events.forEach((event) => window.removeEventListener(event, refreshSession));
-    // eslint-disable-next-line
+
   }, [user]);
 
   useEffect(() => {

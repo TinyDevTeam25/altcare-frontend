@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthCard from "./AuthCard.jsx";
 import Nav from "../../components/Nav1/Nav.jsx";
-import Footer from "../Profile/Footer.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
 import Couple from "../../assets/Couple.png";
 import apiClient from "../../utils/axiosConfig.js";
 import { Eye, EyeOff } from "lucide-react";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Nav from "../../components/Nav1/Nav.jsx";
-import Footer from "../Profile/Footer.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
 import AuthCard from "./AuthCard.jsx";
 import "./sign.css";
 import Singleman from "../../assets/singleman.png";

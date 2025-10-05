@@ -1,7 +1,8 @@
 import "../../index.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
-
+import MenuBar from "../../assets/menu.png";
+import { useState } from "react";
 function handleAnchorClick(e, href) {
   if (href.startsWith("#")) {
     e.preventDefault();
@@ -25,11 +26,18 @@ export default function Nav({
   },
   linkTo = "/signin",
 }) {
+  let [showNav, setShowNav] = useState(false);
   return (
     <nav className="nav">
       <img src={Logo} alt="logo" />
+      <img
+        src={MenuBar}
+        className="bar"
+        onClick={() => setShowNav(!showNav)}
+        alt=""
+      />
       {showLinks && (
-        <ul className="nav-link">
+        <ul className={`nav-link ${showNav? "": "hidden"}`}>
           {links.map((link, index) => (
             <li key={index}>
               {link.href.startsWith("/") ? (
@@ -44,11 +52,18 @@ export default function Nav({
               )}
             </li>
           ))}
+          <li className="hide">{pText}</li>
+          <Link to={linkTo} className="hide">
+            {buttonText}
+          </Link>
         </ul>
       )}
 
       {showButton && (
-        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+        <div
+          className="hidden"
+          style={{ display: "flex", gap: "20px", alignItems: "center" }}
+        >
           <P
             style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}
           >

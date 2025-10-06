@@ -5,6 +5,10 @@
 // import AuthProvider, { useAuth } from "./context/AuthContext.jsx";
 // import "./index.css";
 
+// // ADDED: react-toastify container + CSS
+// import { ToastContainer } from "react-toastify"; // ADDED
+// import "react-toastify/dist/ReactToastify.css"; // ADDED
+
 // // This line is important for deployment.
 // const basename = import.meta.env.PROD ? "/altcare-frontend" : "";
 
@@ -39,10 +43,28 @@
 //       <AuthProvider>
 //         <TimeoutWarningBanner />
 //         <App />
+
+//         {/* ADDED: Global toast container (one place only) */}
+//         <ToastContainer
+//           position="top-right"
+//           autoClose={4000}
+//           hideProgressBar={false}
+//           newestOnTop
+//           closeOnClick
+//           pauseOnFocusLoss
+//           draggable
+//           pauseOnHover
+//           theme="colored"
+//           style={{ zIndex: 999999 }} // keep above modals/banners
+//           toastStyle={{ borderRadius: "10px" }}
+//           // OPTIONAL: if banner covers toasts, push them down a bit:
+//           // style={{ zIndex: 999999, top: 72 }}
+//         />
 //       </AuthProvider>
 //     </BrowserRouter>
 //   </StrictMode>
 // );
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -50,9 +72,13 @@ import App from "./App.jsx";
 import AuthProvider, { useAuth } from "./context/AuthContext.jsx";
 import "./index.css";
 
-// ADDED: react-toastify container + CSS
-import { ToastContainer } from "react-toastify"; // ADDED
-import "react-toastify/dist/ReactToastify.css"; // ADDED
+// ADDED: wallet provider + modal
+import { WalletProvider } from "./components/wallet/WalletProvider.jsx"; // ADDED
+import WalletModal from "./components/wallet/WalletButtonAndModal.jsx"; // ADDED
+
+// Toasts
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // This line is important for deployment.
 const basename = import.meta.env.PROD ? "/altcare-frontend" : "";
@@ -86,25 +112,30 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter basename={basename}>
       <AuthProvider>
-        <TimeoutWarningBanner />
-        <App />
+        {/* ADDED: Wrap the app so wallet state is available everywhere */}
+        <WalletProvider>
+          <TimeoutWarningBanner />
+          <App />
 
-        {/* ADDED: Global toast container (one place only) */}
-        <ToastContainer
-          position="top-right"
-          autoClose={4000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          style={{ zIndex: 999999 }} // keep above modals/banners
-          toastStyle={{ borderRadius: "10px" }}
-          // OPTIONAL: if banner covers toasts, push them down a bit:
-          // style={{ zIndex: 999999, top: 72 }}
-        />
+          {/* ADDED: Global wallet modal (opens via context from any page) */}
+          <WalletModal />
+
+          {/* Global toast container */}
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            style={{ zIndex: 999999 }} // keep above modals/banners
+            toastStyle={{ borderRadius: "10px" }}
+            // If banner overlaps toasts, add: style={{ zIndex: 999999, top: 72 }}
+          />
+        </WalletProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

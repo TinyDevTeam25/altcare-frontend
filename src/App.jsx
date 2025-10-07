@@ -21,6 +21,7 @@ import PatientAppointmentDetailsPage from "./patient/appointment-details/Patient
 import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
+import ProfessionalDashboard from "./professional/dashboard/professionaldashboard.jsx";
 // You will need to create this page for Immunizations
 // import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
 import VerifyEmailPage from "./patient/JOY/VerifyEmailPage.jsx";
@@ -85,6 +86,7 @@ function App() {
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+      <Route path="/professional/dashboard" element={<ProfessionalDashboard />} />
       <Route path="/professional/hospital-signin" element={<HospitalSignin />} />
       <Route path="/professional/hospital-register" element={<HospitalRegister />} />
       <Route path="/professional/practitioner-register" element={<PractitionerRegister />} /> 

@@ -29,8 +29,8 @@ import ResetPasswordPage from "./patient/JOY/ResetPasswordPage.jsx";
 import ProtectedRoute from "./layouts/ProtectedRoute.jsx";
 import HospitalSignin from "./professional/Register/hospitalSignin.jsx";
 import HospitalRegister from "./professional/Register/hospitalRegister.jsx";
-import  PractitionerRegister from "./professional/Register/practitionerRegister.jsx";
-
+import PractitionerRegister from "./professional/Register/practitionerRegister.jsx";
+import AccountSettings from "./patient/Settings/AccountSettings.jsx";
 function App() {
   return (
     <Routes>
@@ -63,6 +63,7 @@ function App() {
           <Route path="messages" element={<SecureMessagesPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="settings" element={<AccountSettings />} />
 
           {/* === CORRECTED & FINAL RECORDS ROUTING === */}
           {/* Main "All Records" page */}
@@ -85,13 +86,20 @@ function App() {
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
-      <Route path="/professional/hospital-signin" element={<HospitalSignin />} />
-      <Route path="/professional/hospital-register" element={<HospitalRegister />} />
-      <Route path="/professional/practitioner-register" element={<PractitionerRegister />} /> 
+      <Route
+        path="/professional/hospital-signin"
+        element={<HospitalSignin />}
+      />
+      <Route
+        path="/professional/hospital-register"
+        element={<HospitalRegister />}
+      />
+      <Route
+        path="/professional/practitioner-register"
+        element={<PractitionerRegister />}
+      />
     </Routes>
-    
   );
-  
 }
 
 export default App;

@@ -28,6 +28,95 @@
   font-weight: 700;
 }
 
+/* Method selector */
+.wlt-methods {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.wlt-method {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wlt-method.active {
+  background: #008080;
+  color: #fff;
+  border-color: #008080;
+}
+
+/* Transfer / USSD panels */
+.wlt-panel {
+  margin-top: 12px;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fafafa;
+}
+
+.wlt-kv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.wlt-kv span {
+  color: #6b7280;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Waiting state + inline simulate button */
+.wlt-wait {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #374151;
+}
+
+.wlt-wait .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #f59e0b;
+  display: inline-block;
+}
+
+.wlt-inline {
+  border: none;
+  background: transparent;
+  color: #008080;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* USSD pill */
+.wlt-ussd {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #111827;
+  color: #fff;
+}
+
+/* Small note text */
+.wlt-note {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+
 /* Overlay + modal */
 .wlt-overlay {
   position: fixed;
@@ -36,6 +125,9 @@
   /* slightly darker for clarity */
   display: grid;
   place-items: center;
+  overscroll-behavior: contain;
+  padding: 12px;
+
   z-index: 1000;
 }
 
@@ -47,10 +139,12 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
   border: 1px solid #eef2f7;
   padding: 18px;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom));
   position: relative;
   display: grid;
   gap: 14px;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  overflow: hidden;
   font-family: var(--primary-font, "Poppins", sans-serif);
 }
 
@@ -215,6 +309,13 @@
   min-height: 180px;
 }
 
+.wlt-topup,
+.wlt-history {
+  min-height: 0;
+  /* critical for CSS Grid scrolling */
+  overflow: auto;
+}
+
 .wlt-history-head h4 {
   margin: 6px 0;
   font-size: 16px;
@@ -275,6 +376,12 @@
   background: #fef2f2;
   border-color: #fee2e2;
   color: #991b1b;
+}
+
+/* If your transfer/USSD details grow tall, keep them scrollable too */
+.wlt-panel {
+  max-height: 40vh;
+  overflow: auto;
 }
 
 .wlt-ref {

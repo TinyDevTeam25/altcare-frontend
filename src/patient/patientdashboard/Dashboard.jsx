@@ -149,7 +149,7 @@ function Dashboard() {
   return (
     <main className="dashboard">
       {/* You can choose: use fullName OR firstName */}
-      <Top userName={fullName} isNewUser={isNewUser} />
+      <Top userName={firstName} isNewUser={isNewUser} />
       <Menu />
       <Activity />
     </main>

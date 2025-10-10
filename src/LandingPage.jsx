@@ -80,10 +80,11 @@ function HealthCards() {
       <div className="health-section">
         <h1 className="head-text">Empowering Your Health Management</h1>
         <section className="health-cards">
-          <HealthCard img={folder} title="Secure Record Access" description="Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis." />
-          <HealthCard img={calender} title="Effortless Appointment" description="Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis." />
-          <HealthCard img={message} title="Direct Communication" description="Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis." />
-          <HealthCard img={timer} title="Medication Reminders" description="Worem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis." />
+          <HealthCard img={folder} title="Secure Record Access" description="Access your medical history anytime, without worrying about lost files or mix-ups. Your data is encrypted and stored safely for you." />
+          <HealthCard img={calender} title="Effortless Appointment" description="Book, reschedule, or track your appointments in just a few taps,no long calls or waiting lines needed." />
+          <HealthCard img={message} title="Direct Communication" description="Stay connected with your doctor through secure in-app messaging for updates, questions, or follow-ups.
+" />
+          <HealthCard img={timer} title="Medication Reminders" description="Never miss a dose again. Get personalised reminders to stay consistent  with your treatment plan." />
         </section>
       </div>
     </section>

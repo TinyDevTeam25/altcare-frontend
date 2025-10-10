@@ -69,9 +69,10 @@
 
 // export default ProfilePage;
 
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { Navigate } from "react-router-dom";
+import ProfileSection from "./profileImage.jsx";
 
 import PersonalInfoSection from "./PersonalInfoSection.jsx";
 import EmergencyContactSection from "./EmergencyContactSection.jsx";
@@ -82,13 +83,15 @@ const ProfilePage = () => {
   const { user, loading } = useAuth();
   console.log("USER FROM CONTEXT ===>", user);
 
+  const [profile, setProfile] = useState(user?.patient || {});
+
   if (loading) return <div>Loading Profile...</div>;
   if (!user) return <Navigate to="/signin" replace />;
 
-  // ✅ Use user data directly from context
-   const account = user.profile;          // main account data (email, role, etc.)
-  const profile = user.profile.profile;  // nested profile details
-  const emergency = profile?.emergency_contact;
+  const handleProfileUpdate = (updatedData) => {
+    setProfile((prev) => ({ ...prev, ...updatedData }));
+  };
+
   return (
     <main className="profile-page-main-content">
       <h1 className="profile-page-title">My Profile</h1>
@@ -96,16 +99,22 @@ const ProfilePage = () => {
         View and update your personal and contact information.
       </p>
 
-      <PersonalInfoSection userData={{
+      <ProfileSection />
+
+      <PersonalInfoSection
+        userData={{
           full_name: profile.full_name,
           gender: profile.gender,
           date_of_birth: profile.date_of_birth,
           phone: profile.phone,
           address: profile.address,
           NIN: profile.NIN,
-          email: user.email, // from root level
-      }} />
-      <EmergencyContactSection emergencyData={profile.emergency_contact} />
+          email: user.email,
+        }}
+        onUpdate={handleProfileUpdate}
+      />
+
+      <EmergencyContactSection emergencyData={profile?.emergency_contact || {}} />
       <AccountSettingsSection />
     </main>
   );

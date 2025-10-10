@@ -141,7 +141,7 @@ function Dashboard() {
   const fullName = profile?.full_name || "User";
 
   // Grab just the first name if you prefer "Welcome, Aniekan"
-  const firstName = fullName.split(" ")[0];
+   const firstName = fullName.split(" ")[0];
 
   const isNewUser = user?.isNewUser || false;
   console.log("User object from context:", user);

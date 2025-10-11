@@ -1,8 +1,5 @@
 import RecordCard from "./recordcard.jsx";
 import RecordTabs from "./recordtabs.jsx";
-import Footer from "../../components/headfoot/Footer.jsx";
-import PatientHeader from "../../components/headfoot/PatientHeader.jsx";
-
 import Icon1 from "../../assets/book.png";
 import Icon2 from "../../assets/book (1).png";
 import Icon3 from "../../assets/book (2).png";
@@ -12,7 +9,6 @@ import Icon5 from "../../assets/book (4).png";
 export default function HealthRecords() {
   return (
     <div className="min-h-screen flex flex-col">
-      <PatientHeader />
 
       <main className="flex-grow px-4 md:px-12 py-2 max-w-5xl mx-auto mt-10 mb-20">
         <section className="bg-white p-4 rounded-lg shadow-sm">
@@ -75,8 +71,6 @@ export default function HealthRecords() {
           />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

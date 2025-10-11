@@ -1,4 +1,4 @@
-.walletCard {
+/* .walletCard {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.418);
@@ -78,4 +78,121 @@ color: #383C38;
   top: 10px;
   right: 10px;
   cursor: pointer;
+} */
+
+
+.walletCard {
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.418);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0%;
+  font-family: var(--primary-font);
+  z-index: 1000;
+  /* ADDED: keep above nav/modals */
+}
+
+.Wallet-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  padding: 20px 0px;
+}
+
+.currency {
+  font-size: 10px;
+}
+
+/* Anchor the panel to the viewport top-right */
+.walletCard .pcard {
+  width: 250px;
+  min-height: 250px;
+  border-radius: 10px;
+  padding: 15px;
+  background: white;
+
+  /* EDITED: position & placement */
+  position: fixed;
+  /* was: relative + float */
+  top: 80px;
+  right: 100px;
+  float: none;
+  /* ensure float doesn't interfere */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+  /* optional subtle depth */
+}
+
+/* SCOPE button styles so they don't leak app-wide */
+.walletCard .pcard button {
+  /* EDITED: was global `button { ... }` */
+  padding: 10px 5px;
+  width: 100%;
+  text-align: center;
+  border-radius: 30px;
+  outline: none;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  cursor: pointer;
+  /* ADDED: pointer cursor */
+  font-family: var(--primary-font);
+}
+
+.gren-btn {
+  font-size: 14px;
+  border: 1px solid #008000;
+  background-color: #E0F9E0;
+  color: #008000;
+}
+
+.ash-btn {
+  font-size: 14px;
+  margin: 0 auto;
+  width: 90%;
+  background-color: #E1E0E0;
+  color: #383C38;
+  border: 1px solid #383C38;
+  margin-bottom: 40px;
+}
+
+/* Optional: keep icons tidy in the buttons */
+.walletCard .pcard button img {
+  /* ADDED */
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin-right: 8px;
+}
+
+.walletcancel {
+  border-radius: 100%;
+  height: 15px;
+  width: 15px;
+  font-size: 10px;
+  border: 1px solid #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--primary-font);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Mobile nicety: slide in a bit from edges */
+@media (max-width: 480px) {
+
+  /* ADDED */
+  .walletCard .pcard {
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
 }

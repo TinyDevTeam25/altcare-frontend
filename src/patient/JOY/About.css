@@ -1,0 +1,364 @@
+/* Fixed-size canvas centered; scales down on smaller desktop widths */
+.about-wrap {
+  /* Scale factor: keep within viewport width, but never above 1 */
+  --s: min(1, calc((100vw - 16px) / 1440));
+  display: grid;
+  place-items: start center;
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+.about-canvas {
+  position: relative;
+  width: 1440px;
+  height: 2087px;
+  background: #ffffff;
+  transform: scale(var(--s));
+  transform-origin: top center;
+}
+
+/* HERO background */
+.about-hero {
+  position: absolute;
+  left: 0;
+  top: 91px;
+  width: 1440px;
+  height: 965px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+}
+
+/* Heading group block from Figma (Group 2131) */
+.about-hgroup {
+  position: absolute;
+  width: 880px;
+  height: 277px;
+  left: 286px;
+  top: 229px;
+}
+
+/* Title: “Your Health, Your Control” */
+.about-title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 880px;
+  height: 96px;
+
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 96px;
+  letter-spacing: -0.5px;
+  color: #121212;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Intro paragraph */
+.about-intro {
+  position: absolute;
+  left: 0;
+  top: 133px; /* 362 - 229 (relative to group) */
+  width: 865px;
+  height: 144px;
+
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #000000;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-left: 7px; /* tiny nudge so width matches Figma 865 vs 880 */
+}
+
+/* Mission card */
+.about-card.about-card--mission {
+  position: absolute;
+  left: 52px;
+  top: 668px;
+  width: 547px;
+  height: 322px;
+
+  box-sizing: border-box;
+  background: rgba(217, 217, 217, 0.1);
+  border: 1px solid #ffffff;
+  backdrop-filter: blur(7.2px);
+  border-radius: 60px;
+}
+
+/* Mission heading */
+.about-card-heading.about-card-heading--mission {
+  position: absolute;
+  left: 15.07%;
+  top: 32.2%;
+  /* Figma gives percentages; translate to px close to card-left area */
+  /* Approximate to look visually centered over the left card */
+  left: 160px;
+  top: 700px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 96px;
+  letter-spacing: -0.5px;
+  color: #414448;
+}
+
+/* Mission body */
+.about-card-text.about-card-text--mission {
+  position: absolute;
+  left: 74px;
+  top: 780px;
+  width: 464px;
+  height: 216px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #414448;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+/* Vision card */
+.about-card.about-card--vision {
+  position: absolute;
+  left: 796px;
+  top: 668px;
+  width: 547px;
+  height: 322px;
+
+  box-sizing: border-box;
+  background: rgba(217, 217, 217, 0.1);
+  border: 1px solid #ffffff;
+  backdrop-filter: blur(7.2px);
+  border-radius: 60px;
+}
+
+/* Vision heading */
+.about-card-heading.about-card-heading--vision {
+  position: absolute;
+  left: 929px; /* 68.61% of 1440 ≈ 988, slightly nudged for balance */
+  top: 700px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 96px;
+  letter-spacing: -0.5px;
+  color: #414448;
+}
+
+/* Vision body */
+.about-card-text.about-card-text--vision {
+  position: absolute;
+  left: 840px;
+  top: 780px;
+  width: 473px;
+  height: 180px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #222222;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+/* Section title: Empowering Your Health Management */
+.about-section-title {
+  position: absolute;
+  left: 286px;
+  top: 1110px;
+  width: 864px;
+  height: 120px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 60px;
+  letter-spacing: -0.5px;
+  color: #131313;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Offer rectangles */
+.about-offer.about-offer--left {
+  position: absolute;
+  left: 71px;
+  top: 1333px;
+  width: 595px;
+  height: 502px;
+
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 32px;
+}
+
+.about-offer.about-offer--right {
+  position: absolute;
+  left: 745px;
+  top: 1333px;
+  width: 595px;
+  height: 502px;
+
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 32px;
+}
+
+/* Offer headings */
+.about-offer-heading.about-offer-heading--left {
+  position: absolute;
+  left: 255px;
+  top: 1391px;
+  width: 226px;
+  height: 36px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #000000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-offer-heading.about-offer-heading--right {
+  position: absolute;
+  left: 929px;
+  top: 1398px;
+  width: 226px;
+  height: 36px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #000000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Small divider lines inside cards */
+.about-offer-line.about-offer-line--left {
+  position: absolute;
+  left: 275px;
+  top: 1452px;
+  width: 165px;
+  border-top: 0.5px solid #000000;
+}
+
+.about-offer-line.about-offer-line--right {
+  position: absolute;
+  left: 957px;
+  top: 1453px;
+  width: 165px;
+  border-top: 0.5px solid #000000;
+}
+
+/* Offer texts */
+.about-offer-text.about-offer-text--left {
+  position: absolute;
+  left: 166px;
+  top: 1481px;
+  width: 404px;
+  height: 252px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #131313;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.about-offer-text.about-offer-text--right {
+  position: absolute;
+  left: 840px;
+  top: 1483px;
+  width: 404px;
+  height: 252px;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #131313;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.about-card {
+  /* your existing size/position/border styles stay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* horizontal center */
+  justify-content: center; /* vertical center */
+  text-align: center;
+  gap: 16px;
+  padding: 32px;
+}
+
+.about-card-heading {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: #414448; /* use #414448 for Mission, can override for Vision */
+}
+
+.about-card-text {
+  margin: 0;
+  max-width: 464px; /* matches figma content width */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.5px;
+  color: #414448;
+}
+
+/* optional: Vision paragraph slightly darker as in figma */
+.about-card--vision .about-card-text { color: #222222; }
+

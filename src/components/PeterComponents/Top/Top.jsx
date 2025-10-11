@@ -25,7 +25,7 @@ import Card2 from "../Card2/Card2.jsx";
 // It no longer has its own state or useEffect.
 function Top({ userName, isNewUser }) {
   // Determine the welcome message based on the prop.
-  const welcomeText = isNewUser ? "Welcome" : "Welcome back";
+  const welcomeText = isNewUser ? "Welcome" : "Welcome";
   const subText = isNewUser
     ? "Thanks for joining! Your personalized health overview is ready."
     : "Your personalized health overview at a glance.";

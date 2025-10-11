@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import personalInfoIconUrl from "../../assets/user.svg";
-import apiClient from "../../utils/axiosConfig"; // For making API calls
+import apiClient from "../../utils/axiosConfig";
+import { useAuth } from "../../context/AuthContext.jsx";
 
-// The component now accepts the initial user data as a prop
-const PersonalInfoSection = ({ userData }) => {
+const PersonalInfoSection = ({ userData, onProfileUpdate }) => {
+  const { user } = useAuth();
+
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -12,12 +14,14 @@ const PersonalInfoSection = ({ userData }) => {
     address: "",
   });
 
-  // This hook runs when the component loads, populating the form with the user's data
+  // 🔹 Populate form with initial data
   useEffect(() => {
     if (userData) {
       setPersonalInfo({
         fullName: userData.full_name || "",
-        dateOfBirth: userData.date_of_birth ? userData.date_of_birth.split("T")[0] : "",
+        dateOfBirth: userData.date_of_birth
+          ? userData.date_of_birth.split("T")[0]
+          : "",
         gender: userData.gender || "",
         contactNumber: userData.phone || "",
         address: userData.address || "",
@@ -27,30 +31,62 @@ const PersonalInfoSection = ({ userData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPersonalInfo((prevInfo) => ({
-      ...prevInfo,
+    setPersonalInfo((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user?.token) {
+      alert("You must be logged in to update your profile.");
+      return;
+    }
+
     try {
-      // This is the API call to update the profile
-      const response = await apiClient.put("/patient/update-profile", {
+      const payload = {
+        full_name: personalInfo.fullName,
+        date_of_birth: personalInfo.dateOfBirth,
+        gender: personalInfo.gender,
         phone: personalInfo.contactNumber,
         address: personalInfo.address,
-        // Add other fields the backend allows to be updated
+      };
+
+      console.log("🔹 Sending payload:", payload);
+
+      const response = await apiClient.patch("/patient/profile", payload, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       });
-      // It's good practice to update the UI with the confirmed data from the server
-      console.log("Update successful:", response.data);
-      alert("Personal information updated successfully!");
+
+      console.log("✅ Update successful:", response.data);
+      alert("Profile updated successfully!");
+
+      // ✅ Immediately update local state so UI reflects new info
+      setPersonalInfo((prev) => ({
+        ...prev,
+        ...{
+          fullName: payload.full_name,
+          dateOfBirth: payload.date_of_birth,
+          gender: payload.gender,
+          contactNumber: payload.phone,
+          address: payload.address,
+        },
+      }));
+
+      // ✅ Notify parent component if needed
+      if (onProfileUpdate) onProfileUpdate(response.data);
     } catch (err) {
-      console.error("Profile Update Error:", err);
-      alert("Failed to update profile. Please try again.");
+      console.error("❌ Profile Update Error:", err.response?.data || err.message);
+      alert(
+        err.response?.data?.message ||
+          "Failed to update profile. Please try again."
+      );
     }
   };
-
 
   return (
     <section className="profile-section">
@@ -62,9 +98,9 @@ const PersonalInfoSection = ({ userData }) => {
         />
         Personal Information
       </h2>
+
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
-          {/* Full Name (Read-only - users usually can't change their name easily) */}
           <div>
             <label htmlFor="fullName" className="form-label">
               Full Name
@@ -74,11 +110,11 @@ const PersonalInfoSection = ({ userData }) => {
               id="fullName"
               name="fullName"
               value={personalInfo.fullName}
+              onChange={handleChange}
               className="form-input"
-              readOnly 
             />
           </div>
-          {/* Date of Birth (Read-only) */}
+
           <div>
             <label htmlFor="dateOfBirth" className="form-label">
               Date of Birth
@@ -88,25 +124,29 @@ const PersonalInfoSection = ({ userData }) => {
               id="dateOfBirth"
               name="dateOfBirth"
               value={personalInfo.dateOfBirth}
+              onChange={handleChange}
               className="form-input"
-              readOnly 
             />
           </div>
-          {/* Gender (Read-only) */}
+
           <div>
             <label htmlFor="gender" className="form-label">
               Gender
             </label>
-            <input
-              type="text"
+            <select
               id="gender"
               name="gender"
               value={personalInfo.gender}
+              onChange={handleChange}
               className="form-input"
-              readOnly
-            />
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
           </div>
-          {/* Contact Number (Editable) */}
+
           <div>
             <label htmlFor="contactNumber" className="form-label">
               Contact Number
@@ -121,7 +161,7 @@ const PersonalInfoSection = ({ userData }) => {
             />
           </div>
         </div>
-        {/* Address (Editable) */}
+
         <div className="form-field-full-width">
           <label htmlFor="address" className="form-label">
             Address
@@ -135,6 +175,7 @@ const PersonalInfoSection = ({ userData }) => {
             className="form-input"
           />
         </div>
+
         <button type="submit" className="btn-primary">
           Update Personal Info
         </button>

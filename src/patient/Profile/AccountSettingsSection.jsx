@@ -2,6 +2,7 @@ import React from "react";
 // Import the icon files. They will be used as URLs in <img> tags.
 import arrowRightIconUrl from "../../assets/Line-arrow-right.svg";
 import accountSettingsIconUrl from "../../assets/candle-2.svg";
+import { Link } from "react-router-dom";
 
 const AccountSettingsSection = () => {
   return (
@@ -24,11 +25,12 @@ const AccountSettingsSection = () => {
           {/* THIS IS THE FIX: Use an <img> tag */}
           <img src={arrowRightIconUrl} alt="Go" className="arrow-icon" />
         </a>
-        <a href="#" className="account-settings-link">
+
+        <Link to="/patient/settings" className="account-settings-link">
           <span>Manage Notifications</span>
           {/* THIS IS THE FIX: Use an <img> tag */}
           <img src={arrowRightIconUrl} alt="Go" className="arrow-icon" />
-        </a>
+        </Link>
       </div>
     </section>
   );

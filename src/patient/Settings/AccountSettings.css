@@ -1,0 +1,225 @@
+.settings-page {
+  position: relative;
+  min-height: 100vh;
+  background: #F5FFFF;
+  font-family: var(--primary-font, "Poppins", sans-serif);
+}
+
+/* "Settings" label near the top-left */
+.settings-page__title {
+  position: relative;
+  left: 100px;
+  top: 130px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #000;
+}
+
+/* Two-column grid matching figma spacing */
+.settings-layout {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  margin-top: 188px; /* aligns with figma top: 188px for rail start */
+  display: grid;
+  grid-template-columns: 246px 1fr;
+  gap: 40px;
+}
+
+/* Left rail */
+.settings-rail { position: relative; left: -140px; }
+.rail-group { display: grid; gap: 20px; }
+.rail-item { display: flex; align-items: center; gap: 20px; height: 24px; }
+.rail-icon-img { width: 24px; height: 24px; display: block; }
+.rail-text {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: #000;
+  font-weight: 400;
+}
+.rail-text--bold { font-weight: 500; }
+
+/* Right content */
+.settings-main { position: relative; left: -60px; display: grid; gap: 16px; }
+.section-caption {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+/* Field blocks */
+.field-block { display: grid; gap: 5px; }
+.field-label {
+  width: 440px; height: 24px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400; font-size: 12px; line-height: 24px;
+  letter-spacing: -0.5px; color: #000;
+}
+
+.field-row {
+  box-sizing: border-box;
+  width: 440px; height: 44px;
+  border: 0.5px solid #000;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff;
+}
+.field-row--split { justify-content: space-between; }
+
+.field-value, .field-text {
+  font-family: "Inter", sans-serif;
+  font-size: 16px; line-height: 24px;
+  letter-spacing: -0.5px; color: #131313;
+}
+
+.field-input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: "Inter", sans-serif; font-size: 16px; line-height: 24px; color: #131313;
+}
+
+.field-action {
+  margin-left: 8px;
+  background: transparent; border: none; color: #000;
+  font-family: "Inter", sans-serif; font-weight: 500; font-size: 10px; line-height: 24px;
+  cursor: pointer;
+}
+
+/* Save button area */
+.save-wrap { width: 440px; display: flex; justify-content: flex-end; margin-top: 10px; }
+.save-btn {
+  width: 77px; height: 44px; background: #D9D9D9; border-radius: 10px;
+  border: none; color: #fff; font-family: "Inter", sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;
+}
+
+/* Delete row */
+.delete-row {
+  width: 438px;
+  border-top: 0.5px solid #000; border-bottom: 0.5px solid #000;
+  padding: 30px 0; margin-top: 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.delete-label {
+  font-family: "Inter", sans-serif; font-size: 16px; line-height: 24px; color: #000;
+}
+.delete-btn {
+  width: 108px; height: 44px; background: #F10808; border-radius: 10px;
+  border: none; color: #fff; font-family: "Inter", sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;
+}
+
+/* Modal */
+.set-modal__backdrop {
+  position: fixed; inset: 0; background: rgba(11, 19, 32, .55);
+  display: grid; place-items: center; z-index: 9999;
+}
+.set-modal {
+  width: min(560px, 94vw);
+  background: #fff; border: 1px solid #eef2f7; border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  padding: 20px; font-family: var(--primary-font, "Poppins", sans-serif);
+}
+.set-modal__title { margin: 0; font-size: 18px; font-weight: 700; color: #0b1320; }
+.set-modal__desc { color: #6b7280; margin-top: 6px; }
+.set-modal__warn {
+  margin-top: 12px; padding: 12px; border: 1px solid #fee2e2;
+  background: #fef2f2; color: #991b1b; border-radius: 10px;
+}
+.set-modal__input {
+  margin-top: 12px; width: 100%; padding: 10px 12px;
+  border-radius: 10px; border: 1px solid #e5e7eb; outline: none;
+}
+.set-modal__actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.set-btn { border: 1px solid transparent; border-radius: 10px; padding: 10px 14px; font-weight: 600; cursor: pointer; }
+.set-btn--ghost { border-color: #e5e7eb; background: #fff; color: #374151; }
+.set-btn--danger { background: #b91c1c; color: #fff; }
+.set-btn.is-disabled { opacity: .6; cursor: not-allowed; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .settings-layout { grid-template-columns: 1fr; gap: 24px; margin-top: 160px; }
+  .settings-rail, .settings-main { left: 0; }
+  .save-wrap, .delete-row { width: 100%; }
+  .field-row, .field-block .field-label { width: 100%; }
+}
+
+/* --- Extra small refinements --- */
+@media (max-width: 640px) {
+  .settings-page__title {
+    left: 16px;         /* was 100px in figma */
+    top: 90px;          /* a little tighter */
+    font-size: 18px;
+  }
+
+  .settings-layout {
+    margin-top: 120px;  /* pull content up a bit */
+    padding: 0 16px;    /* side breathing room */
+  }
+
+  .rail-item { gap: 12px; }
+  .rail-text { font-size: 14px; }
+
+  .section-caption { font-size: 14px; }
+
+  .field-row {
+    height: auto;            /* allow wrapping */
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+
+  .field-input, .field-text, .field-value {
+    font-size: 15px;
+  }
+
+  .field-action {
+    font-size: 11px;
+    padding: 6px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+
+  .save-wrap { justify-content: stretch; }
+  .save-btn {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .delete-row {
+    gap: 12px;
+    flex-wrap: wrap;          /* let label & button wrap */
+  }
+
+  .delete-btn {
+    width: 100%;
+    height: 44px;
+  }
+
+  .set-modal {
+    width: calc(100vw - 24px);
+    padding: 16px;
+  }
+}
+
+/* Make the left rail look like a horizontal list on very small screens (optional) */
+@media (max-width: 480px) {
+  .rail-group {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+  }
+  .rail-item {
+    height: auto;
+    padding: 8px 10px;
+    border: 1px solid #eef2f7;
+    border-radius: 10px;
+    background: #fff;
+  }
+}

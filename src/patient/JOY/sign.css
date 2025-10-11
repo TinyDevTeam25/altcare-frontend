@@ -1,21 +1,19 @@
-
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-   box-sizing: border-box;
-} 
+  box-sizing: border-box;
+}
 
-
-body{
-  height:100vh;
+body {
+  height: 100vh;
 }
 
 .cont {
   display: flex;
   justify-content: space-between;
-  padding:70px 0 110px 0;
+  padding: 70px 0 110px 0;
   margin: 0 auto;
 
   /* background-color: "#fff";
@@ -25,87 +23,84 @@ body{
   max-width: "450px";
   box-shadow: "0 4px 20px rgba(0,0,0,0.05)"; */
 }
-form{
+form {
   width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
-  gap:20px;
-} 
-.text{
+  gap: 20px;
+}
+.text {
   text-align: center;
 }
-.text h2:first-child{
+.text h2:first-child {
   font-size: 36px;
   font-weight: 700;
-  color: #38B2AC;
+  color: #38b2ac;
   letter-spacing: -0.5px;
   line-height: 54px;
 }
-.welcome{
+.welcome {
   font-size: 32px;
   color: #121;
   line-height: 48px;
   letter-spacing: -0.5px;
   font-weight: 500;
 }
-.text h2:last-child{
+.text h2:last-child {
   font-size: 24px;
   line-height: 36px;
   letter-spacing: -0.5px;
   margin-bottom: 15px;
 }
-.const img{
-    width: 610px;
-    height: auto;
+.const img {
+  width: 610px;
+  height: auto;
 }
-.the-form{
+.the-form {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
-.form{
- width: 650px;
- height: 700px;
- display: flex;
- flex-direction: column;
- row-gap:30px ;
-padding: 0 90px 90px;
+.form {
+  width: 650px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  padding: 0 90px 90px;
 }
-.field{
+.field {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.fieldd{
+.fieldd {
   display: flex;
   justify-content: start;
   align-items: center;
   column-gap: 5px;
 }
-.fieldd input{
+.fieldd input {
   width: 30px;
   height: 30px;
   color: #131;
 }
-.fieldd label span{
-  color: #D9D9D9;
+.fieldd label span {
+  color: #d9d9d9;
 }
-.foot{
+.foot {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top:5px;
+  padding-top: 5px;
 }
-
 
 /* registration css */
 
-
 /* Article Section */
-.all{
-  background-color:#F5FFFF;
+.all {
+  background-color: #f5ffff;
 }
 article {
   display: flex;
@@ -113,151 +108,166 @@ article {
   gap: 10px;
   text-align: center;
   padding: 2rem 1rem;
-  
 }
 
 article h1 {
-    color: #008080;
+  color: #008080;
   font-weight: 600;
-    font-size: 36px;
+  font-size: 36px;
 }
 
 article h2 {
-    font-weight: 600;
-   font-size: 32px;
+  font-weight: 600;
+  font-size: 32px;
 }
 
 article p {
-    color: #555;
-    font-size: 1rem;
-    max-width: 400px;
-    margin: 0 auto;
+  color: #555;
+  font-size: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 /* Form Styling */
 .formm {
-    background-color: #fff;
-    max-width: 600px;
-    margin: 1rem auto 3rem auto;
-    padding: 2rem;
-    border-radius: 10px;
-    /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
+  background-color: #fff;
+  max-width: 600px;
+  margin: 1rem auto 3rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
 }
 
 /* Input Container */
 .inputContainer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
 }
 
 /* Label */
 .la {
-    margin-bottom: 0.5rem;
-    font-weight: 400;
-    color: #333;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: #333;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
 }
 
 /* Input & Select */
 .in {
-    padding: 0.7rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
 .in:focus {
-    border-color: #008080;
+  border-color: #008080;
 }
-input::placeholder{
+input::placeholder {
   color: gray;
   font-size: 14px;
 }
-input[type="date"]{
-  color:gray
-}
-.select{
+input[type="date"] {
   color: gray;
 }
- 
- .select option:first-child {
+.select {
+  color: gray;
+}
+
+.select option:first-child {
   color: #333;
 }
 /* Textarea */
 .tex {
-    padding: 0.7rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    resize: vertical;
-    min-height: 80px;
-    outline: none;
-    transition: border-color 0.3s;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
 .tex:focus {
-    border-color: #008080;
+  border-color: #008080;
 }
 
 /* Emergency Contact Title */
 h1 {
-    color: #008080;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+  color: #008080;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 /* Button */
 button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #008080;
-    color: #fff;
-    font-weight: 600;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #008080;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #006666;
+  background-color: #006666;
 }
 
 /* Responsive */
 
-   @media screen and (max-width: 801px) {
-.cont img{display: none;}
-.cont{ margin:0 auto;  }
-.the-form{ width: 100%; display: flex;}
-.form{ width: 100%; 
-  padding:60px;
-  margin: 0 auto;
+@media screen and (max-width: 801px) {
+  .cont img {
+    display: none;
+  }
+  .cont {
+    margin: 0 auto;
+  }
+  .the-form {
+    width: 100%;
+    display: flex;
+     min-height: 40vh;
   }
 
+ 
 
-
-    form{ display: flex;
-      flex: 1;
-      width:100%;
-      padding:0;}
-      
-   }
-
-   @media screen and (max-width: 400px) {
-.cont img{display: none;}
-.cont {
-  margin: 0 auto; padding:40px}
-.the-form{ width: 100%; display: flex;}
-.form{ width: 100%; 
-  height:80vh;
-  padding:40px 0;
-  margin: 0 auto;
+  div.form {
+    display: flex;
+    flex: 1;
+    
+    padding:30px ;
   }
-   Footer{display:none;}
+}
+
+@media screen and (max-width: 450px) {
+  .cont img {
+    display: none;
   }
+  .cont {
+    margin: 0 auto;
+  }
+  .the-form {
+    width: 100%;
+    display: flex;
+  }
+  .form {
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  div.foot { width: 100%;
+    margin-top: 20px;
+  padding: 0 10px;
+  gap: 10px;
+  }
+}

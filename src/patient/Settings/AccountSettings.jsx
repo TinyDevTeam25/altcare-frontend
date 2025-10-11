@@ -1,113 +1,60 @@
 import React, { useMemo, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import apiClient from "../../utils/axiosConfig.js";
 import { toast } from "react-toastify";
+import "./AccountSettings.css";
+import iconUser from "../../assets/user.svg";
+import iconCard from "../../assets/card.png";
+import iconMessages from "../../assets/messages.png";
+import iconEyeSlash from "../../assets/eye-slash.svg";
+import iconLink from "../../assets/link.png";
 
 /* ===========================
    Small inline confirm modal
    =========================== */
 function DeleteAccountModal({ open, onClose, onConfirm, loading }) {
   const [text, setText] = useState("");
-
   if (!open) return null;
   const canDelete = text.trim().toUpperCase() === "DELETE";
 
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(11,19,32,0.55)",
-        display: "grid",
-        placeItems: "center",
-        zIndex: 9999,
-      }}
-    >
+    <div className="set-modal__backdrop" onClick={onClose}>
       <div
-        onClick={(e) => e.stopPropagation()}
+        className="set-modal"
         role="dialog"
         aria-modal="true"
-        style={{
-          width: "min(560px, 94vw)",
-          background: "#fff",
-          border: "1px solid #eef2f7",
-          borderRadius: 12,
-          boxShadow: "0 10px 30px rgba(0,0,0,.08)",
-          padding: 20,
-          fontFamily: "var(--primary-font, Poppins, sans-serif)",
-        }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>
-          Delete account
-        </h3>
-        <p style={{ color: "#6b7280", marginTop: 6 }}>
+        <h3 className="set-modal__title">Delete account</h3>
+        <p className="set-modal__desc">
           This will permanently remove your profile and data from AltCare. This
           action cannot be undone.
         </p>
 
-        <div
-          style={{
-            marginTop: 12,
-            padding: 12,
-            border: "1px solid #fee2e2",
-            background: "#fef2f2",
-            color: "#991b1b",
-            borderRadius: 10,
-          }}
-        >
+        <div className="set-modal__warn">
           Type <strong>DELETE</strong> to confirm.
         </div>
 
         <input
+          className="set-modal__input"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="DELETE"
-          style={{
-            marginTop: 12,
-            width: "100%",
-            padding: "10px 12px",
-            borderRadius: 10,
-            border: "1px solid #e5e7eb",
-            outline: "none",
-          }}
         />
 
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-            justifyContent: "flex-end",
-            marginTop: 16,
-          }}
-        >
+        <div className="set-modal__actions">
           <button
+            className="set-btn set-btn--ghost"
             onClick={onClose}
-            style={{
-              border: "1px solid #e5e7eb",
-              background: "#fff",
-              color: "#374151",
-              padding: "10px 14px",
-              borderRadius: 10,
-              cursor: "pointer",
-            }}
             disabled={loading}
           >
             Cancel
           </button>
           <button
-            onClick={() => onConfirm()}
+            className={`set-btn set-btn--danger ${!canDelete ? "is-disabled" : ""}`}
+            onClick={onConfirm}
             disabled={!canDelete || loading}
-            style={{
-              border: "none",
-              background: canDelete ? "#b91c1c" : "#ef4444",
-              color: "#fff",
-              padding: "10px 14px",
-              borderRadius: 10,
-              cursor: canDelete && !loading ? "pointer" : "not-allowed",
-              opacity: loading ? 0.8 : 1,
-            }}
           >
             {loading ? "Deleting…" : "Delete account"}
           </button>
@@ -122,19 +69,28 @@ function DeleteAccountModal({ open, onClose, onConfirm, loading }) {
    =========================== */
 export default function AccountSettings() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); // we’ll try to read token from context first
+  const { user, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   // Try to obtain a bearer token from several common places
-  const token = useMemo(() => {
-    return (
+  const token = useMemo(
+    () =>
       user?.token ||
       user?.accessToken ||
       localStorage.getItem("token") ||
-      localStorage.getItem("accessToken")
-    );
-  }, [user]);
+      localStorage.getItem("accessToken"),
+    [user]
+  );
+
+  const email =
+    user?.profile?.profile?.email || user?.profile?.email || "janedoe@example.com";
+
+  // Demo controlled inputs for editable rows
+  const [phone, setPhone] = useState("123 456 7890");
+  const [country, setCountry] = useState("Country");
+  const [stateProv, setStateProv] = useState("State or Province");
+  const [lga, setLga] = useState("LGA");
 
   const handleDelete = async () => {
     if (!token) {
@@ -144,15 +100,12 @@ export default function AccountSettings() {
     }
     setDeleting(true);
     try {
-      // IMPORTANT: call your backend endpoint
       await apiClient.delete("patient/deleteMe", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       toast.success("Your account has been deleted.");
-      // Clear any local auth, then take the user home
       logout?.();
-
       localStorage.removeItem("token");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("registrationToken");
@@ -168,7 +121,6 @@ export default function AccountSettings() {
       toast.error(msg);
       if (err?.response?.status === 401 || err?.response?.status === 403) {
         logout?.();
-
         navigate("/signin");
       }
     } finally {
@@ -176,141 +128,142 @@ export default function AccountSettings() {
     }
   };
 
-  // Simple 2-column layout scaffold; header/footer come from your layout
   return (
-    <div
-      style={{
-        background: "#F5FFFF", // per your note
-        minHeight: "100vh",
-        fontFamily: "var(--primary-font, Poppins, sans-serif)",
-      }}
-    >
-      <main
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "24px 16px 60px",
-          display: "grid",
-          gridTemplateColumns: "280px 1fr",
-          gap: 24,
-        }}
-      >
-        {/* Left rail – simple settings nav (optional links) */}
-        <aside
-          style={{
-            background: "#fff",
-            border: "1px solid #eef2f7",
-            borderRadius: 12,
-            padding: 16,
-            height: "fit-content",
-          }}
-        >
-          <h2 style={{ margin: "0 0 10px", fontSize: 18 }}>Settings</h2>
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "grid",
-              gap: 8,
-            }}
-          >
-            <li>
-              <Link to="#" style={{ color: "#111827", textDecoration: "none" }}>
-                Account Details
-              </Link>
-            </li>
-            <li>
-              <Link to="#" style={{ color: "#111827", textDecoration: "none" }}>
-                Payment Methods
-              </Link>
-            </li>
-            <li>
-              <Link to="#" style={{ color: "#111827", textDecoration: "none" }}>
-                Communication Preferences
-              </Link>
-            </li>
-            <li>
-              <Link to="#" style={{ color: "#111827", textDecoration: "none" }}>
-                Privacy
-              </Link>
-            </li>
-            <li>
-              <Link to="#" style={{ color: "#111827", textDecoration: "none" }}>
-                Linked Accounts
-              </Link>
-            </li>
-          </ul>
+    <div className="settings-page">
+
+      <div className="settings-page__title">Settings</div>
+
+      <div className="settings-layout">
+        {/* Left rail with REAL icons */}
+        <aside className="settings-rail">
+          <div className="rail-group">
+            <div className="rail-item">
+              <img className="rail-icon-img" src={iconUser} alt="Account details" />
+              <span className="rail-text rail-text--bold">Account Details</span>
+            </div>
+
+            <div className="rail-item">
+              <img className="rail-icon-img" src={iconCard} alt="Payment methods" />
+              <span className="rail-text">Payment Methods</span>
+            </div>
+
+            <div className="rail-item">
+              <img
+                className="rail-icon-img"
+                src={iconMessages}
+                alt="Communication preferences"
+              />
+              <span className="rail-text">Communication Preferences</span>
+            </div>
+
+            <div className="rail-item">
+              <img className="rail-icon-img" src={iconEyeSlash} alt="Privacy" />
+              <span className="rail-text">Privacy</span>
+            </div>
+
+            <div className="rail-item">
+              <img className="rail-icon-img" src={iconLink} alt="Linked accounts" />
+              <span className="rail-text">Linked Accounts</span>
+            </div>
+          </div>
         </aside>
 
         {/* Right content */}
-        <section style={{ display: "grid", gap: 16 }}>
-          {/* Account details card (read-only demo; you can wire edits later) */}
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #eef2f7",
-              borderRadius: 12,
-              padding: 16,
-            }}
-          >
-            <h3 style={{ margin: 0, fontSize: 18 }}>Account Details</h3>
-            <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
-              <div>
-                <label style={{ color: "#6b7280", fontSize: 13 }}>Email</label>
-                <div style={{ fontWeight: 600 }}>
-                  {user?.profile?.profile?.email || user?.profile?.email || "—"}
-                </div>
-              </div>
-              <div>
-                <label style={{ color: "#6b7280", fontSize: 13 }}>
-                  Full Name
-                </label>
-                <div style={{ fontWeight: 600 }}>
-                  {user?.profile?.profile?.full_name ||
-                    user?.patient?.full_name ||
-                    "—"}
-                </div>
-              </div>
+        <section className="settings-main">
+          <div className="section-caption">Account Details</div>
+
+          {/* Email (read-only visual) */}
+          <div className="field-block">
+            <label className="field-label">Email</label>
+            <div className="field-row">
+              <div className="field-value">{email}</div>
             </div>
           </div>
 
-          {/* Danger zone */}
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #fee2e2",
-              borderRadius: 12,
-              padding: 16,
-            }}
-          >
-            <h3 style={{ margin: 0, fontSize: 18, color: "#991b1b" }}>
-              Delete Account
-            </h3>
-            <p style={{ color: "#6b7280", marginTop: 6 }}>
-              Permanently remove your account and data from AltCare. This action
-              cannot be undone.
-            </p>
-
-            <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+          {/* Password (masked with Edit pill) */}
+          <div className="field-block">
+            <label className="field-label">Password</label>
+            <div className="field-row field-row--split">
+              <div className="field-text">********</div>
               <button
-                onClick={() => setShowModal(true)}
-                style={{
-                  border: "1px solid #ef4444",
-                  background: "#fff",
-                  color: "#ef4444",
-                  padding: "10px 14px",
-                  borderRadius: 10,
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                className="field-action"
+                type="button"
+                onClick={() => toast.info("Password edit coming soon")}
               >
-                Delete my account
+                Edit
               </button>
             </div>
           </div>
+
+          {/* Phone (editable demo) */}
+          <div className="field-block">
+            <label className="field-label">Phone Number</label>
+            <div className="field-row field-row--split">
+              <input
+                className="field-input"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <button
+                className="field-action"
+                type="button"
+                onClick={() => toast.success("Phone saved (demo)")}
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+
+          {/* Country / State / LGA blocks */}
+          <div className="field-block">
+            <label className="field-label">Phone Number</label>
+            <div className="field-row">
+              <input
+                className="field-input"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              />
+            </div>
+            <div className="field-row">
+              <input
+                className="field-input"
+                value={stateProv}
+                onChange={(e) => setStateProv(e.target.value)}
+              />
+            </div>
+            <div className="field-row">
+              <input
+                className="field-input"
+                value={lga}
+                onChange={(e) => setLga(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Save button (right aligned) */}
+          <div className="save-wrap">
+            <button
+              className="save-btn"
+              type="button"
+              onClick={() => toast.success("Saved (demo)")}
+            >
+              Save
+            </button>
+          </div>
+
+          {/* Delete row */}
+          <div className="delete-row">
+            <div className="delete-label">Delete Account</div>
+            <button
+              type="button"
+              className="delete-btn"
+              onClick={() => setShowModal(true)}
+            >
+              Delete
+            </button>
+          </div>
         </section>
-      </main>
+      </div>
 
       {/* Confirmation modal */}
       <DeleteAccountModal

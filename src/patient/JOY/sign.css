@@ -238,7 +238,7 @@ button:hover {
      min-height: 40vh;
   }
 
- 
+ .testimonial{width: 100%;}
 
   div.form {
     display: flex;

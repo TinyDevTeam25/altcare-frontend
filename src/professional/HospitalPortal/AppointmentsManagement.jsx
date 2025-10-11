@@ -160,15 +160,15 @@ function AppointmentsManagement() {
     );
   };
 
-  const handleCancelAppointment = (appointmentId) => {
-    setAppointments(prev => 
-      prev.map(apt => 
-        apt.id === appointmentId 
-          ? { ...apt, status: "cancelled" }
-          : apt
-      )
-    );
-  };
+//   const handleCancelAppointment = (appointmentId) => {
+//     setAppointments(prev => 
+//       prev.map(apt => 
+//         apt.id === appointmentId 
+//           ? { ...apt, status: "cancelled" }
+//           : apt
+//       )
+//     );
+//   };
 
   // Filter appointments
   const filteredAppointments = appointments.filter(appointment => {
@@ -379,14 +379,14 @@ function AppointmentsManagement() {
                       Mark Complete
                     </button>
                   )}
-                  {appointment.status !== "completed" && appointment.status !== "cancelled" && (
+                  {/* {appointment.status !== "completed" && appointment.status !== "cancelled" && (
                     <button 
                       className="action-btn cancel"
                       onClick={() => handleCancelAppointment(appointment.id)}
                     >
-                      Cancel
+                     <XCircle/>
                     </button>
-                  )}
+                  )} */}
                 </div>
               </div>
             ))}

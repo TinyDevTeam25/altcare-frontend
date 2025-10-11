@@ -1,0 +1,43 @@
+/* Scaling wrapper to keep a 1480px-wide absolute canvas visible on smaller screens */
+.contact-wrap {
+  /* Compute a safe scale factor between 0.5x and 1x */
+  --s: clamp(0.5, calc((100vw - 16px) / 1480px), 1);
+
+  display: grid;
+  place-items: start center;
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* The fixed-size canvas that contains the absolute-positioned content */
+.contact-canvas {
+  width: 1480px;
+  height: 2823px;
+
+  /* Primary transform using the CSS var (works in modern browsers) */
+  transform: scale(var(--s));
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Fallback: if your browser ever flags the var (rare), this keeps layout usable */
+@supports not (transform: scale(var(--s))) {
+  .contact-canvas {
+    transform: scale(calc((100vw - 16px) / 1480));
+  }
+}
+
+/* On large screens, don’t scale at all */
+@media (min-width: 1480px) {
+  .contact-canvas {
+    transform: none;
+  }
+}
+
+/* Minor readability tweaks on very small widths (optional) */
+@media (max-width: 600px) {
+  .contact-wrap {
+    padding-bottom: 24px;
+  }
+}

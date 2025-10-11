@@ -310,23 +310,6 @@ figcaption p:last-child {
   line-height: 36px;
 }
 
-
-.figma-scale-wrap {
-  --s: min(1, calc(100vw / 1480));
-  display: grid;
-  place-items: start center;
-  width: 100%;
-  overflow-x: hidden;
-  padding-bottom: 40px;
-}
-
-.figma-scale-inner {
-  width: 1480px;            
-  transform: scale(var(--s));
-  transform-origin: top center;
-}
-
-
 /* ================================= */
 /* --      SHARED FOOTER          -- */
 /* ================================= */

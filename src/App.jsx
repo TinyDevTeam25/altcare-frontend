@@ -121,6 +121,7 @@ import SignUp from "./patient/JOY/SignUp.jsx";
 import Registration from "./patient/JOY/Registration.jsx";
 import FeaturesPage from "./patient/JOY/Features.jsx";
 import ContactPage from "./patient/JOY/Contact.jsx";
+import PrivacyPolicy from "./patient/JOY/PrivacyPolicy.jsx";
 import VerifyEmailPage from "./patient/JOY/VerifyEmailPage.jsx";
 import ForgotPasswordPage from "./patient/JOY/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./patient/JOY/ResetPasswordPage.jsx";
@@ -160,6 +161,7 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/features" element={<FeaturesPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/registration" element={<Registration />} />

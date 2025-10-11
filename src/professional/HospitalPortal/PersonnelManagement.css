@@ -1,0 +1,385 @@
+.personnel-management {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.personnel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.personnel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-wrap: nowrap;
+}
+
+.personnel-title h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+}
+
+.title-icon {
+  width: 28px;
+  height: 28px;
+  color: #38B2AC;
+}
+
+.add-personnel-btn {
+    width:max-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #38B2AC;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-personnel-btn:hover {
+  background-color: #319795;
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.personnel-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #38B2AC;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #e6fffa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38B2AC;
+}
+
+.stat-icon.active {
+  background-color: #f0fff4;
+  color: #38a169;
+}
+
+.stat-icon.pending {
+  background-color: #fffaf0;
+  color: #dd6b20;
+}
+
+.stat-content h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+}
+
+.stat-content p {
+  color: #718096;
+  margin: 0;
+  font-size: 14px;
+}
+
+.personnel-controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #a0aec0;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #38B2AC;
+  box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+}
+
+.role-filter {
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 14px;
+  min-width: 150px;
+  cursor: pointer;
+}
+
+.role-filter:focus {
+  outline: none;
+  border-color: #38B2AC;
+  box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #718096;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #38B2AC;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #718096;
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  color: #cbd5e0;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  margin-bottom: 24px;
+  max-width: 400px;
+}
+
+.personnel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.personnel-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.personnel-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.personnel-info {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.personnel-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #38B2AC;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.personnel-details {
+  flex: 1;
+}
+
+.personnel-details h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 4px 0;
+}
+
+.personnel-email {
+  color: #4a5568;
+  font-size: 14px;
+  margin: 0 0 2px 0;
+}
+
+.personnel-phone {
+  color: #718096;
+  font-size: 13px;
+  margin: 0 0 8px 0;
+}
+
+.personnel-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personnel-role {
+  background-color: #e6fffa;
+  color: #38B2AC;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background-color: #f0fff4;
+  color: #38a169;
+}
+
+.status-badge.pending {
+  background-color: #fffaf0;
+  color: #dd6b20;
+}
+
+.status-badge.inactive {
+  background-color: #fed7d7;
+  color: #e53e3e;
+}
+
+.personnel-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn.approve {
+  background-color: #38a169;
+  color: white;
+}
+
+.action-btn.approve:hover {
+  background-color: #2f855a;
+}
+
+.action-btn.activate {
+  background-color: #38B2AC;
+  color: white;
+}
+
+.action-btn.activate:hover {
+  background-color: #319795;
+}
+
+.action-btn.deactivate {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.action-btn.deactivate:hover {
+  background-color: #c53030;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .personnel-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+  
+  .personnel-controls {
+    flex-direction: column;
+  }
+  
+  .search-box {
+    min-width: auto;
+  }
+  
+  .personnel-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .personnel-stats {
+    grid-template-columns: 1fr;
+  }
+}

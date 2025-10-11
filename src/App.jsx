@@ -148,6 +148,7 @@ import ProfessionalAppointmentDetailsPage from "./professional/appointment-detai
 import HospitalSignin from "./professional/Register/hospitalSignin.jsx";
 import HospitalRegister from "./professional/Register/hospitalRegister.jsx";
 import PractitionerRegister from "./professional/Register/practitionerRegister.jsx";
+import HospitalPortal from "./professional/HospitalPortal/HospitalPortal.jsx";
 
 import AccountSettings from "./patient/Settings/AccountSettings.jsx";
 
@@ -199,7 +200,7 @@ function App() {
         </Route>
       </Route>
 
-      {/* --- Professional Route --- */}
+      {/* --- Professional Routes --- */}
       <Route
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
@@ -217,12 +218,11 @@ function App() {
         element={<PractitionerRegister />}
       />
 
-
-      {/* --- Professional Routes --- */}
-      <Route path="/professional/appointment-details" element={<ProfessionalAppointmentDetailsPage />} />
-      <Route path="/professional/hospital-signin" element={<HospitalSignin />} />
-      <Route path="/professional/hospital-register" element={<HospitalRegister />} />
-      <Route path="/professional/practitioner-register" element={<PractitionerRegister />} />
+      {/* --- Hospital Portal Route --- */}
+      <Route
+        path="/hospital-portal/*"
+        element={<HospitalPortal />}
+      />
  
     </Routes>
   );

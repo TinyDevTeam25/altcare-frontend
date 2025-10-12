@@ -1,0 +1,387 @@
+/* Success Page Container */
+.success-container {
+  min-height: 100vh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Success Card */
+.success-card {
+  width: 100%;
+  max-width: 56rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Success Header */
+.success-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.success-icon {
+  width: 4rem;
+  height: 4rem;
+  background-color: #d1fae5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.checkmark-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #059669;
+  stroke-width: 2;
+}
+
+.success-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.success-subtitle {
+  color: #4b5563;
+}
+
+/* Hospital ID Section */
+.hospital-id-box {
+  background-color: #d1fae5;
+  border: 2px solid #0d9488;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hospital-id-heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.id-content-wrapper {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.id-description {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.id-display-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9fafb;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+}
+
+.id-code {
+  color: #0d9488;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  word-break: break-all;
+}
+
+.copy-id-btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d9488;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.copy-id-btn:hover {
+  background-color: #0f766e;
+}
+
+.id-warning-box {
+  background-color: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+}
+
+.warning-text {
+  font-size: 0.875rem;
+  color: #78350f;
+}
+
+/* Hospital Details Section */
+.hospital-details-box {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.details-heading {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.75rem;
+}
+
+.details-space {
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-label {
+  color: #4b5563;
+  width: 8rem;
+}
+
+.detail-value {
+  color: #111827;
+  font-weight: 500;
+}
+
+/* Button Space */
+.button-space {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-btn,
+.register-another-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-size: 1rem;
+  text-decoration: none;
+  display: block;
+}
+
+.login-btn {
+  background-color: #0d9488;
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: #0f766e;
+}
+
+.register-another-btn {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.register-another-btn:hover {
+  background-color: #e5e7eb;
+}
+
+/* Register Page */
+.register-page {
+  min-height: 100vh;
+  background-color: #d1fae5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.register-form-card {
+  width: 100%;
+  max-width: 28rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Register Header */
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0d9488;
+  margin-bottom: 1rem;
+}
+
+.register-page-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.register-subtitle {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* Alerts */
+.success-alert {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #d1fae5;
+  border: 1px solid #a7f3d0;
+  border-radius: 0.5rem;
+}
+
+.success-alert-text {
+  color: #065f46;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+.error-alert {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+}
+
+.error-alert-text {
+  color: #991b1b;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* Form */
+.form-space {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-section-heading {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  border: 1px solid;
+}
+
+.input-normal-border {
+  border-color: #d1d5db;
+}
+
+.form-input:focus {
+  background-color: white;
+  border-color: #0d9488 !important;
+  outline: none;
+}
+
+.input-error-border {
+  border-color: #ef4444;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* Hospital Info Section */
+.hospital-info-section {
+  margin-top: 2rem;
+}
+
+/* Submit Button */
+.register-submit-btn {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.btn-enabled {
+  background-color: #0d9488;
+}
+
+.btn-enabled:hover {
+  background-color: #0f766e;
+}
+
+.btn-disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Login Prompt */
+.login-prompt {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.login-link {
+  color: #0d9488;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-link:hover {
+  color: #0f766e;
+}

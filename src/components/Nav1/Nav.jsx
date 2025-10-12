@@ -2,6 +2,7 @@ import "../../index.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import MenuBar from "../../assets/menu.png";
+import HospitalRegister from "../../professional/Register/hospitalRegister";
 import { useState } from "react";
 function handleAnchorClick(e, href) {
   if (href.startsWith("#")) {
@@ -25,6 +26,7 @@ export default function Nav({
     padding: "10px 20px",
   },
   linkTo = "/signin",
+  pTextLink = "/professional/hospital-register",
 }) {
   let [showNav, setShowNav] = useState(false);
   return (
@@ -64,11 +66,13 @@ export default function Nav({
           className="hidden"
           style={{ display: "flex", gap: "20px", alignItems: "center" }}
         >
-          <P
-            style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}
-          >
-            {pText}
-          </P>
+          <Link to={pTextLink} style={{ textDecoration: "none" }}>
+            <P
+              style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}
+            >
+              {pText}
+            </P>
+          </Link>
           <Link to={linkTo}>
             <Button style={buttonStyle}>{buttonText}</Button>
           </Link>

@@ -147,6 +147,13 @@ import VideoCall from "./patient/booking/VideoCall.jsx";
 
 // --- Professional Pages ---
 import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
+import ProfessionalDashboard from "./professional/dashboard/professionaldashboard.jsx";
+// You will need to create this page for Immunizations
+// import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
+import VerifyEmailPage from "./patient/JOY/VerifyEmailPage.jsx";
+import ForgotPasswordPage from "./patient/JOY/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "./patient/JOY/ResetPasswordPage.jsx";
+import ProtectedRoute from "./layouts/ProtectedRoute.jsx";
 import HospitalSignin from "./professional/Register/hospitalSignin.jsx";
 import HospitalRegister from "./professional/Register/hospitalRegister.jsx";
 import PractitionerRegister from "./professional/Register/practitionerRegister.jsx";
@@ -210,6 +217,10 @@ function App() {
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
+      <Route path="/professional/dashboard" element={<ProfessionalDashboard />} />
+      <Route path="/professional/hospital-signin" element={<HospitalSignin />} />
+      <Route path="/professional/hospital-register" element={<HospitalRegister />} />
+      <Route path="/professional/practitioner-register" element={<PractitionerRegister />} /> 
       <Route
         path="/professional/hospital-signin"
         element={<HospitalSignin />}

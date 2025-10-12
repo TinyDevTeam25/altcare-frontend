@@ -309,7 +309,7 @@ import doctorLeft from "../../assets/doctor1.png";   // Left feature image (anot
 import fileMedicalAlt from "../../assets/file-medical.png";   // left card icon
 import fileMedical from "../../assets/file-medical-alt.png";          // middle card icon
 import medicalRibbon from "../../assets/medical-ribbon.png";      // right card icon
-
+// import "./Features.css";  // Page-specific CSS (scaling + responsiveness)
 const mainLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },

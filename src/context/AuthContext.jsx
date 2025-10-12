@@ -219,7 +219,7 @@ import React, { createContext, useState, useEffect, useContext, useRef } from "r
 const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
 
-const SESSION_TIMEOUT_MINUTES = 2;
+const SESSION_TIMEOUT_MINUTES = 30; // 30 minutes
 const WARNING_BEFORE_EXPIRY_MS = 1 * 60 * 1000; // 1 minute
 
 function getExpiryTimestamp() {

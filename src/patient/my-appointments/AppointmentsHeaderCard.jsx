@@ -9,7 +9,7 @@ function AppointmentsHeaderCard() {
       <p className="page-subtitle">
         Manage your upcoming and past medical appointments.
       </p>
-      <Link to="/appointments/schedule" className="button-schedule">
+      <Link to="/patient/book-appointment" className="button-schedule">
         <img src={plusIcon} alt="Schedule New Appointment" />
         <span>Schedule New Appointment</span>
       </Link>

@@ -182,7 +182,7 @@ import "./ProfileCard.css";
 import LogOut from "../../../assets/logout.png";
 import image from "../../../assets/jane-doe-avatar.png";
 import camera from "../../../assets/camera.png";
-import CopyIcon from "../../../assets/camera.png"; // ⬅️ NEW: Import a copy icon (you'll need to create/find this asset)
+import CopyIcon from "../../../assets/copy.png"; // ⬅️ NEW: Import copy icon image
 
 /** ─────────────────────────────────────────────────────────────
  * Inline, self-contained Logout Caution Modal
@@ -458,16 +458,24 @@ const ProfileCard = ({ setshowProfileCard }) => {
                   : "Jane Doe"}
               </p>
               {/* Display and allow copying of user ID */}
-              <div className="user-id-wrapper"> {/* Add this wrapper */}
-                <p>ID: {userId}</p>
+              <div className="user-id-wrapper">
+                <p className="user-id-text">ID: {userId}</p>
+
                 <button
                   className="copy-id-btn"
                   onClick={() => copyToClipboard(userId)}
                   title="Copy ID to clipboard"
+                  aria-label="Copy ID to clipboard"
+                  type="button"
                 >
-                  <img src={CopyIcon} alt="Copy ID" className="copy-icon" /> {/* Using the imported image */}
+                  <img src={CopyIcon} alt="" className="copy-icon" />
                 </button>
-                {copyStatus && <span className="copy-status">{copyStatus}</span>}
+
+                {copyStatus && (
+                  <span className="copy-status" role="status" aria-live="polite">
+                    {copyStatus}
+                  </span>
+                )}
               </div>
             </div>
           </div>

@@ -146,18 +146,11 @@ import BookingAppointment from "./patient/booking/BookAppointment.jsx";
 import VideoCall from "./patient/booking/VideoCall.jsx";
 
 // --- Professional Pages ---
-import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import ProfessionalDashboard from "./professional/dashboard/professionaldashboard.jsx";
-// You will need to create this page for Immunizations
-// import ImmunizationRecords from "./patient/immunization/ImmunizationRecords.jsx";
-import VerifyEmailPage from "./patient/JOY/VerifyEmailPage.jsx";
-import ForgotPasswordPage from "./patient/JOY/ForgotPasswordPage.jsx";
-import ResetPasswordPage from "./patient/JOY/ResetPasswordPage.jsx";
-import ProtectedRoute from "./layouts/ProtectedRoute.jsx";
+import ProfessionalAppointmentDetailsPage from "./professional/appointment-details/AppointmentDetailsPage.jsx";
 import HospitalSignin from "./professional/Register/hospitalSignin.jsx";
 import HospitalRegister from "./professional/Register/hospitalRegister.jsx";
 import PractitionerRegister from "./professional/Register/practitionerRegister.jsx";
-import HospitalPortal from "./professional/HospitalPortal/HospitalPortal.jsx";
 
 import AccountSettings from "./patient/Settings/AccountSettings.jsx";
 
@@ -212,15 +205,11 @@ function App() {
         </Route>
       </Route>
 
-      {/* --- Professional Routes --- */}
+      {/* --- Professional Route --- */}
       <Route
         path="/professional/appointment-details"
         element={<ProfessionalAppointmentDetailsPage />}
       />
-      <Route path="/professional/dashboard" element={<ProfessionalDashboard />} />
-      <Route path="/professional/hospital-signin" element={<HospitalSignin />} />
-      <Route path="/professional/hospital-register" element={<HospitalRegister />} />
-      <Route path="/professional/practitioner-register" element={<PractitionerRegister />} /> 
       <Route
         path="/professional/hospital-signin"
         element={<HospitalSignin />}
@@ -233,12 +222,7 @@ function App() {
         path="/professional/practitioner-register"
         element={<PractitionerRegister />}
       />
-
-      {/* --- Hospital Portal Route --- */}
-      <Route
-        path="/hospital-portal/*"
-        element={<HospitalPortal />}
-      />
+      <Route path="/professional/dashboard" element={<ProfessionalDashboard />} />
  
     </Routes>
   );

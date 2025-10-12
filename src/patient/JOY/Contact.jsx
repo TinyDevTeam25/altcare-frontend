@@ -423,9 +423,13 @@
 //     </div>
 //   );
 // }
+// import Nav from "../../components/Nav1/Nav.jsx";
+// import Footer from "../../components/headfoot/Footer.jsx";
 
 "use client";
 import React, { useMemo, useState } from "react";
+import Nav from "../../components/Nav1/Nav.jsx";
+import Footer from "../../components/headfoot/Footer.jsx";
 import doctorImg from "../../assets/contact-hero.png";
 import PhoneIcon from "../../assets/phone.png";
 import WhatsAppIcon from "../../assets/whatsapp.png";
@@ -434,9 +438,16 @@ import { toast } from "react-toastify";
 import apiClient from "../../utils/axiosConfig.js";
 import "./ContactUs.css";
 
-/**  backend */
+/** Adjust to match your backend routes */
 const CONTACT_ENDPOINT = "/contact/messages";
 const NEWSLETTER_ENDPOINT = "/newsletter/subscribe";
+
+const mainLinks = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Features", href: "/features" },
+  { label: "Contact Us", href: "/contact" },
+];
 
 export default function ContactUs() {
   const [name, setName] = useState("");
@@ -470,10 +481,7 @@ export default function ContactUs() {
         message,
       });
       toast.success("Thanks! We’ll get back to you shortly.");
-      setName("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
+      setName(""); setEmail(""); setPhone(""); setMessage("");
     } catch (err) {
       const msg =
         err?.response?.data?.message ||
@@ -504,7 +512,7 @@ export default function ContactUs() {
     }
   };
 
-  /** Inline styles that match your Figma positions */
+  /* === Figma-aligned inline styles (unchanged layout) === */
   const S = {
     page: {
       position: "relative",
@@ -625,16 +633,10 @@ export default function ContactUs() {
       objectFit: "contain",
       display: "block",
     }),
-    miniTitle: {
-      marginTop: "6px",
-      fontWeight: 600,
-      fontSize: "22px",
-      lineHeight: "24px",
-      color: "#000",
-    },
+    miniTitle: { marginTop: 6, fontWeight: 600, fontSize: 22, color: "#000" },
     miniSub: {
       fontWeight: 400,
-      fontSize: "20px",
+      fontSize: 20,
       lineHeight: "30px",
       color: "#000",
       letterSpacing: "-0.5px",
@@ -670,8 +672,6 @@ export default function ContactUs() {
       display: "flex",
       alignItems: "center",
     },
-
-    /** Rect containers (we’ll place inputs inside) */
     fieldRect: (top) => ({
       boxSizing: "border-box",
       position: "absolute",
@@ -686,7 +686,6 @@ export default function ContactUs() {
       alignItems: "center",
       padding: "0 24px",
     }),
-    /** Inputs inside the rects */
     fieldInput: {
       width: "100%",
       height: "56px",
@@ -696,7 +695,6 @@ export default function ContactUs() {
       fontSize: "20px",
       color: "#000",
     },
-
     messageRect: {
       boxSizing: "border-box",
       position: "absolute",
@@ -721,8 +719,6 @@ export default function ContactUs() {
       fontSize: "20px",
       color: "#000",
     },
-
-    /** Ghost placeholder labels (keep your Figma look) */
     fieldLabel: (left, top, textOpacity = 0.12) => ({
       position: "absolute",
       left: `${left}px`,
@@ -735,8 +731,6 @@ export default function ContactUs() {
       opacity: textOpacity,
       pointerEvents: "none",
     }),
-
-    /** Submit pill */
     submitWrap: {
       position: "absolute",
       left: "571px",
@@ -766,8 +760,6 @@ export default function ContactUs() {
       letterSpacing: "-0.5px",
       color: "#131313",
     },
-
-    /** Newsletter band */
     newsBand: {
       position: "absolute",
       left: "0px",
@@ -851,187 +843,174 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="contact-wrap">
-      <div className="contact-canvas">
-        <div style={S.page}>
-          {/* HERO */}
-          <div style={S.heroBg} />
-          <div style={S.h1}>Contact Us</div>
-          <div style={S.intro}>
-            Access your medical records, schedule appointments, view
-            prescriptions, and connect with your healthcare team all in one
-            place. Reach out today and let us support your wellness journey!
-          </div>
+    <div>
+      {/* Reusable header */}
+      <Nav links={mainLinks} />
 
-          {/* Right image frame + image */}
-          <div style={S.imgFrame} />
-          <img src={doctorImg} alt="Paediatrician" style={S.imgInner} />
+      {/* Page wrapper that handles scaling and overflow */}
+      <div className="contact-wrap">
+        <div className="contact-canvas">
+          <div style={S.page}>
+            <div style={S.heroBg} />
 
-          {/* Contact info */}
-          <div style={S.contactInformationTitle}>Contact Information</div>
-          <div style={S.helpText}>
-            Need help or have questions? Reach out to us anytime.
-          </div>
+            {/* Heading & intro */}
+            <div style={S.h1}>Contact Us</div>
+            <div style={S.intro}>
+              Access your medical records, schedule appointments, view prescriptions, and connect with your healthcare team all in one place.
+              Reach out today and let us support your wellness journey!
+            </div>
 
-          {/* Mini Cards (clickable) */}
-          <a style={S.miniCardBase(168)} href="tel:+2347063949519">
-            <img src={PhoneIcon} alt="Phone" style={S.miniIconImg(82, 82)} />
-            <div style={S.miniTitle}>Phone</div>
-            <div style={S.miniSub}>+234 706 394 9519</div>
-          </a>
+            {/* Right image frame + image */}
+            <div style={S.imgFrame} />
+            <img src={doctorImg} alt="Paediatrician" style={S.imgInner} />
 
-          <a
-            style={S.miniCardBase(578)}
-            href="https://wa.me/2348146093712"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src={WhatsAppIcon}
-              alt="WhatsApp"
-              style={S.miniIconImg(78, 78)}
-            />
-            <div style={S.miniTitle}>WhatsApp</div>
-            <div style={S.miniSub}>+234 814 609 3712</div>
-          </a>
+            {/* Section titles */}
+            <div style={S.contactInformationTitle}>Contact Information</div>
+            <div style={S.helpText}>Need help or have questions? Reach out to us anytime.</div>
 
-          <a
-            style={S.miniCardBase(988)}
-            href="mailto:Althubteam25@gmail.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={MailIcon} alt="Email" style={S.miniIconImg(73, 73)} />
-            <div style={S.miniTitle}>Email</div>
-            <div style={S.miniSub}>Althubteam25@gmail.com</div>
-          </a>
+            {/* Mini Cards (clickable) */}
+            <a style={S.miniCardBase(168)} href="tel:+2347063949519">
+              <img src={PhoneIcon} alt="Phone" style={S.miniIconImg(82, 82)} />
+              <div style={S.miniTitle}>Phone</div>
+              <div style={S.miniSub}>+234 706 394 9519</div>
+            </a>
 
-          {/* Center line */}
-          <div style={S.weLoveText}>
-            We’d love to hear from you. Whether you have a question about
-            features, pricing, or anything else, our team is ready to help.
-          </div>
-
-          {/* --- Get In Touch form --- */}
-          <div style={S.getInTouch}>Get In Touch</div>
-
-          {/* Name */}
-          <div style={S.fieldRect(1593)}>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={S.fieldInput}
-              aria-label="Your name"
-            />
-          </div>
-
-          {/* Email */}
-          <div style={S.fieldRect(1718)}>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={S.fieldInput}
-              aria-label="Your email"
-            />
-          </div>
-
-          {/* Phone */}
-          <div style={S.fieldRect(1843)}>
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              style={S.fieldInput}
-              aria-label="Your phone number"
-            />
-          </div>
-
-          {/* Message */}
-          <div style={S.messageRect}>
-            <textarea
-              placeholder="Message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              style={S.messageTextarea}
-              aria-label="Your message"
-            />
-          </div>
-
-          {/* (Optional) ghost labels that match Figma look */}
-          <div style={S.fieldLabel(157, 1621, 0.13)}>Name</div>
-          <div style={S.fieldLabel(157, 1747, 0.12)}>Email</div>
-          <div style={S.fieldLabel(157, 1871, 0.12)}>Phone</div>
-          <div style={S.fieldLabel(157, 1995, 0.12)}>Message</div>
-
-          {/* Submit pill */}
-          <div style={S.submitWrap}>
-            <button
-              type="button"
-              onClick={submitContact}
-              disabled={loading || !canSubmit}
-              style={{
-                ...S.submitBtn,
-                opacity: loading || !canSubmit ? 0.7 : 1,
-              }}
-              onMouseDown={(e) =>
-                (e.currentTarget.style.transform = "scale(0.99)")
-              }
-              onMouseUp={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
+            <a
+              style={S.miniCardBase(578)}
+              href="https://wa.me/2348146093712"
+              target="_blank"
+              rel="noreferrer"
             >
-              <span style={S.submitText}>
-                {loading ? "Submitting…" : "Submit"}
-              </span>
-            </button>
-          </div>
+              <img src={WhatsAppIcon} alt="WhatsApp" style={S.miniIconImg(78, 78)} />
+              <div style={S.miniTitle}>WhatsApp</div>
+              <div style={S.miniSub}>+234 814 609 3712</div>
+            </a>
 
-          {/* Newsletter band */}
-          <div style={S.newsBand} />
-          <div style={S.newsTitle}>Our Newsletter</div>
-          <div style={S.newsText}>
-            Stay informed about health tips, new features, and updates.
-            Subscribe here.
-          </div>
-
-          <div style={S.newsInputWrap}>
-            <input
-              style={S.newsInput}
-              type="email"
-              placeholder="Email"
-              value={newsEmail}
-              onChange={(e) => setNewsEmail(e.target.value)}
-              aria-label="Newsletter email"
-            />
-          </div>
-
-          <div style={S.newsSubmitWrap}>
-            <button
-              type="button"
-              onClick={submitNewsletter}
-              disabled={newsLoading}
-              style={{
-                ...S.newsSubmitBtn,
-                boxShadow: newsLoading ? "none" : "0 1px 0 rgba(0,0,0,.06)",
-                opacity: newsLoading ? 0.8 : 1,
-              }}
-              onMouseDown={(e) =>
-                (e.currentTarget.style.transform = "scale(0.99)")
-              }
-              onMouseUp={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
+            <a
+              style={S.miniCardBase(988)}
+              href="mailto:Althubteam25@gmail.com"
+              target="_blank"
+              rel="noreferrer"
             >
-              {newsLoading ? "Sending…" : "Submit"}
-            </button>
+              <img src={MailIcon} alt="Email" style={S.miniIconImg(73, 73)} />
+              <div style={S.miniTitle}>Email</div>
+              <div style={S.miniSub}>Althubteam25@gmail.com</div>
+            </a>
+
+            {/* Center line */}
+            <div style={S.weLoveText}>
+              We’d love to hear from you. Whether you have a question about features, pricing, or anything else, our team is ready to help.
+            </div>
+
+            {/* --- Get In Touch form --- */}
+            <div style={S.getInTouch}>Get In Touch</div>
+
+            <div style={S.fieldRect(1593)}>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                style={S.fieldInput}
+                aria-label="Your name"
+              />
+            </div>
+
+            <div style={S.fieldRect(1718)}>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={S.fieldInput}
+                aria-label="Your email"
+              />
+            </div>
+
+            <div style={S.fieldRect(1843)}>
+              <input
+                type="tel"
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                style={S.fieldInput}
+                aria-label="Your phone number"
+              />
+            </div>
+
+            <div style={S.messageRect}>
+              <textarea
+                placeholder="Message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                style={S.messageTextarea}
+                aria-label="Your message"
+              />
+            </div>
+
+            {/* Optional ghost labels to match Figma look */}
+            <div style={S.fieldLabel(157, 1621, 0.13)}>Name</div>
+            <div style={S.fieldLabel(157, 1747, 0.12)}>Email</div>
+            <div style={S.fieldLabel(157, 1871, 0.12)}>Phone</div>
+            <div style={S.fieldLabel(157, 1995, 0.12)}>Message</div>
+
+            {/* Submit pill */}
+            <div style={S.submitWrap}>
+              <button
+                type="button"
+                onClick={submitContact}
+                disabled={loading || !canSubmit}
+                style={{
+                  ...S.submitBtn,
+                  opacity: loading || !canSubmit ? 0.7 : 1,
+                }}
+                onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.99)")}
+                onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                <span style={S.submitText}>{loading ? "Submitting…" : "Submit"}</span>
+              </button>
+            </div>
+
+            {/* Newsletter band */}
+            <div style={S.newsBand} />
+            <div style={S.newsTitle}>Our Newsletter</div>
+            <div style={S.newsText}>
+              Stay informed about health tips, new features, and updates. Subscribe here.
+            </div>
+
+            <div style={S.newsInputWrap}>
+              <input
+                style={S.newsInput}
+                type="email"
+                placeholder="Email"
+                value={newsEmail}
+                onChange={(e) => setNewsEmail(e.target.value)}
+                aria-label="Newsletter email"
+              />
+            </div>
+
+            <div style={S.newsSubmitWrap}>
+              <button
+                type="button"
+                onClick={submitNewsletter}
+                disabled={newsLoading}
+                style={{
+                  ...S.newsSubmitBtn,
+                  boxShadow: newsLoading ? "none" : "0 1px 0 rgba(0,0,0,.06)",
+                  opacity: newsLoading ? 0.8 : 1,
+                }}
+                onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.99)")}
+                onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                {newsLoading ? "Sending…" : "Submit"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Reusable footer */}
+      <Footer />
     </div>
   );
 }

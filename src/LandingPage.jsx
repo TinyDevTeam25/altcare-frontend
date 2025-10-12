@@ -107,7 +107,7 @@ function WhatUsersSay() {
       <div className="tes-head">
         <h1 className="head-text">What Users say</h1>
         <article className="testimonial">
-          <p>“Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis!”</p>
+          <p>“Thanks to this app, managing my health has never been easier. The reminders and easy access to my records are game changers!”</p>
           <figure>
             <img src={user} alt="user profile" />
             <figcaption>
@@ -125,7 +125,7 @@ function HealthControl() {
   return (
     <section className="health-control">
       <h1 className="control-head-text">Ready to take control of your Health?</h1>
-      <p>Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+      <p>Access your medical records, book appointments, and get medication reminders all from one easy-to-use, secure app designed for your well-being.</p>
       <Button style={{ color: "#38B2AC", borderRadius: "30px", padding: "20px 50px", fontSize: "16px", cursor: "pointer", border: "none" }}>Sign up for free</Button>
     </section>
   );

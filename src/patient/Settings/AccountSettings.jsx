@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import apiClient from "../../utils/axiosConfig.js";
 import { toast } from "react-toastify";
@@ -64,6 +64,54 @@ function DeleteAccountModal({ open, onClose, onConfirm, loading }) {
   );
 }
 
+/* ===========================================
+   Helper: robust delete with graceful fallbacks
+   =========================================== */
+async function deletePatientProfile({ token, patientId }) {
+  const headers = { Authorization: `Bearer ${token}` };
+
+  // Try #1: DELETE /patient/profile with a confirm body (axios supports body via "data")
+  try {
+    const r1 = await apiClient.delete("/patient/profile", {
+      headers,
+      data: { confirm: "DELETE" },
+      validateStatus: () => true,
+    });
+    if (r1.status === 200 || r1.status === 204) return { ok: true };
+    if (r1.data?.message) return { ok: false, status: r1.status, message: r1.data.message };
+  } catch (_) {
+    /* fall through */
+  }
+
+  // Try #2: DELETE /patient/profile without body
+  try {
+    const r2 = await apiClient.delete("/patient/profile", {
+      headers,
+      validateStatus: () => true,
+    });
+    if (r2.status === 200 || r2.status === 204) return { ok: true };
+    if (r2.data?.message) return { ok: false, status: r2.status, message: r2.data.message };
+  } catch (_) {
+    /* fall through */
+  }
+
+  // Try #3: DELETE /patient/profile/:id if backend is id-based
+  if (patientId) {
+    try {
+      const r3 = await apiClient.delete(`/patient/profile/${patientId}`, {
+        headers,
+        validateStatus: () => true,
+      });
+      if (r3.status === 200 || r3.status === 204) return { ok: true };
+      if (r3.data?.message) return { ok: false, status: r3.status, message: r3.data.message };
+    } catch (_) {
+      /* fall through */
+    }
+  }
+
+  return { ok: false, message: "Could not delete profile. Endpoint/constraints mismatch." };
+}
+
 /* ===========================
    Main Account Settings page
    =========================== */
@@ -73,7 +121,7 @@ export default function AccountSettings() {
   const [showModal, setShowModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // Try to obtain a bearer token from several common places
+  // Token from common locations
   const token = useMemo(
     () =>
       user?.token ||
@@ -86,7 +134,10 @@ export default function AccountSettings() {
   const email =
     user?.profile?.profile?.email || user?.profile?.email || "janedoe@example.com";
 
-  // Demo controlled inputs for editable rows
+  // For the id-based fallback
+  const patientId = user?.profile?.profile?.id || user?.profile?.id || undefined;
+
+  // Demo controlled inputs
   const [phone, setPhone] = useState("123 456 7890");
   const [country, setCountry] = useState("Country");
   const [stateProv, setStateProv] = useState("State or Province");
@@ -100,29 +151,31 @@ export default function AccountSettings() {
     }
     setDeleting(true);
     try {
-      await apiClient.delete("patient/deleteMe", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const result = await deletePatientProfile({ token, patientId });
+      if (result.ok) {
+        toast.success("Your account has been deleted.");
+        logout?.();
+        localStorage.removeItem("token");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("registrationToken");
+        setShowModal(false);
+        navigate("/");
+        return;
+      }
 
-      toast.success("Your account has been deleted.");
-      logout?.();
-      localStorage.removeItem("token");
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("registrationToken");
-      setShowModal(false);
-      navigate("/");
-    } catch (err) {
-      console.error("Delete account error:", err);
+      // show backend message if provided
       const msg =
-        err?.response?.data?.message ||
-        (err?.response?.status === 401 || err?.response?.status === 403
-          ? "Your session has expired. Please sign in again."
-          : "Could not delete your account. Please try again.");
+        result.message ||
+        "Cannot delete profile right now. You may need to cancel active appointments first.";
       toast.error(msg);
-      if (err?.response?.status === 401 || err?.response?.status === 403) {
+
+      if (result.status === 401 || result.status === 403) {
         logout?.();
         navigate("/signin");
       }
+    } catch (err) {
+      console.error("Delete account error:", err);
+      toast.error("Unexpected error. Please try again.");
     } finally {
       setDeleting(false);
     }
@@ -130,11 +183,10 @@ export default function AccountSettings() {
 
   return (
     <div className="settings-page">
-
       <div className="settings-page__title">Settings</div>
 
       <div className="settings-layout">
-        {/* Left rail with REAL icons */}
+        {/* Left rail with icons */}
         <aside className="settings-rail">
           <div className="rail-group">
             <div className="rail-item">
@@ -172,7 +224,7 @@ export default function AccountSettings() {
         <section className="settings-main">
           <div className="section-caption">Account Details</div>
 
-          {/* Email (read-only visual) */}
+          {/* Email (read-only) */}
           <div className="field-block">
             <label className="field-label">Email</label>
             <div className="field-row">
@@ -214,9 +266,9 @@ export default function AccountSettings() {
             </div>
           </div>
 
-          {/* Country / State / LGA blocks */}
+          {/* Location (Country / State / LGA) */}
           <div className="field-block">
-            <label className="field-label">Phone Number</label>
+            <label className="field-label">Location</label>
             <div className="field-row">
               <input
                 className="field-input"

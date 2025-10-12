@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import  {Link} from 'react-router';
+import '../Register/HospitalRegister.css';
+import './hospitalSignin'
 
 export default function HospitalRegister() {
   const [formData, setFormData] = useState({
@@ -128,68 +130,66 @@ export default function HospitalRegister() {
 
   if (success && hospitalData) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="success-container">
+        <div className="success-card">
+          <div className="success-header">
+            <div className="success-icon">
+              <svg className="checkmark-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Registration Successful!</h1>
-            <p className="text-gray-600">Your hospital has been registered successfully</p>
+            <h1 className="success-title">Registration Successful!</h1>
+            <p className="success-subtitle">Your hospital has been registered successfully</p>
           </div>
 
-          <div className="bg-teal-50 border-2 border-teal-600 rounded-lg p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Hospital ID</h2>
-            <div className="bg-white rounded-lg p-4 mb-4">
-              <p className="text-sm text-gray-600 mb-2">Share this ID with practitioners to join your hospital:</p>
-              <div className="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200">
-                <code className="text-teal-600 font-mono text-sm break-all">
+          <div className="hospital-id-box">
+            <h2 className="hospital-id-heading">Your Hospital ID</h2>
+            <div className="id-content-wrapper">
+              <p className="id-description">Share this ID with practitioners to join your hospital:</p>
+              <div className="id-display-box">
+                <code className="id-code">
                   {hospitalData.hospital?.id || hospitalData.id || hospitalData.hospital_id || 'ID not found'}
                 </code>
                 <button
                   onClick={() => copyToClipboard(hospitalData.hospital?.id || hospitalData.id || hospitalData.hospital_id)}
-                  className="ml-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 text-sm whitespace-nowrap"
+                  className="copy-id-btn"
                 >
                   Copy ID
                 </button>
               </div>
             </div>
-            <div className="bg-yellow-50 border border-yellow-200 rounded p-3">
-              <p className="text-sm text-yellow-800">
+            <div className="id-warning-box">
+              <p className="warning-text">
                 <strong>Important:</strong> Save this ID securely. Practitioners will need it to register under your hospital.
               </p>
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-6 mb-6">
-            <h3 className="font-semibold text-gray-900 mb-3">Hospital Details</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex">
-                <span className="text-gray-600 w-32">Name:</span>
-                <span className="text-gray-900 font-medium">{hospitalData.hospital?.name || hospitalData.name || 'N/A'}</span>
+          <div className="hospital-details-box">
+            <h3 className="details-heading">Hospital Details</h3>
+            <div className="details-space">
+              <div className="detail-item">
+                <span className="detail-label">Name:</span>
+                <span className="detail-value">{hospitalData.hospital?.name || hospitalData.name || 'N/A'}</span>
               </div>
-              <div className="flex">
-                <span className="text-gray-600 w-32">Email:</span>
-                <span className="text-gray-900">{hospitalData.hospital?.email || hospitalData.email || 'N/A'}</span>
+              <div className="detail-item">
+                <span className="detail-label">Email:</span>
+                <span className="detail-value">{hospitalData.hospital?.email || hospitalData.email || 'N/A'}</span>
               </div>
-              <div className="flex">
-                <span className="text-gray-600 w-32">Phone:</span>
-                <span className="text-gray-900">{hospitalData.hospital?.phone || hospitalData.phone || 'N/A'}</span>
+              <div className="detail-item">
+                <span className="detail-label">Phone:</span>
+                <span className="detail-value">{hospitalData.hospital?.phone || hospitalData.phone || 'N/A'}</span>
               </div>
-              <div className="flex">
-                <span className="text-gray-600 w-32">Address:</span>
-                <span className="text-gray-900">{hospitalData.hospital?.address || hospitalData.address || 'N/A'}</span>
+              <div className="detail-item">
+                <span className="detail-label">Address:</span>
+                <span className="detail-value">{hospitalData.hospital?.address || hospitalData.address || 'N/A'}</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <Link to="/signin">
-              <button
-                className="w-full py-3 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition"
-              >
+          <div className="button-space">
+            <Link to="/professional/hospital-signin">
+              <button className="login-btn">
                 Go to Login
               </button>
             </Link>
@@ -198,7 +198,7 @@ export default function HospitalRegister() {
                 setSuccess(false);
                 setHospitalData(null);
               }}
-              className="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition"
+              className="register-another-btn"
             >
               Register Another Hospital
             </button>
@@ -209,31 +209,31 @@ export default function HospitalRegister() {
   }
 
   return (
-    <div className="min-h-screen bg-teal-100  flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-tea-400 mb-4">AltCare Admin</h1>
-          <h2 className="text-lg font-bold text-gray-900 mb-2">Register as a Hospital</h2>
-          <p className="text-sm text-gray-600">Create your account to access the hospital portal</p>
+    <div className="register-page">
+      <div className="register-form-card">
+        <div className="register-header">
+          <h1 className="app-title">AltCare Admin</h1>
+          <h2 className="register-page-title">Register as a Hospital</h2>
+          <p className="register-subtitle">Create your account to access the hospital portal</p>
 
         </div>
 
         {success && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-teal-800 text-sm text-center">Registration successful! You can now log in.</p>
+          <div className="success-alert">
+            <p className="success-alert-text">Registration successful! You can now log in.</p>
           </div>
         )}
 
         {apiError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800 text-sm text-center">{apiError}</p>
+          <div className="error-alert">
+            <p className="error-alert-text">{apiError}</p>
           </div>
         )}
 
-        <div className="space-y-6">
-          <h2 className="text-base font-medium text-gray-900 mb-4 text-center">Your Hopital Details</h2>
-          <div>
-            <label className="block text-sm text-gray-700 mb-2">
+        <div className="form-space">
+          <h2 className="form-section-heading">Your Hopital Details</h2>
+          <div className="input-group">
+            <label className="input-label">
               Full Name
             </label>
             <input
@@ -241,18 +241,18 @@ export default function HospitalRegister() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                errors.name ? 'border-red-500' : 'border-gray-300'
+              className={`form-input ${
+                errors.name ? 'input-error-border' : 'input-normal-border'
               }`}
               placeholder=""
             />
             {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+              <p className="error-text">{errors.name}</p>
             )}
           </div>
 
-          <div>
-            <label className="block text-sm text-gray-700 mb-2">
+          <div className="input-group">
+            <label className="input-label">
               Professional Email Address
             </label>
             <input
@@ -260,20 +260,20 @@ export default function HospitalRegister() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
+              className={`form-input ${
+                errors.email ? 'input-error-border' : 'input-normal-border'
               }`}
               placeholder=""
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              <p className="error-text">{errors.email}</p>
             )}
           </div>
 
-          <div>
-          <h2 className="text-base font-medium text-gray-900 mb-4 text-center">Set Your Password</h2>
+          <div className="input-group">
+          <h2 className="form-section-heading">Set Your Password</h2>
 
-            <label className="block text-sm text-gray-700 mb-2">
+            <label className="input-label">
               Set Your Password
             </label>
             <input
@@ -281,18 +281,18 @@ export default function HospitalRegister() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                errors.password ? 'border-red-500' : 'border-gray-300'
+              className={`form-input ${
+                errors.password ? 'input-error-border' : 'input-normal-border'
               }`}
               placeholder="Password"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              <p className="error-text">{errors.password}</p>
             )}
           </div>
 
-          <div>
-            <label className="block text-sm text-gray-700 mb-2">
+          <div className="input-group">
+            <label className="input-label">
               Confirm Password
             </label>
             <input
@@ -300,21 +300,21 @@ export default function HospitalRegister() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+              className={`form-input ${
+                errors.confirmPassword ? 'input-error-border' : 'input-normal-border'
               }`}
               placeholder=""
             />
             {errors.confirmPassword && (
-              <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+              <p className="error-text">{errors.confirmPassword}</p>
             )}
           </div>
 
-          <div className="mt-8">
-            <h2 className="text-base font-medium text-gray-900 mb-4 text-center">Hospital Information</h2>
+          <div className="hospital-info-section">
+            <h2 className="form-section-heading">Hospital Information</h2>
             
-            <div className="mb-6">
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="input-group">
+              <label className="input-label">
                 Hospital Number
               </label>
               <input
@@ -322,18 +322,18 @@ export default function HospitalRegister() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                  errors.phone ? 'border-red-500' : 'border-gray-300'
+                className={`form-input ${
+                  errors.phone ? 'input-error-border' : 'input-normal-border'
                 }`}
                 placeholder=""
               />
               {errors.phone && (
-                <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                <p className="error-text">{errors.phone}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="input-group">
+              <label className="input-label">
                 Hospital Address
               </label>
               <input
@@ -341,13 +341,13 @@ export default function HospitalRegister() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg bg-gray-50 focus:bg-white focus:border-teal-600 outline-none transition ${
-                  errors.address ? 'border-red-500' : 'border-gray-300'
+                className={`form-input ${
+                  errors.address ? 'input-error-border' : 'input-normal-border'
                 }`}
                 placeholder=""
               />
               {errors.address && (
-                <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+                <p className="error-text">{errors.address}</p>
               )}
             </div>
           </div>
@@ -356,17 +356,17 @@ export default function HospitalRegister() {
             type="button"
             onClick={handleSubmit}
             disabled={loading || success}
-            className={`w-full mt-8 py-3 px-4 rounded-lg text-white font-medium transition ${
+            className={`register-submit-btn ${
               loading || success
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-teal-600 hover:bg-teal-700'
+                ? 'btn-disabled'
+                : 'btn-enabled'
             }`}
           >
             {loading ? 'Registering...' : 'Register Account'}
           </button>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Already have an account? <Link to="/professional/hospital-signin" className="text-teal-600 hover:text-teal-700 font-medium cursor-pointer">Log in here</Link>
+          <p className="login-prompt">
+            Already have an account? <Link to="/professional/hospital-signin" className="login-link">Log in here</Link>
           </p>
         </div>
       </div>

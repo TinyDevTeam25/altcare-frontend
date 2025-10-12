@@ -4,6 +4,7 @@ import { useState } from "react"
 import React from "react"
 import singleman from "../../assets/singleman.png"
 import { Link } from "react-router"
+import '../Register/HospitalSignin.css';
 
 export default function HospitalSignin() {
   const [email, setEmail] = useState("")
@@ -18,67 +19,67 @@ export default function HospitalSignin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#EAF9FA] px-4">
+    <div className="signin-page">
       {/* Main Container */}
-      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-x-8 overflow-hidden rounded-lg shadow-lg">
+      <div className="signin-container">
         
         {/* Left - Image */}
-        <div className="flex items-center justify-center">
+        <div className="signin-image-section">
           <img
             src={singleman}
             alt="Medical professionals"
-            className="h-full w-full object-cover"
+            className="signin-image"
           />
         </div>
 
         {/* Right - Form (white background only here) */}
-        <div className="bg-white p-8 sm:p-12 flex flex-col justify-center">
-          <h2 className="text-2xl font-bold text-teal-700 text-center">AltCare Admin</h2>
-          <p className="font-bold text-2xl text-center">Professional Access</p>
-          <p className="text-center text-lg mb-8">
+        <div className="signin-form-section">
+          <h2 className="signin-app-title">AltCare Admin</h2>
+          <p className="signin-page-title">Professional Access</p>
+          <p className="signin-description">
             Log in to manage patient records and system settings.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="signin-form">
             {/* Email */}
-            <div>
-              <label className="block font-bold text-sm mb-1">Professional ID or Email</label>
+            <div className="signin-input-group">
+              <label className="signin-label">Professional ID or Email</label>
               <input
                 type="email"
                 placeholder="admin@altcare.com or Staff ID"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-[#D5D5D5] focus:ring-2 focus:ring-teal-500 outline-none"
+                className="signin-input"
               />
             </div>
 
             {/* Password */}
-            <div>
-              <label className="block font-bold text-sm mb-1">Password</label>
+            <div className="signin-input-group">
+              <label className="signin-label">Password</label>
               <input
                 type="password"
                 placeholder="******"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-[#D5D5D5] focus:ring-2 focus:ring-teal-500 outline-none"
+                className="signin-input"
               />
-              <div className="text-right mt-1">
-                <a href="#" className="text-sm text-teal-600 hover:underline">
+              <div className="signin-forgot-password">
+                <a href="#" className="signin-forgot-link">
                   Forgot your password?
                 </a>
               </div>
             </div>
 
             {/* Remember Me */}
-            <div className="flex items-center">
+            <div className="signin-checkbox-group">
               <input
                 type="checkbox"
                 id="remember"
                 checked={remember}
                 onChange={() => setRemember(!remember)}
-                className="mr-2"
+                className="signin-checkbox"
               />
-              <label htmlFor="remember" className="text-sm text-gray-600">
+              <label htmlFor="remember" className="signin-checkbox-label">
                 Remember me
               </label>
             </div>
@@ -87,21 +88,21 @@ export default function HospitalSignin() {
             <Link to="/hospital-portal">
               <button
                 type="submit"
-                className="w-full bg-teal-700 text-white py-2 rounded-full font-semibold hover:bg-teal-800 transition"
+                className="signin-submit-btn"
               >
                 Log In to Admin Panel
               </button>
             </Link>
           </form>
 
-          <p className="text-sm text-gray-600 mt-5 text-center">
-            Don’t have an admin account?{" "}
-            <Link to="/professional/hospital-register" className="text-teal-600 font-medium hover:underline">
+          <p className="signin-signup-prompt">
+            Don't have an admin account?{" "}
+            <Link to="/professional/hospital-register" className="signin-signup-link">
               Sign up here
             </Link>
           </p>
 
-          <p className="text-sm mt-6 text-center">
+          <p className="signin-footer-text">
             This portal is for authorized medical professionals only.
           </p>
         </div>

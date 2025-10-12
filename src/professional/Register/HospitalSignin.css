@@ -1,0 +1,181 @@
+.signin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EAF9FA;
+  padding: 1rem;
+}
+
+.signin-container {
+  width: 100%;
+  max-width: 80rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.signin-image-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.signin-form-section {
+  background-color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .signin-container {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .signin-image-section {
+    display: none;
+  }
+
+  .signin-form-section {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .signin-form-section {
+    padding: 2rem;
+  }
+}
+
+.signin-app-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0d7377;
+  text-align: center;
+}
+
+.signin-page-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.signin-description {
+  text-align: center;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.signin-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.signin-label {
+  display: block;
+  font-weight: bold;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.signin-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #D5D5D5;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.signin-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0d9488;
+}
+
+.signin-forgot-password {
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.signin-forgot-link {
+  font-size: 0.875rem;
+  color: #0d9488;
+  text-decoration: none;
+}
+
+.signin-forgot-link:hover {
+  text-decoration: underline;
+}
+
+.signin-checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.signin-checkbox {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.signin-checkbox-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.signin-submit-btn {
+  width: 100%;
+  background-color: #0d7377;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+
+.signin-submit-btn:hover {
+  background-color: #0a5a61;
+}
+
+.signin-signup-prompt {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.signin-signup-link {
+  color: #0d9488;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signin-signup-link:hover {
+  text-decoration: underline;
+}
+
+.signin-footer-text {
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}

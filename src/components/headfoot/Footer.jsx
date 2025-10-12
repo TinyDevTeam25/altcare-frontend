@@ -1,5 +1,5 @@
 import "./Footer.css";
-
+import { Link } from "react-router-dom";
 function Footer() {
   return (
     <section className="Footer">
@@ -7,9 +7,9 @@ function Footer() {
 
       <div>
         <ul>
-          <li>Privacy Policy</li>
-          <li>Terms of Service</li>
-          <li>FAQ</li>
+          <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+          <li><Link to="/terms-of-service">Terms of Service</Link></li>
+          <li><Link to="/faq">FAQ</Link></li>
         </ul>
       </div>
     </section>

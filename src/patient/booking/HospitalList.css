@@ -1,0 +1,30 @@
+.hospital-list h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.hospital-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.hospital-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.hospital-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

@@ -1,0 +1,39 @@
+.hospital-portal-body {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.hospital-dashboard {
+  max-width: 85%;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.welcome-section {
+  margin-bottom: 40px;
+}
+
+.welcome-card {
+  width: 100%;
+  margin: 0 auto;
+  font-family: var(--primary-font, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  padding: 30px;
+  line-height: 1.6;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 10px;
+}
+
+.welcome-card h1 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a202c;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  font-size: 16px;
+  color: #4a5568;
+  margin: 0;
+}

@@ -1,0 +1,9 @@
+.home {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.home h1 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}

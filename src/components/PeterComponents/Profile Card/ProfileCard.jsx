@@ -174,13 +174,15 @@
 // export default ProfileCard;
 
 // ProfileCard.jsx
-import React, { useState } from "react"; // ⬅️ added useState
+// ProfileCard.jsx
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext.jsx";
 import "./ProfileCard.css";
 import LogOut from "../../../assets/logout.png";
 import image from "../../../assets/jane-doe-avatar.png";
 import camera from "../../../assets/camera.png";
+import CopyIcon from "../../../assets/camera.png"; // ⬅️ NEW: Import a copy icon (you'll need to create/find this asset)
 
 /** ─────────────────────────────────────────────────────────────
  * Inline, self-contained Logout Caution Modal
@@ -400,20 +402,35 @@ function LogoutCautionModal({
 }
 
 const ProfileCard = ({ setshowProfileCard }) => {
-  //  Get the user and logout function from the context (unchanged)
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // ⬅️ NEW: controls the logout modal visibility
   const [showLogout, setShowLogout] = useState(false);
+  const [copyStatus, setCopyStatus] = useState(""); // ⬅️ NEW: State for "Copied!" message
 
-  // (kept) Performs the actual logout + redirect
   const handleLogout = () => {
     logout(); // clears the user's session
     navigate("/"); // redirects to the landing page
     setShowLogout(false);
     setshowProfileCard(false);
   };
+
+  // ⬅️ NEW: Function to copy text to clipboard
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus("Copied!");
+      setTimeout(() => setCopyStatus(""), 2000); // Clear message after 2 seconds
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+      setCopyStatus("Failed to copy!");
+      setTimeout(() => setCopyStatus(""), 2000); // Clear message after 2 seconds
+    }
+  };
+
+  // ⬅️ NEW: Determine the ID to display and copy
+  const userId =
+    user?.profile?.profile?.id || user?.profile?.id || "P-001-XYZ";
 
   return (
     <>
@@ -430,33 +447,39 @@ const ProfileCard = ({ setshowProfileCard }) => {
 
           <div className="profile-info">
             <div className="pics">
-              <img src={image} className="profile-image" alt="" />
-              <img src={camera} alt="" className="relative" />
+              <img src={image} className="profile-image" alt="Profile avatar" />
+              <img src={camera} alt="Camera icon" className="relative" />
             </div>
             <div>
-              {/* Display user's name and ID from the context */}
+              {/* Display user's name */}
               <p>
                 {user
                   ? user.profile?.profile?.full_name || "Jane Doe"
                   : "Jane Doe"}
               </p>
-              <p>
-                {user?.profile?.id
-                  ? `ID: ${user.profile?.profile?.id}`
-                  : "P-001-XYZ"}
-              </p>
+              {/* Display and allow copying of user ID */}
+              <div className="user-id-wrapper"> {/* Add this wrapper */}
+                <p>ID: {userId}</p>
+                <button
+                  className="copy-id-btn"
+                  onClick={() => copyToClipboard(userId)}
+                  title="Copy ID to clipboard"
+                >
+                  <img src={CopyIcon} alt="Copy ID" className="copy-icon" /> {/* Using the imported image */}
+                </button>
+                {copyStatus && <span className="copy-status">{copyStatus}</span>}
+              </div>
             </div>
           </div>
 
           <button className="green-btn">Manage your AltCare Account</button>
 
-          {/* 🔴 Changed: open the modal instead of logging out immediately */}
           <button
             className="red-btn"
             onClick={() => setShowLogout(true)}
             type="button"
           >
-            <img src={LogOut} alt="" />
+            <img src={LogOut} alt="Logout icon" />
             Sign out of AltCare
           </button>
 

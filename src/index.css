@@ -55,7 +55,6 @@ main .nav {
   justify-content: space-between;
   align-items: center;
   padding: 20px 100px;
-
 }
 
 .nav-link {
@@ -224,7 +223,23 @@ main .nav {
     text-align: center;
     justify-content: center;
     align-items: center;
+  }
 
+  figure,
+  p {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .health-control,
+  .control-head-text {
+  text-align: center;
+    justify-content: center;
   }
 }
 

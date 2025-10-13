@@ -14,11 +14,13 @@ export default function HospitalSignin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     const loadingToaster = toast.info("Signing you in...");
+    setLoading(true);
     try {
       e.preventDefault();
 
@@ -72,6 +74,7 @@ export default function HospitalSignin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="signin-input"
+                required
               />
             </div>
 
@@ -84,6 +87,7 @@ export default function HospitalSignin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="signin-input"
+                required
               />
               <div className="signin-forgot-password">
                 <a href="#" className="signin-forgot-link">
@@ -107,6 +111,13 @@ export default function HospitalSignin() {
             </div>
 
             {/* Submit */}
+            <button
+              type="submit"
+              className="signin-submit-btn"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log In to Admin Panel"}
+            </button>
             {/* <Link to="/hospital-portal"> */}
             <button type="submit" className="signin-submit-btn">
               Log In to Admin Panel

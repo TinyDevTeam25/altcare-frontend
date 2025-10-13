@@ -1,28 +1,50 @@
 // src/pages/AdminLogin.tsx
-"use client"
-import { useState } from "react"
-import React from "react"
-import singleman from "../../assets/singleman.png"
-import { Link } from "react-router"
-import '../Register/HospitalSignin.css';
+"use client";
+import { useState } from "react";
+import React from "react";
+import singleman from "../../assets/singleman.png";
+import { Link, useNavigate } from "react-router";
+import "../Register/HospitalSignin.css";
+
+import adminAxiosClient from "../../utils/authAxiosClient";
+import { saveHospitalAuth } from "../../utils/hospitalAuth";
+import { toast } from "react-toastify";
 
 export default function HospitalSignin() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [remember, setRemember] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Email:", email)
-    console.log("Password:", password)
-    console.log("Remember me:", remember)
-  }
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    const loadingToaster = toast.info("Signing you in...");
+    try {
+      e.preventDefault();
+
+      const response = await adminAxiosClient.post("/hospital/login", {
+        email,
+        password,
+      });
+
+      saveHospitalAuth(response.data);
+
+      toast.success(response.data.message);
+
+      navigate("/hospital-portal");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || error.message || "Login failed";
+      toast.error(errorMessage);
+    } finally {
+      toast.dismiss(loadingToaster);
+    }
+  };
 
   return (
     <div className="signin-page">
       {/* Main Container */}
       <div className="signin-container">
-        
         {/* Left - Image */}
         <div className="signin-image-section">
           <img
@@ -85,19 +107,19 @@ export default function HospitalSignin() {
             </div>
 
             {/* Submit */}
-            <Link to="/hospital-portal">
-              <button
-                type="submit"
-                className="signin-submit-btn"
-              >
-                Log In to Admin Panel
-              </button>
-            </Link>
+            {/* <Link to="/hospital-portal"> */}
+            <button type="submit" className="signin-submit-btn">
+              Log In to Admin Panel
+            </button>
+            {/* </Link> */}
           </form>
 
           <p className="signin-signup-prompt">
             Don't have an admin account?{" "}
-            <Link to="/professional/hospital-register" className="signin-signup-link">
+            <Link
+              to="/professional/hospital-register"
+              className="signin-signup-link"
+            >
               Sign up here
             </Link>
           </p>
@@ -108,5 +130,5 @@ export default function HospitalSignin() {
         </div>
       </div>
     </div>
-  )
+  );
 }

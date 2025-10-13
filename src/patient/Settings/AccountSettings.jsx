@@ -52,7 +52,9 @@ function DeleteAccountModal({ open, onClose, onConfirm, loading }) {
             Cancel
           </button>
           <button
-            className={`set-btn set-btn--danger ${!canDelete ? "is-disabled" : ""}`}
+            className={`set-btn set-btn--danger ${
+              !canDelete ? "is-disabled" : ""
+            }`}
             onClick={onConfirm}
             disabled={!canDelete || loading}
           >
@@ -78,8 +80,10 @@ async function deletePatientProfile({ token, patientId }) {
       validateStatus: () => true,
     });
     if (r1.status === 200 || r1.status === 204) return { ok: true };
-    if (r1.data?.message) return { ok: false, status: r1.status, message: r1.data.message };
-  } catch (_) {
+    if (r1.data?.message)
+      return { ok: false, status: r1.status, message: r1.data.message };
+  } catch (err) {
+    console.table(err);
     /* fall through */
   }
 
@@ -90,8 +94,10 @@ async function deletePatientProfile({ token, patientId }) {
       validateStatus: () => true,
     });
     if (r2.status === 200 || r2.status === 204) return { ok: true };
-    if (r2.data?.message) return { ok: false, status: r2.status, message: r2.data.message };
-  } catch (_) {
+    if (r2.data?.message)
+      return { ok: false, status: r2.status, message: r2.data.message };
+  } catch (err) {
+    console.table(err);
     /* fall through */
   }
 
@@ -103,13 +109,19 @@ async function deletePatientProfile({ token, patientId }) {
         validateStatus: () => true,
       });
       if (r3.status === 200 || r3.status === 204) return { ok: true };
-      if (r3.data?.message) return { ok: false, status: r3.status, message: r3.data.message };
-    } catch (_) {
+      if (r3.data?.message)
+        return { ok: false, status: r3.status, message: r3.data.message };
+    } catch (err) {
+      console.table(err);
+
       /* fall through */
     }
   }
 
-  return { ok: false, message: "Could not delete profile. Endpoint/constraints mismatch." };
+  return {
+    ok: false,
+    message: "Could not delete profile. Endpoint/constraints mismatch.",
+  };
 }
 
 /* ===========================
@@ -132,10 +144,13 @@ export default function AccountSettings() {
   );
 
   const email =
-    user?.profile?.profile?.email || user?.profile?.email || "janedoe@example.com";
+    user?.profile?.profile?.email ||
+    user?.profile?.email ||
+    "janedoe@example.com";
 
   // For the id-based fallback
-  const patientId = user?.profile?.profile?.id || user?.profile?.id || undefined;
+  const patientId =
+    user?.profile?.profile?.id || user?.profile?.id || undefined;
 
   // Demo controlled inputs
   const [phone, setPhone] = useState("123 456 7890");
@@ -190,12 +205,20 @@ export default function AccountSettings() {
         <aside className="settings-rail">
           <div className="rail-group">
             <div className="rail-item">
-              <img className="rail-icon-img" src={iconUser} alt="Account details" />
+              <img
+                className="rail-icon-img"
+                src={iconUser}
+                alt="Account details"
+              />
               <span className="rail-text rail-text--bold">Account Details</span>
             </div>
 
             <div className="rail-item">
-              <img className="rail-icon-img" src={iconCard} alt="Payment methods" />
+              <img
+                className="rail-icon-img"
+                src={iconCard}
+                alt="Payment methods"
+              />
               <span className="rail-text">Payment Methods</span>
             </div>
 
@@ -214,7 +237,11 @@ export default function AccountSettings() {
             </div>
 
             <div className="rail-item">
-              <img className="rail-icon-img" src={iconLink} alt="Linked accounts" />
+              <img
+                className="rail-icon-img"
+                src={iconLink}
+                alt="Linked accounts"
+              />
               <span className="rail-text">Linked Accounts</span>
             </div>
           </div>

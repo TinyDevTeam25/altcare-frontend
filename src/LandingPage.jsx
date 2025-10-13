@@ -41,7 +41,7 @@ export default function LandingPage() {
 function Hero() {
   const words=["Control","Access","Management","Power","Toolkit"]
   const[currentordIndex,setCurrentWordIndex]=useState(0)
-  
+  const [IsHovered, setIsHovered] = useState(false);
 
   useEffect(function(){
     const interval=setInterval(()=>{
@@ -63,8 +63,26 @@ function Hero() {
           <Link to="/signup" style={{ flex: 1, textDecoration: "none"}}>
             <button style={{ color: "white", backgroundColor: "#008080", border: "none", padding: "10px 20px", borderRadius: "30px", cursor: "pointer",width: "100%" }} >Get started</button>
           </Link>
+            
+          <Link to="/about" style={{ flex: 1, textDecoration: "none" }}>
+           <Button
+               onMouseEnter={() => setIsHovered(true)}
+               onMouseLeave={() => setIsHovered(false)}
+               style={{
+                       border: "1px solid #319999",
+              color: IsHovered ? "white" : "#008080",
+              backgroundColor: IsHovered ? "#008080" : "#f5ffff",
+              padding: "10px 0px",
+              borderRadius: "30px",
+              cursor: "pointer",
+              width: "100%",
+              transition: "all 0.3s ease",
+                   }}
+                 >
+                         Take a tour
+             </Button>
+          </Link>
 
-          <Button style={{ border: "1px solid #319999", color: "#008080", backgroundColor: "#f5ffff", padding: "10px 0px", borderRadius:"30px", cursor: "pointer",flex: 1 }}>Take a tour</Button>
         </span>
       </div>
       <div className="hero-image">
@@ -126,7 +144,9 @@ function HealthControl() {
     <section className="health-control">
       <h1 className="control-head-text">Ready to take control of your Health?</h1>
       <p>Access your medical records, book appointments, and get medication reminders all from one easy-to-use, secure app designed for your well-being.</p>
-      <Button style={{ color: "#38B2AC", borderRadius: "30px", padding: "20px 50px", fontSize: "16px", cursor: "pointer", border: "none" }}>Sign up for free</Button>
+      <Link to="/signup" style={{ flex: 1, textDecoration: "none"}}>
+      <Button style={{ color: "#38B2AC", borderRadius: "30px", padding: "20px 50px", fontSize: "16px", cursor: "pointer", border: "none", backgroundColor:"white"}}>Sign up for free</Button>
+      </Link>
     </section>
   );
 }

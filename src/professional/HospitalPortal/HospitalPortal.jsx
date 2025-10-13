@@ -13,22 +13,28 @@ function HospitalPortal() {
   const [loading, setLoading] = useState(false);
   const [hospitalData, sethospitalData] = useState();
   const [showAddPersonnelModal, setShowAddPersonnelModal] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
-  function loadHospitalData() {
+  async function loadHospitalData() {
     try {
       setLoading(true);
-      const response = adminAxiosClient.get("/hospital/profile");
-      sethospitalData(response.data.hospital.practitioners);
+      const response = await adminAxiosClient.get("/hospital/profile");
 
-      console.log({ response });
+      sethospitalData(response.data.hospital);
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message || error.message || "Login failed";
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   }
+
+  const handlePersonnelAdded = () => {
+    setRefresh((prev) => prev + 1);
+  };
 
   useEffect(() => {
     loadHospitalData();
@@ -37,6 +43,10 @@ function HospitalPortal() {
   useEffect(() => {
     console.log({ hospitalData });
   }, [hospitalData]);
+
+  useEffect(() => {
+    loadHospitalData();
+  }, [refresh]);
 
   if (loading) {
     return <div>Loading hospital portal...</div>;
@@ -67,6 +77,7 @@ function HospitalPortal() {
                 {/* Personnel Management Section */}
                 <PersonnelManagement
                   onAddPersonnel={() => setShowAddPersonnelModal(true)}
+                  personnelData={hospitalData?.practitioners}
                 />
               </>
             }
@@ -78,6 +89,7 @@ function HospitalPortal() {
             element={
               <PersonnelManagement
                 onAddPersonnel={() => setShowAddPersonnelModal(true)}
+                personnelData={hospitalData?.practitioners}
               />
             }
           />
@@ -118,7 +130,8 @@ function HospitalPortal() {
         {showAddPersonnelModal && (
           <AddPersonnelModal
             onClose={() => setShowAddPersonnelModal(false)}
-            hospitalId={hospitalData?.hospital?.id}
+            hospitalId={hospitalData?.id}
+            onSuccess={handlePersonnelAdded}
           />
         )}
       </main>

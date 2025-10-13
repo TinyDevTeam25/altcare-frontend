@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import logo from "../../assets/Logo.png";
 import userAvatar from "../../assets/jane-doe-avatar.png";
 import "./HospitalHeader.css";
+import { clearHospitalAuth } from "../../utils/hospitalAuth.js";
 
 // Hospital admin navigation links
 const hospitalNavLinks = [
@@ -32,6 +33,10 @@ function HospitalHeader() {
 
   const handleLogout = () => {
     logout();
+    clearHospitalAuth();
+    setTimeout(() => {
+      window.location.href = "/professional/hospital-signin";
+    }, 1000);
   };
 
   const navLinks = hospitalNavLinks.map((link) => (
@@ -67,7 +72,11 @@ function HospitalHeader() {
             onClick={toggleProfile}
             style={{ cursor: "pointer" }}
           >
-            <img src={userAvatar} alt="Hospital Admin Avatar" className="avatar" />
+            <img
+              src={userAvatar}
+              alt="Hospital Admin Avatar"
+              className="avatar"
+            />
             <span className="user-name">
               {user?.hospital?.admin_name || "Admin"}
             </span>
@@ -89,7 +98,9 @@ function HospitalHeader() {
           <div className="profile-info">
             <img src={userAvatar} alt="Admin Avatar" />
             <div>
-              <p className="profile-name">{user?.hospital?.admin_name || "Admin"}</p>
+              <p className="profile-name">
+                {user?.hospital?.admin_name || "Admin"}
+              </p>
               <p className="profile-role">Hospital Administrator</p>
             </div>
           </div>

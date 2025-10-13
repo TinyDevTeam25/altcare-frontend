@@ -118,11 +118,6 @@ export default function HospitalSignin() {
             >
               {loading ? "Logging in..." : "Log In to Admin Panel"}
             </button>
-            {/* <Link to="/hospital-portal"> */}
-            <button type="submit" className="signin-submit-btn">
-              Log In to Admin Panel
-            </button>
-            {/* </Link> */}
           </form>
 
           <p className="signin-signup-prompt">

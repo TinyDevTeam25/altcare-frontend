@@ -793,29 +793,763 @@
 // }
 
 
+// "use client";
+// import React, { useEffect, useMemo, useRef, useState } from "react";
+// import { toast } from "react-toastify";
+// import { useAuth } from "../../context/AuthContext.jsx";
+// import apiClient from "../../utils/axiosConfig.js";
+// import "./MyAppointments.css";
+
+// /** ===== Adjust these when backend finalizes paths ===== */
+// const GET_PATIENT_PROFILE = "/patient/profile"; // GET (auth)
+// const GET_HOSPITALS = "/hospital/profile";      // GET (auth) – may return one or many
+// const GET_PRACTITIONERS_BY_HOSPITAL = (id) =>
+//   `/hospital/profile/${id}/practitioners`;     // GET (auth) – when backend ships it
+
+// const APPOINTMENT_TYPES = [
+//   { value: "in_person", label: "In-person" },
+//   { value: "virtual", label: "Virtual" },
+//   { value: "follow_up", label: "Follow-up" },
+// ];
+
+// export default function BookAppointment() {
+//   const { user, logout } = useAuth();
+
+//   // Token
+//   const token = useMemo(
+//     () =>
+//       user?.token ||
+//       user?.accessToken ||
+//       localStorage.getItem("token") ||
+//       localStorage.getItem("accessToken"),
+//     [user]
+//   );
+
+//   // Memoize headers so useEffect deps are stable
+//   const authHeaders = useMemo(
+//     () => (token ? { Authorization: `Bearer ${token}` } : undefined),
+//     [token]
+//   );
+
+//   const mountedRef = useRef(true);
+//   useEffect(() => {
+//     mountedRef.current = true;
+//     return () => {
+//       mountedRef.current = false;
+//     };
+//   }, []);
+
+//   // Hidden patient id
+//   const [patientId, setPatientId] = useState("");
+
+//   // Hospitals + practitioners
+//   const [hospitals, setHospitals] = useState([]);
+//   const [hospitalsLoading, setHospitalsLoading] = useState(false);
+//   const [hospitals404, setHospitals404] = useState(false);
+
+//   const [hospitalId, setHospitalId] = useState("");
+//   const [practitioners, setPractitioners] = useState([]);
+//   const [practLoading, setPractLoading] = useState(false);
+//   const [pract404, setPract404] = useState(false);
+
+//   // Manual practitioner ID fallback (until list endpoint is live)
+//   const [manualPractId, setManualPractId] = useState("");
+
+//   // Form
+//   const [practitionerId, setPractitionerId] = useState("");
+//   const [apptType, setApptType] = useState("");
+//   const [title, setTitle] = useState("");
+//   const [reason, setReason] = useState("");
+//   const [datetime, setDatetime] = useState("");
+//   const [submitting, setSubmitting] = useState(false);
+//   const [success, setSuccess] = useState(false);
+
+//   // Resolve patient id (auth)
+//   useEffect(() => {
+//     if (!token) return;
+//     (async () => {
+//       try {
+//         const { data } = await apiClient.get(GET_PATIENT_PROFILE, {
+//           headers: authHeaders,
+//         });
+//         const pid =
+//           data?.data?.patient?.profile?.id ||
+//           user?.profile?.profile?.id ||
+//           user?.profile?.id ||
+//           "";
+//         if (!pid) {
+//           toast.error("Could not resolve your patient profile. Please sign in again.");
+//           logout?.();
+//           return;
+//         }
+//         if (mountedRef.current) setPatientId(pid);
+//       } catch (err) {
+//         const status = err?.response?.status;
+//         toast.error(
+//           status === 401 || status === 403
+//             ? "Session expired. Please sign in again."
+//             : "Could not load your profile."
+//         );
+//         if (status === 401 || status === 403) logout?.();
+//       }
+//     })();
+//   }, [token, authHeaders, user, logout]);
+
+//   // Load hospitals (auth) — handle 404 without looping
+//   useEffect(() => {
+//     if (!token || hospitals404) return;
+//     (async () => {
+//       setHospitalsLoading(true);
+//       try {
+//         const { data } = await apiClient.get(GET_HOSPITALS, {
+//           headers: authHeaders,
+//         });
+//         let list =
+//           data?.data?.hospitals || data?.hospitals || data?.data || data || [];
+//         if (!Array.isArray(list)) list = [list].filter(Boolean);
+//         if (mountedRef.current) setHospitals(list);
+//       } catch (err) {
+//         const status = err?.response?.status;
+//         if (status === 404) {
+//           setHospitals404(true); // stop retrying
+//           // Soft note; don’t spam toasts on re-renders
+//           console.warn("Hospitals endpoint returned 404. Hiding hospital select.");
+//         } else {
+//           toast.error(
+//             status === 401 || status === 403
+//               ? "Unauthorized to view hospitals."
+//               : "Could not load hospitals."
+//           );
+//         }
+//       } finally {
+//         if (mountedRef.current) setHospitalsLoading(false);
+//       }
+//     })();
+//   }, [token, authHeaders, hospitals404]);
+
+//   // Load practitioners when a hospital is chosen (auth) — handle 404 gracefully
+//   useEffect(() => {
+//     if (!token || !hospitalId || pract404) return;
+//     (async () => {
+//       setPractLoading(true);
+//       try {
+//         const url = GET_PRACTITIONERS_BY_HOSPITAL(hospitalId);
+//         const { data } = await apiClient.get(url, { headers: authHeaders });
+//         const raw =
+//           data?.data?.practitioners ||
+//           data?.practitioners ||
+//           data?.data ||
+//           data ||
+//           [];
+//         const normalized = (Array.isArray(raw) ? raw : []).map((p) => ({
+//           id: p?.id || p?.practitioner_id || p?.uuid || "",
+//           name: p?.name || p?.full_name || p?.displayName || "Unknown",
+//           speciality:
+//             p?.speciality || p?.specialty || p?.department || p?.role || "",
+//         }));
+//         if (mountedRef.current) {
+//           setPractitioners(normalized.filter((p) => p.id));
+//           setPractitionerId("");
+//         }
+//       } catch (err) {
+//         const status = err?.response?.status;
+//         if (status === 404) {
+//           setPract404(true);
+//           console.warn(
+//             "Practitioners-by-hospital endpoint returned 404. Falling back to manual practitioner ID."
+//           );
+//         } else {
+//           toast.error(
+//             status === 401 || status === 403
+//               ? "Unauthorized to view practitioners."
+//               : "Could not load practitioners."
+//           );
+//         }
+//       } finally {
+//         if (mountedRef.current) setPractLoading(false);
+//       }
+//     })();
+//   }, [token, authHeaders, hospitalId, pract404]);
+
+//   // If list is unavailable, use manual ID; else use selected
+//   const effectivePractitionerId =
+//     !hospitals404 && !pract404 && practitioners.length
+//       ? practitionerId
+//       : manualPractId.trim();
+
+//   const canSubmit =
+//     !!patientId &&
+//     !!effectivePractitionerId &&
+//     !!apptType &&
+//     title.trim() &&
+//     reason.trim() &&
+//     !!datetime;
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!canSubmit) return;
+
+//     setSubmitting(true);
+//     setSuccess(false);
+//     try {
+//       const payload = {
+//         patient_id: patientId,
+//         practitioner_id: effectivePractitionerId,
+//         title: title.trim(),
+//         reason_for_visit: reason.trim(),
+//         appointment_type: apptType, // in_person | virtual | follow_up
+//         appointment_date: new Date(datetime).toISOString(),
+//       };
+
+//       await apiClient.post("/patient/book-appointment", payload, {
+//         headers: authHeaders,
+//       });
+
+//       setSuccess(true);
+//       toast.success("Appointment booked successfully.");
+//     } catch (err) {
+//       const status = err?.response?.status;
+//       const msg =
+//         err?.response?.data?.message ||
+//         (status === 401 || status === 403
+//           ? "Your session has expired. Please sign in again."
+//           : "Could not book the appointment. Please try again.");
+//       toast.error(msg);
+//       if (status === 401 || status === 403) logout?.();
+//     } finally {
+//       setSubmitting(false);
+//     }
+//   };
+
+//   return (
+//     <main className="appts-page">
+//       <section className="appts-canvas">
+//         <div className="appts-hero">
+//           <div className="appts-hero-inner">
+//             <h2 className="appts-hero-title">Book an Appointment</h2>
+//             <p className="appts-hero-sub">
+//               Pick who you want to see and confirm your details.
+//             </p>
+//           </div>
+//         </div>
+
+//         <form className="appts-form-card" onSubmit={handleSubmit}>
+//           {/* Hospital select (hidden if endpoint 404) */}
+//           {!hospitals404 && (
+//             <div className="appts-field">
+//               <label className="appts-label">Hospital</label>
+//               <div className="appts-input appts-input--select">
+//                 <select
+//                   value={hospitalId}
+//                   onChange={(e) => setHospitalId(e.target.value)}
+//                   aria-label="Select hospital"
+//                   disabled={hospitalsLoading}
+//                 >
+//                   <option value="" disabled>
+//                     {hospitalsLoading ? "Loading hospitals…" : "Select a hospital"}
+//                   </option>
+//                   {hospitals.map((h) => (
+//                     <option key={h.id} value={h.id}>
+//                       {h.name || h.email || h.id}
+//                     </option>
+//                   ))}
+//                 </select>
+//                 <span className="appts-chevron" aria-hidden />
+//               </div>
+//             </div>
+//           )}
+
+//           {/* Practitioner (list if available; else manual ID) */}
+//           {!hospitals404 && !pract404 && practitioners.length > 0 ? (
+//             <div className="appts-field">
+//               <label className="appts-label">Practitioner</label>
+//               <div className="appts-input appts-input--select">
+//                 <select
+//                   value={practitionerId}
+//                   onChange={(e) => setPractitionerId(e.target.value)}
+//                   aria-label="Select practitioner"
+//                   disabled={!hospitalId || practLoading}
+//                 >
+//                   {!hospitalId ? (
+//                     <option value="" disabled>
+//                       Select a hospital first
+//                     </option>
+//                   ) : practLoading ? (
+//                     <option value="" disabled>
+//                       Loading practitioners…
+//                     </option>
+//                   ) : (
+//                     <>
+//                       <option value="" disabled>
+//                         Select practitioner
+//                       </option>
+//                       {practitioners.map((p) => (
+//                         <option key={p.id} value={p.id}>
+//                           {p.name}
+//                           {p.speciality ? ` — ${p.speciality}` : ""}
+//                         </option>
+//                       ))}
+//                     </>
+//                   )}
+//                 </select>
+//                 <span className="appts-chevron" aria-hidden />
+//               </div>
+//             </div>
+//           ) : (
+//             <div className="appts-field">
+//               <label className="appts-label">
+//                 Practitioner ID{" "}
+//                 <span style={{ color: "#6b7280", fontWeight: 400 }}>
+//                   (temporary while list endpoint is unavailable)
+//                 </span>
+//               </label>
+//               <input
+//                 className="appts-input"
+//                 style={{ height: 44, padding: "0 14px" }}
+//                 placeholder="Paste practitioner UUID"
+//                 value={manualPractId}
+//                 onChange={(e) => setManualPractId(e.target.value)}
+//               />
+//             </div>
+//           )}
+
+//           {/* Type */}
+//           <div className="appts-field">
+//             <label className="appts-label">Appointment type</label>
+//             <div className="appts-input appts-input--select">
+//               <select
+//                 value={apptType}
+//                 onChange={(e) => setApptType(e.target.value)}
+//                 aria-label="Select appointment type"
+//               >
+//                 <option value="" disabled>
+//                   Select type
+//                 </option>
+//                 {APPOINTMENT_TYPES.map((t) => (
+//                   <option key={t.value} value={t.value}>
+//                     {t.label}
+//                   </option>
+//                 ))}
+//               </select>
+//               <span className="appts-chevron" aria-hidden />
+//             </div>
+//           </div>
+
+//           {/* Title */}
+//           <div className="appts-field">
+//             <label className="appts-label">Title</label>
+//             <input
+//               className="appts-input"
+//               style={{ height: 44, padding: "0 14px" }}
+//               placeholder="e.g., Follow up – Check-up"
+//               value={title}
+//               onChange={(e) => setTitle(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Reason */}
+//           <div className="appts-field">
+//             <label className="appts-label">Reason for visit</label>
+//             <div className="appts-input appts-input--textarea">
+//               <textarea
+//                 rows={6}
+//                 placeholder="Briefly describe your symptoms or reason for the visit"
+//                 value={reason}
+//                 onChange={(e) => setReason(e.target.value)}
+//               />
+//             </div>
+//           </div>
+
+//           {/* Date & time */}
+//           <div className="appts-field">
+//             <label className="appts-label">Preferred date & time</label>
+//             <input
+//               type="datetime-local"
+//               className="appts-input"
+//               style={{ height: 44, padding: "0 12px" }}
+//               value={datetime}
+//               onChange={(e) => setDatetime(e.target.value)}
+//             />
+//           </div>
+
+//           <div className="appts-actions">
+//             <button className="appts-submit" disabled={!canSubmit || submitting}>
+//               {submitting ? "Booking…" : "Book Appointment"}
+//             </button>
+//           </div>
+
+//           {success && (
+//             <div className="appts-success">
+//               <div className="appts-success-row">
+//                 <span className="appts-success-check" aria-hidden />
+//                 <strong>Appointment Booked</strong>
+//               </div>
+//               <p className="appts-success-text">
+//                 Your appointment has been successfully booked. Thanks for using AltCare!
+//               </p>
+//             </div>
+//           )}
+//         </form>
+//       </section>
+//     </main>
+//   );
+// }
+
+
+// "use client";
+// import React, { useEffect, useMemo, useState } from "react";
+// import { toast } from "react-toastify";
+// import { useAuth } from "../../context/AuthContext.jsx";
+// import apiClient from "../../utils/axiosConfig.js";
+// import "./MyAppointments.css"; // your .appts-* styles live here
+
+// // Backend enum names (from Prisma): in_person | virtual | follow_up
+// const APPOINTMENT_TYPES = [
+//   { label: "In person", value: "in_person" },
+//   { label: "Virtual", value: "virtual" },
+//   { label: "Follow up", value: "follow_up" },
+// ];
+
+// // Try a couple of endpoints safely. Adjust if backend confirms a single source.
+// async function tryFetchPractitioners(token, { hospitalId } = {}) {
+//   const headers = token ? { Authorization: `Bearer ${token}` } : {};
+//   const candidates = [];
+
+//   // 1) If you know the hospital ID, try a public practitioners list
+//   // (backend said they might expose something like this)
+//   if (hospitalId) {
+//     candidates.push({
+//       url: `/public/hospitals/${hospitalId}/practitioners`,
+//       needsAuth: false,
+//     });
+//   }
+
+//   // 2) Authenticated hospital profile; some backends return hospital with practitioners relation
+//   candidates.push({ url: `/hospital/profile`, needsAuth: true });
+
+//   // 3) A fully public list (if they add it): /public/practitioners
+//   candidates.push({ url: `/public/practitioners`, needsAuth: false });
+
+//   for (const c of candidates) {
+//     try {
+//       const res = await apiClient.get(c.url, {
+//         headers: c.needsAuth ? headers : {},
+//       });
+
+//       // Normalize likely payload shapes
+//       const data = res?.data || {};
+//       const list =
+//         data?.practitioners ||
+//         data?.data?.practitioners ||
+//         data?.hospital?.practitioners ||
+//         data?.data?.hospital?.practitioners ||
+//         data; // if the endpoint already returns an array
+
+//       if (Array.isArray(list) && list.length) {
+//         // Map into a stable minimal shape we need for the dropdown
+//         return list
+//           .filter(Boolean)
+//           .map((p) => ({
+//             id: p.id || p.practitioner_id || p?.profile?.id, // best-effort id
+//             name: p.name || p.full_name || p?.profile?.full_name || "Unnamed",
+//             email: p.email || p?.profile?.email || "",
+//             professional_id: p.professional_id || "",
+//             photo: p.photo || "",
+//           }))
+//           .filter((p) => p.id);
+//       }
+//     } catch (e) {
+//       // Keep trying the next candidate; only log to console to avoid noisy toasts
+//       // eslint-disable-next-line no-console
+//       console.warn("Practitioner fetch attempt failed:", c.url, e?.response?.status || e?.message);
+//     }
+//   }
+
+//   // Nothing worked
+//   return [];
+// }
+
+// export default function BookAppointment() {
+//   const { user, logout } = useAuth();
+
+//   // Token (several common places)
+//   const token = useMemo(
+//     () =>
+//       user?.token ||
+//       user?.accessToken ||
+//       localStorage.getItem("token") ||
+//       localStorage.getItem("accessToken"),
+//     [user]
+//   );
+
+//   // Form state
+//   const [practitioners, setPractitioners] = useState([]);
+//   const [loadingList, setLoadingList] = useState(false);
+
+//   const [practitionerId, setPractitionerId] = useState("");
+//   const [title, setTitle] = useState("");
+//   const [reason, setReason] = useState("");
+//   const [apptType, setApptType] = useState("");
+//   const [dateTimeLocal, setDateTimeLocal] = useState(""); // YYYY-MM-DDTHH:mm (local)
+//   const [submitting, setSubmitting] = useState(false);
+//   const [success, setSuccess] = useState(false);
+
+//   // Optional: if you know a default hospitalId from context or route, put it here
+//   const [hospitalId] = useState(""); // e.g. "cac27e77-3e82-4864-b4c5-18b621487edf"
+
+//   const canSubmit =
+//     practitionerId && title.trim() && reason.trim() && apptType && dateTimeLocal;
+
+//   // Fetch practitioners once (or when hospitalId changes)
+//   useEffect(() => {
+//     let alive = true;
+//     (async () => {
+//       setLoadingList(true);
+//       try {
+//         const list = await tryFetchPractitioners(token, { hospitalId });
+//         if (!alive) return;
+
+//         if (list.length === 0) {
+//           // We’ll still allow manual ID entry as a fallback
+//           toast.info(
+//             "Couldn’t load practitioners automatically. You can still paste a practitioner ID manually."
+//           );
+//         }
+//         setPractitioners(list);
+//       } finally {
+//         if (alive) setLoadingList(false);
+//       }
+//     })();
+//     return () => {
+//       alive = false;
+//     };
+//   }, [token, hospitalId]);
+
+//   // Manual ID fallback (when list is empty)
+//   const [manualId, setManualId] = useState("");
+//   const effectivePractitionerId = practitioners.length ? practitionerId : manualId.trim();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!canSubmit) return;
+
+//     if (!token) {
+//       toast.error("Missing auth token. Please sign in again.");
+//       logout?.();
+//       return;
+//     }
+
+//     // Convert local datetime to ISO Z (UTC). This keeps backend happy.
+//     // If you want to preserve timezone, coordinate with backend first.
+//     const iso =
+//       dateTimeLocal?.endsWith("Z")
+//         ? dateTimeLocal
+//         : new Date(dateTimeLocal).toISOString();
+
+//     setSubmitting(true);
+//     setSuccess(false);
+//     try {
+//       await apiClient.post(
+//         "/patient/book-appointment",
+//         {
+//           practitioner_id: effectivePractitionerId,
+//           title,
+//           reason_for_visit: reason,
+//           appointment_type: apptType, // "in_person" | "virtual" | "follow_up"
+//           appointment_date: iso,
+//         },
+//         { headers: { Authorization: `Bearer ${token}` } }
+//       );
+
+//       setSuccess(true);
+//       toast.success("Appointment booked successfully.");
+//       // Optional: clear fields
+//       // setPractitionerId(""); setManualId(""); setTitle(""); setReason(""); setApptType(""); setDateTimeLocal("");
+//     } catch (err) {
+//       const status = err?.response?.status;
+//       const msg =
+//         err?.response?.data?.message ||
+//         (status === 401 || status === 403
+//           ? "Your session has expired. Please sign in again."
+//           : "Could not book the appointment. Please try again.");
+//       toast.error(msg);
+//       if (status === 401 || status === 403) {
+//         logout?.();
+//       }
+//     } finally {
+//       setSubmitting(false);
+//     }
+//   };
+
+//   return (
+//     <main className="appts-page">
+//       <section className="appts-canvas">
+//         {/* Hero */}
+//         <div className="appts-hero">
+//           <div className="appts-hero-inner">
+//             <h2 className="appts-hero-title">Book an Appointment</h2>
+//             <p className="appts-hero-sub">
+//               Choose a practitioner, set your date & time, and tell us why you’re visiting.
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* Form */}
+//         <form className="appts-form-card" onSubmit={handleSubmit}>
+//           {/* Practitioner */}
+//           <div className="appts-field">
+//             <label className="appts-label">Select Practitioner</label>
+
+//             {practitioners.length > 0 ? (
+//               <div className="appts-input appts-input--select">
+//                 <select
+//                   value={practitionerId}
+//                   onChange={(e) => setPractitionerId(e.target.value)}
+//                   aria-label="Select Practitioner"
+//                 >
+//                   <option value="" disabled>
+//                     {loadingList ? "Loading…" : "Choose a practitioner"}
+//                   </option>
+//                   {practitioners.map((p) => (
+//                     <option key={p.id} value={p.id}>
+//                       {p.name} {p.professional_id ? `• ${p.professional_id}` : ""}
+//                     </option>
+//                   ))}
+//                 </select>
+//                 <span className="appts-chevron" aria-hidden />
+//               </div>
+//             ) : (
+//               <>
+//                 <div className="appts-input" style={{ display: "grid", alignItems: "center" }}>
+//                   <input
+//                     type="text"
+//                     placeholder="Paste practitioner ID (temporary fallback)"
+//                     value={manualId}
+//                     onChange={(e) => setManualId(e.target.value)}
+//                     aria-label="Practitioner ID"
+//                     className="appts-input"
+//                     style={{ height: 42, border: "none", padding: 0 }}
+//                   />
+//                 </div>
+//                 <small style={{ color: "#4a5568" }}>
+//                   We couldn’t load a list automatically yet. Backend will expose a public practitioners list soon.
+//                 </small>
+//               </>
+//             )}
+//           </div>
+
+//           {/* Title */}
+//           <div className="appts-field">
+//             <label className="appts-label">Appointment Title</label>
+//             <input
+//               className="appts-input"
+//               type="text"
+//               placeholder="e.g. Follow up — Check-up"
+//               value={title}
+//               onChange={(e) => setTitle(e.target.value)}
+//               required
+//             />
+//           </div>
+
+//           {/* Reason */}
+//           <div className="appts-field">
+//             <label className="appts-label">Reason for Visit</label>
+//             <div className="appts-input appts-input--textarea">
+//               <textarea
+//                 rows={6}
+//                 placeholder="Briefly describe your symptoms or reason"
+//                 value={reason}
+//                 onChange={(e) => setReason(e.target.value)}
+//                 required
+//               />
+//             </div>
+//           </div>
+
+//           {/* Type */}
+//           <div className="appts-field">
+//             <label className="appts-label">Appointment Type</label>
+//             <div className="appts-input appts-input--select">
+//               <select
+//                 value={apptType}
+//                 onChange={(e) => setApptType(e.target.value)}
+//                 aria-label="Select appointment type"
+//                 required
+//               >
+//                 <option value="" disabled>
+//                   Select type
+//                 </option>
+//                 {APPOINTMENT_TYPES.map((t) => (
+//                   <option key={t.value} value={t.value}>
+//                     {t.label}
+//                   </option>
+//                 ))}
+//               </select>
+//               <span className="appts-chevron" aria-hidden />
+//             </div>
+//           </div>
+
+//           {/* Date & time (plain but styled input) */}
+//           <div className="appts-field">
+//             <label className="appts-label">Preferred Date & Time</label>
+//             <input
+//               className="appts-input"
+//               type="datetime-local"
+//               value={dateTimeLocal}
+//               onChange={(e) => setDateTimeLocal(e.target.value)}
+//               required
+//             />
+//             <small style={{ color: "#4a5568" }}>
+//               Your time is recorded in your local timezone and sent in UTC to the backend.
+//             </small>
+//           </div>
+
+//           {/* Submit */}
+//           <div className="appts-actions">
+//             <button
+//               className="appts-submit"
+//               disabled={!canSubmit || submitting}
+//               type="submit"
+//             >
+//               {submitting ? "Booking…" : "Book Appointment"}
+//             </button>
+//           </div>
+
+//           {/* Success banner */}
+//           {success && (
+//             <div className="appts-success" role="status" aria-live="polite">
+//               <div className="appts-success-row">
+//                 <span className="appts-success-check" aria-hidden />
+//                 <strong>Appointment Booked</strong>
+//               </div>
+//               <p className="appts-success-text">
+//                 Your appointment has been successfully booked. We’ll notify you with updates.
+//               </p>
+//             </div>
+//           )}
+//         </form>
+//       </section>
+//     </main>
+//   );
+// }
+
+
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext.jsx";
 import apiClient from "../../utils/axiosConfig.js";
-import "./MyAppointments.css";
-
-/** ===== Adjust these when backend finalizes paths ===== */
-const GET_PATIENT_PROFILE = "/patient/profile"; // GET (auth)
-const GET_HOSPITALS = "/hospital/profile";      // GET (auth) – may return one or many
-const GET_PRACTITIONERS_BY_HOSPITAL = (id) =>
-  `/hospital/profile/${id}/practitioners`;     // GET (auth) – when backend ships it
+import "./MyAppointments.css"; // your appts-* styles live here
 
 const APPOINTMENT_TYPES = [
-  { value: "in_person", label: "In-person" },
+  { value: "in_person", label: "In person" },
   { value: "virtual", label: "Virtual" },
-  { value: "follow_up", label: "Follow-up" },
+  { value: "follow_up", label: "Follow up" },
 ];
 
 export default function BookAppointment() {
   const { user, logout } = useAuth();
 
-  // Token
+  // Try several common token spots (matches your other pages)
   const token = useMemo(
     () =>
       user?.token ||
@@ -825,188 +1559,68 @@ export default function BookAppointment() {
     [user]
   );
 
-  // Memoize headers so useEffect deps are stable
-  const authHeaders = useMemo(
-    () => (token ? { Authorization: `Bearer ${token}` } : undefined),
-    [token]
-  );
-
-  const mountedRef = useRef(true);
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  // Hidden patient id
-  const [patientId, setPatientId] = useState("");
-
-  // Hospitals + practitioners
-  const [hospitals, setHospitals] = useState([]);
-  const [hospitalsLoading, setHospitalsLoading] = useState(false);
-  const [hospitals404, setHospitals404] = useState(false);
-
-  const [hospitalId, setHospitalId] = useState("");
-  const [practitioners, setPractitioners] = useState([]);
-  const [practLoading, setPractLoading] = useState(false);
-  const [pract404, setPract404] = useState(false);
-
-  // Manual practitioner ID fallback (until list endpoint is live)
-  const [manualPractId, setManualPractId] = useState("");
-
-  // Form
+  // form state
   const [practitionerId, setPractitionerId] = useState("");
-  const [apptType, setApptType] = useState("");
   const [title, setTitle] = useState("");
   const [reason, setReason] = useState("");
-  const [datetime, setDatetime] = useState("");
+  const [apptType, setApptType] = useState("");
+  const [dtLocal, setDtLocal] = useState(""); // datetime-local (e.g. 2025-10-20T11:00)
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Resolve patient id (auth)
-  useEffect(() => {
-    if (!token) return;
-    (async () => {
-      try {
-        const { data } = await apiClient.get(GET_PATIENT_PROFILE, {
-          headers: authHeaders,
-        });
-        const pid =
-          data?.data?.patient?.profile?.id ||
-          user?.profile?.profile?.id ||
-          user?.profile?.id ||
-          "";
-        if (!pid) {
-          toast.error("Could not resolve your patient profile. Please sign in again.");
-          logout?.();
-          return;
-        }
-        if (mountedRef.current) setPatientId(pid);
-      } catch (err) {
-        const status = err?.response?.status;
-        toast.error(
-          status === 401 || status === 403
-            ? "Session expired. Please sign in again."
-            : "Could not load your profile."
-        );
-        if (status === 401 || status === 403) logout?.();
-      }
-    })();
-  }, [token, authHeaders, user, logout]);
-
-  // Load hospitals (auth) — handle 404 without looping
-  useEffect(() => {
-    if (!token || hospitals404) return;
-    (async () => {
-      setHospitalsLoading(true);
-      try {
-        const { data } = await apiClient.get(GET_HOSPITALS, {
-          headers: authHeaders,
-        });
-        let list =
-          data?.data?.hospitals || data?.hospitals || data?.data || data || [];
-        if (!Array.isArray(list)) list = [list].filter(Boolean);
-        if (mountedRef.current) setHospitals(list);
-      } catch (err) {
-        const status = err?.response?.status;
-        if (status === 404) {
-          setHospitals404(true); // stop retrying
-          // Soft note; don’t spam toasts on re-renders
-          console.warn("Hospitals endpoint returned 404. Hiding hospital select.");
-        } else {
-          toast.error(
-            status === 401 || status === 403
-              ? "Unauthorized to view hospitals."
-              : "Could not load hospitals."
-          );
-        }
-      } finally {
-        if (mountedRef.current) setHospitalsLoading(false);
-      }
-    })();
-  }, [token, authHeaders, hospitals404]);
-
-  // Load practitioners when a hospital is chosen (auth) — handle 404 gracefully
-  useEffect(() => {
-    if (!token || !hospitalId || pract404) return;
-    (async () => {
-      setPractLoading(true);
-      try {
-        const url = GET_PRACTITIONERS_BY_HOSPITAL(hospitalId);
-        const { data } = await apiClient.get(url, { headers: authHeaders });
-        const raw =
-          data?.data?.practitioners ||
-          data?.practitioners ||
-          data?.data ||
-          data ||
-          [];
-        const normalized = (Array.isArray(raw) ? raw : []).map((p) => ({
-          id: p?.id || p?.practitioner_id || p?.uuid || "",
-          name: p?.name || p?.full_name || p?.displayName || "Unknown",
-          speciality:
-            p?.speciality || p?.specialty || p?.department || p?.role || "",
-        }));
-        if (mountedRef.current) {
-          setPractitioners(normalized.filter((p) => p.id));
-          setPractitionerId("");
-        }
-      } catch (err) {
-        const status = err?.response?.status;
-        if (status === 404) {
-          setPract404(true);
-          console.warn(
-            "Practitioners-by-hospital endpoint returned 404. Falling back to manual practitioner ID."
-          );
-        } else {
-          toast.error(
-            status === 401 || status === 403
-              ? "Unauthorized to view practitioners."
-              : "Could not load practitioners."
-          );
-        }
-      } finally {
-        if (mountedRef.current) setPractLoading(false);
-      }
-    })();
-  }, [token, authHeaders, hospitalId, pract404]);
-
-  // If list is unavailable, use manual ID; else use selected
-  const effectivePractitionerId =
-    !hospitals404 && !pract404 && practitioners.length
-      ? practitionerId
-      : manualPractId.trim();
-
+  // computed: can submit?
   const canSubmit =
-    !!patientId &&
-    !!effectivePractitionerId &&
-    !!apptType &&
+    practitionerId.trim() &&
     title.trim() &&
     reason.trim() &&
-    !!datetime;
+    apptType &&
+    dtLocal;
+
+  // helper: convert local datetime-local -> strict UTC ISO with Z
+  const toUtcIso = (localValue) => {
+    // localValue like "2025-10-20T11:00"
+    const d = new Date(localValue);
+    if (Number.isNaN(d.getTime())) return null;
+    return d.toISOString(); // backend expects "2025-10-20T11:00:00.000Z"
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!canSubmit) return;
 
+    if (!token) {
+      toast.error("Your session has expired. Please sign in again.");
+      logout?.();
+      return;
+    }
+
+    const isoUtc = toUtcIso(dtLocal);
+    if (!isoUtc) {
+      toast.error("Please enter a valid date & time.");
+      return;
+    }
+
     setSubmitting(true);
     setSuccess(false);
-    try {
-      const payload = {
-        patient_id: patientId,
-        practitioner_id: effectivePractitionerId,
-        title: title.trim(),
-        reason_for_visit: reason.trim(),
-        appointment_type: apptType, // in_person | virtual | follow_up
-        appointment_date: new Date(datetime).toISOString(),
-      };
 
-      await apiClient.post("/patient/book-appointment", payload, {
-        headers: authHeaders,
-      });
+    try {
+      // IMPORTANT: patient_id is NOT sent; backend reads it from JWT
+      await apiClient.post(
+        "/patient/book-appointment",
+        {
+          practitioner_id: practitionerId.trim(),
+          title: title.trim(),
+          reason_for_visit: reason.trim(),
+          appointment_type: apptType, // must be one of: in_person | virtual | follow_up
+          appointment_date: isoUtc,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
       setSuccess(true);
       toast.success("Appointment booked successfully.");
+      // Optional: reset some fields
+      // setTitle(""); setReason(""); setApptType(""); setDtLocal("");
     } catch (err) {
       const status = err?.response?.status;
       const msg =
@@ -1028,111 +1642,27 @@ export default function BookAppointment() {
           <div className="appts-hero-inner">
             <h2 className="appts-hero-title">Book an Appointment</h2>
             <p className="appts-hero-sub">
-              Pick who you want to see and confirm your details.
+              Pick a practitioner, set your preferred time, and confirm.
             </p>
           </div>
         </div>
 
         <form className="appts-form-card" onSubmit={handleSubmit}>
-          {/* Hospital select (hidden if endpoint 404) */}
-          {!hospitals404 && (
-            <div className="appts-field">
-              <label className="appts-label">Hospital</label>
-              <div className="appts-input appts-input--select">
-                <select
-                  value={hospitalId}
-                  onChange={(e) => setHospitalId(e.target.value)}
-                  aria-label="Select hospital"
-                  disabled={hospitalsLoading}
-                >
-                  <option value="" disabled>
-                    {hospitalsLoading ? "Loading hospitals…" : "Select a hospital"}
-                  </option>
-                  {hospitals.map((h) => (
-                    <option key={h.id} value={h.id}>
-                      {h.name || h.email || h.id}
-                    </option>
-                  ))}
-                </select>
-                <span className="appts-chevron" aria-hidden />
-              </div>
-            </div>
-          )}
-
-          {/* Practitioner (list if available; else manual ID) */}
-          {!hospitals404 && !pract404 && practitioners.length > 0 ? (
-            <div className="appts-field">
-              <label className="appts-label">Practitioner</label>
-              <div className="appts-input appts-input--select">
-                <select
-                  value={practitionerId}
-                  onChange={(e) => setPractitionerId(e.target.value)}
-                  aria-label="Select practitioner"
-                  disabled={!hospitalId || practLoading}
-                >
-                  {!hospitalId ? (
-                    <option value="" disabled>
-                      Select a hospital first
-                    </option>
-                  ) : practLoading ? (
-                    <option value="" disabled>
-                      Loading practitioners…
-                    </option>
-                  ) : (
-                    <>
-                      <option value="" disabled>
-                        Select practitioner
-                      </option>
-                      {practitioners.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.name}
-                          {p.speciality ? ` — ${p.speciality}` : ""}
-                        </option>
-                      ))}
-                    </>
-                  )}
-                </select>
-                <span className="appts-chevron" aria-hidden />
-              </div>
-            </div>
-          ) : (
-            <div className="appts-field">
-              <label className="appts-label">
-                Practitioner ID{" "}
-                <span style={{ color: "#6b7280", fontWeight: 400 }}>
-                  (temporary while list endpoint is unavailable)
-                </span>
-              </label>
-              <input
-                className="appts-input"
-                style={{ height: 44, padding: "0 14px" }}
-                placeholder="Paste practitioner UUID"
-                value={manualPractId}
-                onChange={(e) => setManualPractId(e.target.value)}
-              />
-            </div>
-          )}
-
-          {/* Type */}
+          {/* Practitioner ID (temporary backup until public list endpoint is live) */}
           <div className="appts-field">
-            <label className="appts-label">Appointment type</label>
-            <div className="appts-input appts-input--select">
-              <select
-                value={apptType}
-                onChange={(e) => setApptType(e.target.value)}
-                aria-label="Select appointment type"
-              >
-                <option value="" disabled>
-                  Select type
-                </option>
-                {APPOINTMENT_TYPES.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
-                  </option>
-                ))}
-              </select>
-              <span className="appts-chevron" aria-hidden />
-            </div>
+            <label className="appts-label">
+              Practitioner ID (temporary)
+            </label>
+            <input
+              className="appts-input"
+              placeholder="e.g. 0d6220dc-1917-40a6-9092-bdaead3f9b76"
+              value={practitionerId}
+              onChange={(e) => setPractitionerId(e.target.value)}
+            />
+            <small style={{ color: "#4a5568" }}>
+              This will become a dropdown once the public practitioners list
+              endpoint is available.
+            </small>
           </div>
 
           {/* Title */}
@@ -1140,8 +1670,7 @@ export default function BookAppointment() {
             <label className="appts-label">Title</label>
             <input
               className="appts-input"
-              style={{ height: 44, padding: "0 14px" }}
-              placeholder="e.g., Follow up – Check-up"
+              placeholder="e.g. Follow up — Check-up"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -1153,31 +1682,61 @@ export default function BookAppointment() {
             <div className="appts-input appts-input--textarea">
               <textarea
                 rows={6}
-                placeholder="Briefly describe your symptoms or reason for the visit"
+                placeholder="Briefly describe the issue…"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
               />
             </div>
           </div>
 
+          {/* Appointment type */}
+          <div className="appts-field">
+            <label className="appts-label">Appointment type</label>
+            <div className="appts-input appts-input--select">
+              <select
+                value={apptType}
+                onChange={(e) => setApptType(e.target.value)}
+                aria-label="Select appointment type"
+              >
+                <option value="" disabled>
+                  Select appointment type
+                </option>
+                {APPOINTMENT_TYPES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+              <span className="appts-chevron" aria-hidden />
+            </div>
+          </div>
+
           {/* Date & time */}
           <div className="appts-field">
-            <label className="appts-label">Preferred date & time</label>
+            <label className="appts-label">Preferred Date & Time</label>
             <input
               type="datetime-local"
               className="appts-input"
-              style={{ height: 44, padding: "0 12px" }}
-              value={datetime}
-              onChange={(e) => setDatetime(e.target.value)}
+              value={dtLocal}
+              onChange={(e) => setDtLocal(e.target.value)}
             />
+            <small style={{ color: "#4a5568" }}>
+              We’ll convert your local time to UTC automatically for the API.
+            </small>
           </div>
 
+          {/* Submit */}
           <div className="appts-actions">
-            <button className="appts-submit" disabled={!canSubmit || submitting}>
+            <button
+              className="appts-submit"
+              disabled={!canSubmit || submitting}
+              type="submit"
+            >
               {submitting ? "Booking…" : "Book Appointment"}
             </button>
           </div>
 
+          {/* Success banner */}
           {success && (
             <div className="appts-success">
               <div className="appts-success-row">
@@ -1185,7 +1744,8 @@ export default function BookAppointment() {
                 <strong>Appointment Booked</strong>
               </div>
               <p className="appts-success-text">
-                Your appointment has been successfully booked. Thanks for using AltCare!
+                Your appointment has been successfully booked. You’ll see it in
+                your appointments list shortly.
               </p>
             </div>
           )}

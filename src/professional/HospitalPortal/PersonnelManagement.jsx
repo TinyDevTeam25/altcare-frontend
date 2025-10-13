@@ -1,63 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Users, UserCheck, UserX, Search } from "lucide-react";
 import "./PersonnelManagement.css";
+import ViewPersonnelModal from "./ViewPersonnelModal";
 
-function PersonnelManagement({ onAddPersonnel }) {
+function PersonnelManagement({ onAddPersonnel, personnelData }) {
   const [personnel, setPersonnel] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRole, setFilterRole] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [selectedPersonnelId, setSelectedPersonnelId] = useState(null);
+  const [showViewModal, setShowViewModal] = useState(false);
 
-  // Mock data - replace with actual API call
+  // Use personnelData prop as source of truth
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setPersonnel([
-        {
-          id: 1,
-          name: "Dr. Sarah Johnson",
-          email: "sarah.johnson@hospital.com",
-          role: "doctor",
-          status: "active",
-          joinDate: "2024-01-15",
-          phone: "+234 801 234 5678"
-        },
-        {
-          id: 2,
-          name: "Nurse Michael Brown",
-          email: "michael.brown@hospital.com",
-          role: "nurse",
-          status: "active",
-          joinDate: "2024-02-20",
-          phone: "+234 802 345 6789"
-        },
-        {
-          id: 3,
-          name: "Dr. Emily Davis",
-          email: "emily.davis@hospital.com",
-          role: "doctor",
-          status: "pending",
-          joinDate: "2024-03-10",
-          phone: "+234 803 456 7890"
-        }
-      ]);
+    if (personnelData) {
+      setPersonnel(personnelData);
       setLoading(false);
-    }, 1000);
-  }, []);
+    }
+  }, [personnelData]);
 
-  const filteredPersonnel = personnel.filter(person => {
-    const matchesSearch = person.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         person.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredPersonnel = personnel.filter((person) => {
+    const matchesSearch =
+      person.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = filterRole === "all" || person.role === filterRole;
     return matchesSearch && matchesRole;
   });
 
   const getRoleDisplayName = (role) => {
     switch (role) {
-      case "doctor": return "Doctor";
-      case "nurse": return "Nurse";
-      case "admin": return "Administrator";
-      default: return role;
+      case "doctor":
+        return "Doctor";
+      case "nurse":
+        return "Nurse";
+      case "admin":
+        return "Administrator";
+      default:
+        return role;
     }
   };
 
@@ -74,24 +53,22 @@ function PersonnelManagement({ onAddPersonnel }) {
     }
   };
 
-  const handleDeactivate = (personId) => {
-    setPersonnel(prev => 
-      prev.map(person => 
-        person.id === personId 
-          ? { ...person, status: "inactive" }
-          : person
-      )
-    );
+  // const handleDeactivate = (personId) => {
+  //   setPersonnel((prev) =>
+  //     prev.map((person) =>
+  //       person.id === personId ? { ...person, status: "inactive" } : person
+  //     )
+  //   );
+  // };
+
+  const handleViewPersonnel = (personId) => {
+    setSelectedPersonnelId(personId);
+    setShowViewModal(true);
   };
 
-  const handleActivate = (personId) => {
-    setPersonnel(prev => 
-      prev.map(person => 
-        person.id === personId 
-          ? { ...person, status: "active" }
-          : person
-      )
-    );
+  const handleCloseViewModal = () => {
+    setShowViewModal(false);
+    setSelectedPersonnelId(null);
   };
 
   if (loading) {
@@ -113,10 +90,7 @@ function PersonnelManagement({ onAddPersonnel }) {
           <Users className="title-icon" />
           <h2>Personnel Management</h2>
         </div>
-        <button 
-          className="add-personnel-btn"
-          onClick={onAddPersonnel}
-        >
+        <button className="add-personnel-btn" onClick={onAddPersonnel}>
           <Plus className="btn-icon" />
           Add Personnel
         </button>
@@ -138,7 +112,7 @@ function PersonnelManagement({ onAddPersonnel }) {
             <UserCheck />
           </div>
           <div className="stat-content">
-            <h3>{personnel.filter(p => p.status === "active").length}</h3>
+            <h3>{personnel.filter((p) => p.status === "active").length}</h3>
             <p>Active Staff</p>
           </div>
         </div>
@@ -147,7 +121,7 @@ function PersonnelManagement({ onAddPersonnel }) {
             <UserX />
           </div>
           <div className="stat-content">
-            <h3>{personnel.filter(p => p.status === "pending").length}</h3>
+            <h3>{personnel.filter((p) => p.status === "pending").length}</h3>
             <p>Pending Approval</p>
           </div>
         </div>
@@ -182,7 +156,9 @@ function PersonnelManagement({ onAddPersonnel }) {
           <div className="empty-state">
             <Users className="empty-icon" />
             <h3>No personnel found</h3>
-            <p>Try adjusting your search or add new personnel to get started.</p>
+            <p>
+              Try adjusting your search or add new personnel to get started.
+            </p>
             <button className="add-personnel-btn" onClick={onAddPersonnel}>
               <Plus className="btn-icon" />
               Add Personnel
@@ -194,47 +170,44 @@ function PersonnelManagement({ onAddPersonnel }) {
               <div key={person.id} className="personnel-card">
                 <div className="personnel-info">
                   <div className="personnel-avatar">
-                    {person.name.split(' ').map(n => n[0]).join('')}
+                    {person.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </div>
                   <div className="personnel-details">
                     <h4>{person.name}</h4>
                     <p className="personnel-email">{person.email}</p>
                     <p className="personnel-phone">{person.phone}</p>
                     <div className="personnel-meta">
-                      <span className="personnel-role">{getRoleDisplayName(person.role)}</span>
+                      <span className="personnel-role">
+                        {getRoleDisplayName(person.role)}
+                      </span>
                       {getStatusBadge(person.status)}
                     </div>
                   </div>
                 </div>
                 <div className="personnel-actions">
-                  {person.status === "active" ? (
-                    <button 
-                      className="action-btn deactivate"
-                      onClick={() => handleDeactivate(person.id)}
-                    >
-                      Deactivate
-                    </button>
-                  ) : person.status === "inactive" ? (
-                    <button 
-                      className="action-btn activate"
-                      onClick={() => handleActivate(person.id)}
-                    >
-                      Activate
-                    </button>
-                  ) : (
-                    <button 
-                      className="action-btn approve"
-                      onClick={() => handleActivate(person.id)}
-                    >
-                      Approve
-                    </button>
-                  )}
+                  <button
+                    className="action-btn approve"
+                    onClick={() => handleViewPersonnel(person.id)}
+                  >
+                    View
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* View Personnel Modal */}
+      {showViewModal && selectedPersonnelId && (
+        <ViewPersonnelModal
+          onClose={handleCloseViewModal}
+          personnelId={selectedPersonnelId}
+        />
+      )}
     </section>
   );
 }

@@ -138,6 +138,7 @@ import SecureMessagesPage from "./patient/messaging/SecureMessagesPage.jsx";
 import ProfilePage from "./patient/Profile/ProfilePage.jsx";
 import MyAppointments from "./patient/appointment-details/MyAppointments.jsx";
 import BookAppointment from "./patient/appointment-details/BookAppointment.jsx";  
+import BookAppointmentDemo from "./patient/appointment-details/BookAppointmentDemo.jsx";
 
 // --- Hospital Booking Flow ---
 import HospitalList from "./patient/booking/HospitalList.jsx";
@@ -202,6 +203,7 @@ function App() {
           <Route path="video-call" element={<VideoCall />} />           {/* /patient/video-call */}
           <Route path="myappointments" element={<MyAppointments />} />   {/* /patient/myappointments */}
           <Route path="book-appointment" element={<BookAppointment />} /> {/* /patient/book-appointment */}
+          <Route path="book-appointment-demo" element={<BookAppointmentDemo />} /> {/* /patient/book-appointment-demo */}
 
         </Route>
       </Route>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import plusIcon from "../../assets/plus-icon.svg"; // Assuming you have a plus icon
+import plusIcon from "../../assets/plus-icon.svg"; 
 
 function AppointmentsHeaderCard() {
   return (

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { X, User, Mail, Phone, Shield, Calendar, Lock } from "lucide-react";
 import "./AddPersonnelModal.css";
+import adminAxiosClient from "../../utils/authAxiosClient";
+import { toast } from "react-toastify";
 
-function AddPersonnelModal({ onClose, hospitalId }) {
+function AddPersonnelModal({ onClose, onSuccess, hospitalId }) {
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -10,145 +12,108 @@ function AddPersonnelModal({ onClose, hospitalId }) {
     password: "",
     role: "doctor",
     professional_id: "",
-    hospital_id: hospitalId || ""
+    hospital_id: hospitalId || "",
   });
-  
+
+  console.log({ hospitalId });
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.full_name.trim()) {
       newErrors.full_name = "Full name is required";
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
     }
-    
+
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     }
-    
+
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
     }
-    
+
     if (!formData.professional_id.trim()) {
       newErrors.professional_id = "Professional ID/License Number is required";
     }
-    
-    if (!formData.hospital_id.trim()) {
-      newErrors.hospital_id = "Hospital ID is required";
-    }
-    
+
+    // if (!formData.hospital_id.trim()) {
+    //   newErrors.hospital_id = "Hospital ID is required";
+    // }
+
     if (!formData.role) {
       newErrors.role = "Role is required";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
-    setLoading(true);
-    
-    try {
-      // Get the token from localStorage
-      const authToken = localStorage.getItem('authToken');
-      
-      if (!authToken) {
-        throw new Error('Authentication token not found. Please log in again.');
-      }
 
-      const response = await fetch('https://altcare-backend-production.up.railway.app/api/practitioner/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        },
-        body: JSON.stringify({
-          full_name: formData.full_name,
-          professional_id: formData.professional_id,
-          hospital_id: formData.hospital_id,
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-          role: formData.role
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        const errorMessage = errorData.message || errorData.error || 'Failed to create personnel';
-        
-        if (response.status === 401) {
-          throw new Error('Session expired. Please log in again.');
-        } else if (response.status === 400) {
-          throw new Error(errorMessage);
-        }
-        throw new Error(errorMessage);
-      }
-      
-      setSuccess(true);
-      
-      // Reset form after success
-      setTimeout(() => {
-        setSuccess(false);
-        onClose();
-      }, 2000);
-      
+    setLoading(true);
+
+    try {
+      const personnelData = {
+        full_name: formData.full_name,
+        professional_id: formData.professional_id,
+        hospital_id: hospitalId,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        role: formData.role,
+      };
+
+      const response = await adminAxiosClient.post(
+        "/practitioner/register",
+        personnelData
+      );
+
+      toast.success(response.data.message);
+
+      onClose();
+      onSuccess();
     } catch (error) {
-      console.error('Error creating personnel:', error);
-      setErrors({ submit: error.message });
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className="modal-overlay">
-        <div className="modal-content success-modal">
-          <div className="success-icon">
-            <User />
-          </div>
-          <h2>Personnel Added Successfully!</h2>
-          <p>The new staff member has been added to your hospital.</p>
-          <button className="close-btn" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -163,7 +128,7 @@ function AddPersonnelModal({ onClose, hospitalId }) {
         <form onSubmit={handleSubmit} className="personnel-form">
           <div className="form-section">
             <h3>Personal Information</h3>
-            
+
             <div className="form-group">
               <label>
                 <User className="input-icon" />
@@ -177,7 +142,9 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 className={errors.full_name ? "error" : ""}
                 placeholder="Enter full name"
               />
-              {errors.full_name && <span className="error-text">{errors.full_name}</span>}
+              {errors.full_name && (
+                <span className="error-text">{errors.full_name}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -193,7 +160,9 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 className={errors.email ? "error" : ""}
                 placeholder="Enter email address"
               />
-              {errors.email && <span className="error-text">{errors.email}</span>}
+              {errors.email && (
+                <span className="error-text">{errors.email}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -209,13 +178,15 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 className={errors.phone ? "error" : ""}
                 placeholder="Enter phone number"
               />
-              {errors.phone && <span className="error-text">{errors.phone}</span>}
+              {errors.phone && (
+                <span className="error-text">{errors.phone}</span>
+              )}
             </div>
           </div>
 
           <div className="form-section">
             <h3>Professional Information</h3>
-            
+
             <div className="form-group">
               <label>
                 <Shield className="input-icon" />
@@ -229,10 +200,12 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 className={errors.professional_id ? "error" : ""}
                 placeholder="Enter professional ID or license number"
               />
-              {errors.professional_id && <span className="error-text">{errors.professional_id}</span>}
+              {errors.professional_id && (
+                <span className="error-text">{errors.professional_id}</span>
+              )}
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Hospital ID</label>
               <input
                 type="text"
@@ -243,16 +216,14 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 placeholder="Enter hospital ID"
                 readOnly={!!hospitalId}
               />
-              {errors.hospital_id && <span className="error-text">{errors.hospital_id}</span>}
-            </div>
+              {errors.hospital_id && (
+                <span className="error-text">{errors.hospital_id}</span>
+              )}
+            </div> */}
 
             <div className="form-group">
               <label>Role</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
+              <select name="role" value={formData.role} onChange={handleChange}>
                 <option value="doctor">Doctor</option>
                 <option value="nurse">Nurse</option>
                 <option value="admin">Administrator</option>
@@ -273,25 +244,21 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 className={errors.password ? "error" : ""}
                 placeholder="Enter a secure password"
               />
-              {errors.password && <span className="error-text">{errors.password}</span>}
+              {errors.password && (
+                <span className="error-text">{errors.password}</span>
+              )}
             </div>
           </div>
 
           {errors.submit && (
-            <div className="error-message">
-              {errors.submit}
-            </div>
+            <div className="error-message">{errors.submit}</div>
           )}
 
           <div className="form-actions">
             <button type="button" className="cancel-btn" onClick={onClose}>
               Cancel
             </button>
-            <button 
-              type="submit" 
-              className="submit-btn"
-              disabled={loading}
-            >
+            <button type="submit" className="submit-btn" disabled={loading}>
               {loading ? "Adding..." : "Add Personnel"}
             </button>
           </div>

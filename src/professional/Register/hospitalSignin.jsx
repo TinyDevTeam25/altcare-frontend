@@ -1,70 +1,52 @@
 // src/pages/AdminLogin.tsx
-"use client"
-import { useState } from "react"
-import React from "react"
-import singleman from "../../assets/singleman.png"
-import { Link, useNavigate } from "react-router"
-import '../Register/HospitalSignin.css';
+"use client";
+import { useState } from "react";
+import React from "react";
+import singleman from "../../assets/singleman.png";
+import { Link, useNavigate } from "react-router";
+import "../Register/HospitalSignin.css";
+
+import adminAxiosClient from "../../utils/authAxiosClient";
+import { saveHospitalAuth } from "../../utils/hospitalAuth";
+import { toast } from "react-toastify";
 
 export default function HospitalSignin() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [remember, setRemember] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
-
+    const loadingToaster = toast.info("Signing you in...");
+    setLoading(true);
     try {
-      // Make actual API call to login
-      const response = await fetch('https://altcare-backend-production.up.railway.app/api/hospital/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      })
+      e.preventDefault();
 
-      if (!response.ok) {
-        throw new Error('Invalid email or password')
-      }
+      const response = await adminAxiosClient.post("/hospital/login", {
+        email,
+        password,
+      });
 
-      const data = await response.json()
-      
-      // Store the token in localStorage
-      if (data.token) {
-        localStorage.setItem('authToken', data.token)
-        localStorage.setItem('adminEmail', email)
-        
-        // Optional: store other user data
-        if (data.hospitalId) {
-          localStorage.setItem('hospitalId', data.hospitalId)
-        }
-      }
+      saveHospitalAuth(response.data);
 
-      // Navigate to hospital portal
-      navigate("/hospital-portal")
+      toast.success(response.data.message);
 
-    } catch (err) {
-      setError(err.message || "Login failed. Please try again.")
-      console.error('Login error:', err)
+      navigate("/hospital-portal");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || error.message || "Login failed";
+      toast.error(errorMessage);
     } finally {
-      setLoading(false)
+      toast.dismiss(loadingToaster);
     }
-  }
+  };
 
   return (
     <div className="signin-page">
       {/* Main Container */}
       <div className="signin-container">
-        
         {/* Left - Image */}
         <div className="signin-image-section">
           <img
@@ -83,20 +65,6 @@ export default function HospitalSignin() {
           </p>
 
           <form onSubmit={handleSubmit} className="signin-form">
-            {/* Error Message */}
-            {error && (
-              <div className="error-message" style={{
-                padding: '10px',
-                marginBottom: '15px',
-                backgroundColor: '#fee',
-                color: '#c33',
-                borderRadius: '4px',
-                fontSize: '14px'
-              }}>
-                {error}
-              </div>
-            )}
-
             {/* Email */}
             <div className="signin-input-group">
               <label className="signin-label">Professional ID or Email</label>
@@ -154,7 +122,10 @@ export default function HospitalSignin() {
 
           <p className="signin-signup-prompt">
             Don't have an admin account?{" "}
-            <Link to="/professional/hospital-register" className="signin-signup-link">
+            <Link
+              to="/professional/hospital-register"
+              className="signin-signup-link"
+            >
               Sign up here
             </Link>
           </p>
@@ -165,5 +136,5 @@ export default function HospitalSignin() {
         </div>
       </div>
     </div>
-  )
+  );
 }

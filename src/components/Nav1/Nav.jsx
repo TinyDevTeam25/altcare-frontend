@@ -61,7 +61,7 @@ export default function Nav({
         </ul>
       )}
 
-      {showButton && (
+      {/* {showButton && (
         <div
           className="hidden"
           style={{ display: "flex", gap: "20px", alignItems: "center" }}
@@ -77,7 +77,31 @@ export default function Nav({
             <Button style={buttonStyle}>{buttonText}</Button>
           </Link>
         </div>
-      )}
+      )} */}
+
+      {showButton && (
+  <div
+    className="hidden"
+    style={{ display: "flex", gap: "20px", alignItems: "center" }}
+  >
+    <a
+      href={pTextLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: "none" }}
+    >
+      <P
+        style={{ color: "#008080", lineHeight: "24px", cursor: "pointer" }}
+      >
+        {pText}
+      </P>
+    </a>
+    <Link to={linkTo}>
+      <Button style={buttonStyle}>{buttonText}</Button>
+    </Link>
+  </div>
+)}
+
     </nav>
   );
 }

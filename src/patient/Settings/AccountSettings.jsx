@@ -79,7 +79,7 @@ async function deletePatientProfile({ token, patientId }) {
     });
     if (r1.status === 200 || r1.status === 204) return { ok: true };
     if (r1.data?.message) return { ok: false, status: r1.status, message: r1.data.message };
-  } catch (_) {
+  } catch {
     /* fall through */
   }
 
@@ -91,7 +91,7 @@ async function deletePatientProfile({ token, patientId }) {
     });
     if (r2.status === 200 || r2.status === 204) return { ok: true };
     if (r2.data?.message) return { ok: false, status: r2.status, message: r2.data.message };
-  } catch (_) {
+  } catch{
     /* fall through */
   }
 
@@ -104,7 +104,7 @@ async function deletePatientProfile({ token, patientId }) {
       });
       if (r3.status === 200 || r3.status === 204) return { ok: true };
       if (r3.data?.message) return { ok: false, status: r3.status, message: r3.data.message };
-    } catch (_) {
+    } catch {
       /* fall through */
     }
   }

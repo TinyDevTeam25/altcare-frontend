@@ -69,13 +69,25 @@
   color: #000;
 }
 
-/* Select */
+/* Inputs (shared) */
 .appts-input {
   border: 0.5px solid #d9d9d9;
   border-radius: 10px;
   background: #fff;
+  height: 44px;
+  padding: 0 12px;
 }
 
+/* Focus styles (a11y) */
+.appts-input:focus,
+.appts-input--select:focus-within,
+.appts-input--textarea textarea:focus {
+  outline: none;
+  border-color: #2c7a7b;
+  box-shadow: 0 0 0 3px rgba(56,178,172,.18);
+}
+
+/* Select */
 .appts-input--select {
   position: relative;
   padding: 0 20px;
@@ -328,4 +340,21 @@
   .myappts-main { max-width: 100%; }
   .myappts-row { flex-direction: column; }
   .myappts-actions-row { align-self: flex-start; }
+}
+
+/* optional polish for datetime input */
+.appts-input[type="datetime-local"] {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  color: #121212;
+}
+.appts-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* reduce-motion nicety */
+@media (prefers-reduced-motion: reduce) {
+  .appts-input--select .appts-chevron { transition: none; }
+  .appts-time-chip { transition: none; }
 }

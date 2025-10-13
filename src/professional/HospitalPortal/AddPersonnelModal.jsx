@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, User, Mail, Phone, Shield, Calendar } from "lucide-react";
+import { X, User, Mail, Phone, Shield, Calendar, Lock } from "lucide-react";
 import "./AddPersonnelModal.css";
 
 function AddPersonnelModal({ onClose, hospitalId }) {
@@ -7,10 +7,10 @@ function AddPersonnelModal({ onClose, hospitalId }) {
     full_name: "",
     email: "",
     phone: "",
+    password: "",
     role: "doctor",
     professional_id: "",
-    department: "",
-    start_date: ""
+    hospital_id: hospitalId || ""
   });
   
   const [errors, setErrors] = useState({});
@@ -34,16 +34,22 @@ function AddPersonnelModal({ onClose, hospitalId }) {
       newErrors.phone = "Phone number is required";
     }
     
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+    
     if (!formData.professional_id.trim()) {
       newErrors.professional_id = "Professional ID/License Number is required";
     }
     
-    if (!formData.department.trim()) {
-      newErrors.department = "Department is required";
+    if (!formData.hospital_id.trim()) {
+      newErrors.hospital_id = "Hospital ID is required";
     }
     
-    if (!formData.start_date) {
-      newErrors.start_date = "Start date is required";
+    if (!formData.role) {
+      newErrors.role = "Role is required";
     }
     
     setErrors(newErrors);
@@ -75,21 +81,40 @@ function AddPersonnelModal({ onClose, hospitalId }) {
     setLoading(true);
     
     try {
-      // Mock API call - replace with actual endpoint
-      const response = await fetch('https://altcare-backend-production.up.railway.app/api/practitioner/create', {
+      // Get the token from localStorage
+      const authToken = localStorage.getItem('authToken');
+      
+      if (!authToken) {
+        throw new Error('Authentication token not found. Please log in again.');
+      }
+
+      const response = await fetch('https://altcare-backend-production.up.railway.app/api/practitioner/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify({
-          ...formData,
-          hospital_id: hospitalId,
-          created_by_admin: true
+          full_name: formData.full_name,
+          professional_id: formData.professional_id,
+          hospital_id: formData.hospital_id,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          role: formData.role
         })
       });
       
       if (!response.ok) {
-        throw new Error('Failed to create personnel');
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.message || errorData.error || 'Failed to create personnel';
+        
+        if (response.status === 401) {
+          throw new Error('Session expired. Please log in again.');
+        } else if (response.status === 400) {
+          throw new Error(errorMessage);
+        }
+        throw new Error(errorMessage);
       }
       
       setSuccess(true);
@@ -208,6 +233,20 @@ function AddPersonnelModal({ onClose, hospitalId }) {
             </div>
 
             <div className="form-group">
+              <label>Hospital ID</label>
+              <input
+                type="text"
+                name="hospital_id"
+                value={formData.hospital_id}
+                onChange={handleChange}
+                className={errors.hospital_id ? "error" : ""}
+                placeholder="Enter hospital ID"
+                readOnly={!!hospitalId}
+              />
+              {errors.hospital_id && <span className="error-text">{errors.hospital_id}</span>}
+            </div>
+
+            <div className="form-group">
               <label>Role</label>
               <select
                 name="role"
@@ -218,34 +257,23 @@ function AddPersonnelModal({ onClose, hospitalId }) {
                 <option value="nurse">Nurse</option>
                 <option value="admin">Administrator</option>
               </select>
-            </div>
-
-            <div className="form-group">
-              <label>Department</label>
-              <input
-                type="text"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className={errors.department ? "error" : ""}
-                placeholder="Enter department"
-              />
-              {errors.department && <span className="error-text">{errors.department}</span>}
+              {errors.role && <span className="error-text">{errors.role}</span>}
             </div>
 
             <div className="form-group">
               <label>
-                <Calendar className="input-icon" />
-                Start Date
+                <Lock className="input-icon" />
+                Password
               </label>
               <input
-                type="date"
-                name="start_date"
-                value={formData.start_date}
+                type="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
-                className={errors.start_date ? "error" : ""}
+                className={errors.password ? "error" : ""}
+                placeholder="Enter a secure password"
               />
-              {errors.start_date && <span className="error-text">{errors.start_date}</span>}
+              {errors.password && <span className="error-text">{errors.password}</span>}
             </div>
           </div>
 
